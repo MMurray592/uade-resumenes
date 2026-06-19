@@ -1052,7 +1052,7 @@ render();
   --bg:#0f0f0f; --bg2:#1a1a1a; --bg3:#242424; --bg4:#2e2e2e;
   --text:#e8e8e8; --text2:#a0a0a0; --text3:#666;
   --border:#2e2e2e; --border2:#3a3a3a;
-  --u2:#3dbf8a; --u3:#e8a83d; --u4:#e06b8a;
+  --u2:#3dbf8a; --u3:#e8a83d; --u4:#e06b8a; --pf:#8b7cf0;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;padding:24px 16px;-webkit-font-smoothing:antialiased}
@@ -1072,7 +1072,8 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 #nb2.active{border-color:var(--u2);box-shadow:inset 0 0 0 1px var(--u2)}
 #nb3.active{border-color:var(--u3);box-shadow:inset 0 0 0 1px var(--u3)}
 #nb4.active{border-color:var(--u4);box-shadow:inset 0 0 0 1px var(--u4)}
-#nb2 .nb-tag{color:var(--u2)} #nb3 .nb-tag{color:var(--u3)} #nb4 .nb-tag{color:var(--u4)}
+#nb2 .nb-tag{color:var(--u2)} #nb3 .nb-tag{color:var(--u3)} #nb4 .nb-tag{color:var(--u4)} #nbpf .nb-tag{color:var(--pf)}
+#nbpf.active{border-color:var(--pf);box-shadow:inset 0 0 0 1px var(--pf)}
 /* unit */
 .unit{display:none}
 .unit.show{display:block;animation:fade .25s ease}
@@ -1081,15 +1082,16 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 .u2 .uhead{background:linear-gradient(180deg,rgba(61,191,138,.10),rgba(61,191,138,.02))}
 .u3 .uhead{background:linear-gradient(180deg,rgba(232,168,61,.10),rgba(232,168,61,.02))}
 .u4 .uhead{background:linear-gradient(180deg,rgba(224,107,138,.10),rgba(224,107,138,.02))}
+.upf .uhead{background:linear-gradient(180deg,rgba(139,124,240,.10),rgba(139,124,240,.02))}
 .uhead h2{font-size:18px;font-weight:700}
 .uhead p{color:var(--text2);font-size:13px;margin-top:5px}
-.u2 .uhead h2{color:var(--u2)} .u3 .uhead h2{color:var(--u3)} .u4 .uhead h2{color:var(--u4)}
+.u2 .uhead h2{color:var(--u2)} .u3 .uhead h2{color:var(--u3)} .u4 .uhead h2{color:var(--u4)} .upf .uhead h2{color:var(--pf)}
 /* accordion */
 .sec{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden}
 .sec-head{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none;transition:.15s}
 .sec-head:hover{background:var(--bg3)}
 .sec-num{font-size:12px;font-weight:700;color:var(--text3);min-width:30px}
-.u2 .sec-num{color:var(--u2)} .u3 .sec-num{color:var(--u3)} .u4 .sec-num{color:var(--u4)}
+.u2 .sec-num{color:var(--u2)} .u3 .sec-num{color:var(--u3)} .u4 .sec-num{color:var(--u4)} .upf .sec-num{color:var(--pf)}
 .sec-title{flex:1;font-size:14.5px;font-weight:600}
 .chip{font-size:10.5px;font-weight:600;letter-spacing:.3px;padding:3px 9px;border-radius:20px;background:var(--bg4);color:var(--text2);white-space:nowrap}
 .arrow{color:var(--text3);font-size:11px;transition:transform .2s}
@@ -1128,7 +1130,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 &lt;div class=&quot;wrap&quot;&gt;
   &lt;div class=&quot;top&quot;&gt;
     &lt;h1&gt;Resumen teórico — Finanzas Corporativas II&lt;/h1&gt;
-    &lt;div class=&quot;sub&quot;&gt;2.º Parcial · Unidades 2, 3 y 4 · Prof. E. Marino (resúmenes de clase)&lt;/div&gt;
+    &lt;div class=&quot;sub&quot;&gt;2.º Parcial · Unidades 2, 3 y 4 + Project Finance · Prof. E. Marino / N. Mesa&lt;/div&gt;
     &lt;div class=&quot;exam&quot;&gt;📌 Parcial &lt;b&gt;teórico&lt;/b&gt; (sin práctica): el foco está en conceptos, definiciones, comparaciones y el &lt;b&gt;&quot;por qué&quot;&lt;/b&gt;, no en resolver números.&lt;/div&gt;
   &lt;/div&gt;
 
@@ -1144,6 +1146,10 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
     &lt;button class=&quot;nav-btn&quot; id=&quot;nb4&quot; onclick=&quot;show(4,this)&quot;&gt;
       &lt;div class=&quot;nb-tag&quot;&gt;Unidad 4&lt;/div&gt;
       &lt;div class=&quot;nb-title&quot;&gt;Estructura de capital&lt;/div&gt;
+    &lt;/button&gt;
+    &lt;button class=&quot;nav-btn&quot; id=&quot;nbpf&quot; onclick=&quot;show(&#x27;pf&#x27;,this)&quot;&gt;
+      &lt;div class=&quot;nb-tag&quot;&gt;Project Finance&lt;/div&gt;
+      &lt;div class=&quot;nb-title&quot;&gt;Financiación estructurada de proyectos&lt;/div&gt;
     &lt;/button&gt;
   &lt;/div&gt;
 
@@ -1626,8 +1632,165 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
     &lt;/div&gt;
   &lt;/div&gt;
 
+  &lt;!-- ===================== PROJECT FINANCE ===================== --&gt;
+  &lt;div class=&quot;unit upf&quot; id=&quot;upf&quot;&gt;
+    &lt;div class=&quot;uhead&quot;&gt;
+      &lt;h2&gt;Project Finance · Financiación estructurada de proyectos&lt;/h2&gt;
+      &lt;p&gt;Cómo financiar un proyecto con su propio flujo de fondos y sin recurso contra los Sponsors: estructura, contratos, ventajas/desventajas y esquema de garantías. Caso VMOS (Vaca Muerta Oleoducto Sur).&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;expand-all&quot; onclick=&quot;toggleAll(&#x27;upf&#x27;)&quot;&gt;Expandir / colapsar todo&lt;/span&gt;
+
+    &lt;!-- PF.1 --&gt;
+    &lt;div class=&quot;sec&quot;&gt;
+      &lt;div class=&quot;sec-head&quot; onclick=&quot;toggle(this)&quot;&gt;
+        &lt;span class=&quot;sec-num&quot;&gt;PF.1&lt;/span&gt;
+        &lt;span class=&quot;sec-title&quot;&gt;¿Qué es el Project Finance?&lt;/span&gt;
+        &lt;span class=&quot;chip&quot;&gt;Concepto base&lt;/span&gt;&lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;sec-body&quot;&gt;&lt;div class=&quot;sec-inner&quot;&gt;
+        &lt;p class=&quot;lead&quot;&gt;Estructuración de un proyecto que tendrá su &lt;strong&gt;propio funding&lt;/strong&gt;, que queda separado de la posición de deuda de sus Sponsors. La decisión de prestar se apoya en el &lt;strong&gt;flujo de fondos futuro del propio proyecto&lt;/strong&gt;, no en el balance de los dueños.&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;Sin recurso (non-recourse):&lt;/strong&gt; el acreedor de la deuda &lt;strong&gt;no tiene recurso contra el balance de los Sponsors&lt;/strong&gt;. Su garantía son los activos y los flujos del proyecto.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;Desconsolidación:&lt;/strong&gt; al quedar fuera del balance del Sponsor, &lt;strong&gt;mejora los ratios de endeudamiento&lt;/strong&gt; de los Sponsors.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;Múltiples contratos en simultáneo:&lt;/strong&gt; la operación involucra negociar varios contratos a la vez, que buscan asegurar que los &lt;strong&gt;flujos de fondos del proyecto puedan ser capturados por el acreedor de deuda&lt;/strong&gt;.&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;div class=&quot;note&quot;&gt;&lt;b&gt;Idea central:&lt;/b&gt; se aísla el riesgo del proyecto del riesgo corporativo del dueño. El proyecto &quot;se banca solo&quot; a través de un vehículo dedicado (SPV).&lt;/div&gt;
+      &lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- PF.2 --&gt;
+    &lt;div class=&quot;sec&quot;&gt;
+      &lt;div class=&quot;sec-head&quot; onclick=&quot;toggle(this)&quot;&gt;
+        &lt;span class=&quot;sec-num&quot;&gt;PF.2&lt;/span&gt;
+        &lt;span class=&quot;sec-title&quot;&gt;El SPV y los actores de la estructura&lt;/span&gt;
+        &lt;span class=&quot;chip&quot;&gt;Estructura&lt;/span&gt;&lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;sec-body&quot;&gt;&lt;div class=&quot;sec-inner&quot;&gt;
+        &lt;p class=&quot;lead&quot;&gt;Todo gira en torno a un &lt;strong&gt;SPV (Special Purpose Vehicle)&lt;/strong&gt; — una sociedad creada exclusivamente para el proyecto. Cada actor se conecta a ese vehículo por un contrato distinto.&lt;/p&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;SPV (el Proyecto)&lt;/div&gt;
+          Sociedad dedicada que concentra activos, deuda y flujos. Es el centro de toda la red de contratos.
+        &lt;/div&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;Accionistas / Sponsors&lt;/div&gt;
+          Aportan el &lt;strong&gt;equity&lt;/strong&gt; y reciben &lt;strong&gt;dividendos&lt;/strong&gt;. Su responsabilidad se limita al capital aportado (salvo Completion Guarantee).
+        &lt;/div&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;Bancos / Acreedores&lt;/div&gt;
+          Aportan el &lt;strong&gt;financiamiento (deuda)&lt;/strong&gt; y reciben el &lt;strong&gt;repago&lt;/strong&gt; que sale de los flujos del proyecto.
+        &lt;/div&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;Proveedores y Constructor&lt;/div&gt;
+          Reciben &lt;strong&gt;contratación/pagos&lt;/strong&gt; a cambio de servicios, equipos y materiales, y de la construcción de la obra.
+        &lt;/div&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;Clientes (Off-takers)&lt;/div&gt;
+          Compran la producción: generan las &lt;strong&gt;ventas y cobranzas&lt;/strong&gt; que son la fuente última del repago.
+        &lt;/div&gt;
+        &lt;div class=&quot;note&quot;&gt;&lt;b&gt;Debt Service Reserve Account (DSRA):&lt;/b&gt; cuenta de reserva que guarda fondos para cubrir el servicio de deuda ante baches de caja. Funciona como garantía/colchón para el acreedor.&lt;/div&gt;
+      &lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- PF.3 --&gt;
+    &lt;div class=&quot;sec&quot;&gt;
+      &lt;div class=&quot;sec-head&quot; onclick=&quot;toggle(this)&quot;&gt;
+        &lt;span class=&quot;sec-num&quot;&gt;PF.3&lt;/span&gt;
+        &lt;span class=&quot;sec-title&quot;&gt;Proceso de estructuración (fases del proyecto)&lt;/span&gt;
+        &lt;span class=&quot;chip&quot;&gt;Proceso&lt;/span&gt;&lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;sec-body&quot;&gt;&lt;div class=&quot;sec-inner&quot;&gt;
+        &lt;p class=&quot;lead&quot;&gt;Es un proceso de negociación de múltiples contratos en simultáneo, ordenado en fases. El &lt;strong&gt;Completion Date&lt;/strong&gt; es el hito que separa construir de operar.&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;1 · Estudios de factibilidad:&lt;/strong&gt; se evalúa la viabilidad técnica y económica del proyecto.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;2 · Estructuración:&lt;/strong&gt; se arma el SPV, se negocian los contratos y el esquema de garantías hasta el cierre financiero.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;3 · Construcción:&lt;/strong&gt; se ejecutan los &lt;strong&gt;desembolsos&lt;/strong&gt; de la deuda y se construye la obra.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;4 · Completion Date:&lt;/strong&gt; hito de finalización/puesta en marcha; cambia el perfil de riesgo (se suele liberar la Completion Guarantee).&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;5 · Operación:&lt;/strong&gt; el proyecto genera caja, comienza el &lt;strong&gt;repago&lt;/strong&gt; de la deuda y el reparto de dividendos.&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;div class=&quot;note&quot;&gt;&lt;b&gt;Por qué importa el Completion Date:&lt;/b&gt; antes de él el riesgo es de construcción (sin caja todavía); después es riesgo operativo. La estructura de garantías y los flujos de repago están &quot;adaptados a la generación de caja del proyecto&quot;.&lt;/div&gt;
+      &lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- PF.4 --&gt;
+    &lt;div class=&quot;sec&quot;&gt;
+      &lt;div class=&quot;sec-head&quot; onclick=&quot;toggle(this)&quot;&gt;
+        &lt;span class=&quot;sec-num&quot;&gt;PF.4&lt;/span&gt;
+        &lt;span class=&quot;sec-title&quot;&gt;Ventajas y desventajas&lt;/span&gt;
+        &lt;span class=&quot;chip&quot;&gt;Comparativa&lt;/span&gt;&lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;sec-body&quot;&gt;&lt;div class=&quot;sec-inner&quot;&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;✓ Ventajas&lt;/div&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;Sin recurso:&lt;/strong&gt; los acreedores no tienen recurso contra el balance de los Sponsors (excepto si hay Completion Guarantee). Limita la responsabilidad al capital aportado.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Diferenciación de riesgo:&lt;/strong&gt; separa el riesgo del proyecto del riesgo corporativo del Sponsor; evita impactos en su riesgo crediticio.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Elude covenants:&lt;/strong&gt; se evitan los covenants restrictivos contenidos en los instrumentos de deuda del Sponsor.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Repago a medida:&lt;/strong&gt; los flujos de repago se adaptan totalmente a la estructura de generación de caja del proyecto.&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;✗ Desventajas&lt;/div&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;Mayor costo&lt;/strong&gt; del financiamiento.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Complejidad&lt;/strong&gt; en la estructuración y en el esquema de garantías.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Tiempos:&lt;/strong&gt; mayores plazos de estructuración para llegar al cierre financiero.&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- PF.5 --&gt;
+    &lt;div class=&quot;sec&quot;&gt;
+      &lt;div class=&quot;sec-head&quot; onclick=&quot;toggle(this)&quot;&gt;
+        &lt;span class=&quot;sec-num&quot;&gt;PF.5&lt;/span&gt;
+        &lt;span class=&quot;sec-title&quot;&gt;Esquemas de garantías&lt;/span&gt;
+        &lt;span class=&quot;chip&quot;&gt;Garantías&lt;/span&gt;&lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;sec-body&quot;&gt;&lt;div class=&quot;sec-inner&quot;&gt;
+        &lt;p class=&quot;lead&quot;&gt;Como no hay recurso contra el Sponsor, el acreedor se cubre con un paquete de garantías sobre el propio proyecto.&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;Completion Guarantee (Sponsors):&lt;/strong&gt; garantía de finalización. Es la principal excepción al &quot;sin recurso&quot;: los Sponsors responden hasta que el proyecto se complete (Completion Date).&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;Prenda sobre acciones del SPV:&lt;/strong&gt; permite al acreedor tomar el control del vehículo ante default.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;Cesión fiduciaria de cobranzas (con o sin Off-taker):&lt;/strong&gt; los cobros de las ventas se dirigen a un fideicomiso que asegura el repago antes de llegar a los Sponsors.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;Debt Service Reserve Account (DSRA):&lt;/strong&gt; reserva de fondos para el servicio de deuda.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;Prenda sobre activos físicos (garantías reales):&lt;/strong&gt; los activos del proyecto (p. ej. el oleoducto) respaldan el préstamo.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- PF.6 --&gt;
+    &lt;div class=&quot;sec&quot;&gt;
+      &lt;div class=&quot;sec-head&quot; onclick=&quot;toggle(this)&quot;&gt;
+        &lt;span class=&quot;sec-num&quot;&gt;PF.6&lt;/span&gt;
+        &lt;span class=&quot;sec-title&quot;&gt;Caso VMOS — Vaca Muerta Oleoducto Sur&lt;/span&gt;
+        &lt;span class=&quot;chip&quot;&gt;Caso real&lt;/span&gt;&lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;sec-body&quot;&gt;&lt;div class=&quot;sec-inner&quot;&gt;
+        &lt;p class=&quot;lead&quot;&gt;Ejemplo de project finance en Argentina: financiación basada en los flujos de caja del proyecto VMOS para construir un oleoducto, vía un préstamo sindicado liderado por bancos internacionales.&lt;/p&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;¿Qué es VMOS?&lt;/div&gt;
+          &lt;strong&gt;VMOS S.A.&lt;/strong&gt; es una sociedad anónima formada por YPF, Pluspetrol, Pan American Energy, Pampa Energía, Vista, Chevron Argentina, Shell Argentina y Tecpetrol. Su objetivo es financiar y construir el &lt;strong&gt;Vaca Muerta Oleoducto Sur&lt;/strong&gt;, un oleoducto de &lt;strong&gt;437 km&lt;/strong&gt; que evacúa crudo desde la Cuenca Neuquina hasta la costa atlántica de Río Negro.
+        &lt;/div&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;El &quot;project finance&quot; acá&lt;/div&gt;
+          Financiación estructurada donde los fondos se basan en la &lt;strong&gt;capacidad futura del proyecto de generar caja&lt;/strong&gt;, y los &lt;strong&gt;activos del proyecto (el oleoducto) sirven como garantía&lt;/strong&gt; del préstamo. El SPV es VMOS S.A.; los Sponsors son las petroleras.
+        &lt;/div&gt;
+        &lt;div class=&quot;concept&quot;&gt;
+          &lt;div class=&quot;concept-title&quot;&gt;Detalles del financiamiento&lt;/div&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;Monto:&lt;/strong&gt; préstamo sindicado de &lt;strong&gt;USD 2.000 millones&lt;/strong&gt;.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Líderes:&lt;/strong&gt; bancos internacionales de primera línea — Citi, Deutsche Bank, Itaú, JP Morgan y Santander.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Inversores:&lt;/strong&gt; un grupo de 14 bancos e inversores institucionales internacionales.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Importancia:&lt;/strong&gt; el mayor préstamo comercial para un proyecto de infraestructura en la historia argentina y un hito en el mercado internacional de project finance.&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;note&quot;&gt;&lt;b&gt;Nota:&lt;/b&gt; los datos del caso VMOS provienen del apunte de la materia. Por tratarse de una operación reciente, cifras y participantes pueden haberse actualizado desde entonces.&lt;/div&gt;
+      &lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
   &lt;div class=&quot;foot&quot;&gt;
-    Fuente: resúmenes de clase U2&amp;amp;3 y U4 (Prof. E. Marino) + handoff U2-U3 · Finanzas Corporativas II, UADE.&lt;br&gt;
+    Fuente: resúmenes de clase U2&amp;amp;3 y U4 (Prof. E. Marino) + handoff U2-U3 · PPT y apunte de Project Finance (Prof. N. Mesa) · Finanzas Corporativas II, UADE.&lt;br&gt;
     Contenido &lt;b&gt;solo teórico&lt;/b&gt; para el 2.º parcial — sin resolución numérica. Repasá los &quot;por qué&quot; y las comparaciones.
   &lt;/div&gt;
 &lt;/div&gt;
