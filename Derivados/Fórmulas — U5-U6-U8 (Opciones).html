@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fórmulas — Derivados I · Segundo Parcial (U5 · U6 · U8)</title>
+<style>
+:root{
+  --bg:#0f0f0f; --bg2:#1a1a1a; --bg3:#242424; --bg4:#2e2e2e;
+  --text:#e8e8e8; --text2:#a0a0a0; --text3:#666;
+  --border:#2e2e2e; --border2:#3a3a3a;
+  --u5:#4fa3e8; --u6:#3dbf8a; --u7:#e8a83d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;padding:24px 16px;max-width:1000px;margin:0 auto}
+.title{font-size:1.6rem;font-weight:700}
+.subtitle{color:var(--text2);font-size:.95rem;margin:4px 0 18px}
+.subtitle b{color:var(--text)}
+.controls{position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:10;border-bottom:1px solid var(--border);margin-bottom:18px}
+#search{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:11px 14px;border-radius:9px;font-size:.95rem;margin-bottom:10px}
+#search::placeholder{color:var(--text3)}
+.filters{display:flex;gap:7px;flex-wrap:wrap}
+.fbtn{background:var(--bg2);border:1px solid var(--border2);color:var(--text2);padding:6px 13px;border-radius:7px;cursor:pointer;font-size:.82rem;font-weight:600;transition:all .15s}
+.fbtn:hover{background:var(--bg3);color:var(--text)}
+.fbtn.active{background:var(--text);color:#0f0f0f;border-color:var(--text)}
+.fbtn[data-u="U5"].active{background:var(--u5);border-color:var(--u5);color:#06121d}
+.fbtn[data-u="U6"].active{background:var(--u6);border-color:var(--u6);color:#06140e}
+.fbtn[data-u="U8"].active{background:var(--u7);border-color:var(--u7);color:#1d1405}
+.unit-group{margin-bottom:22px}
+.unit-label{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.dot{width:11px;height:11px;border-radius:50%}
+.dot.U5{background:var(--u5)} .dot.U6{background:var(--u6)} .dot.U8{background:var(--u7)}
+.unit-label .cap{font-size:.78rem;color:var(--text3);font-weight:500;margin-left:auto}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:9px;overflow:hidden}
+.card-head{display:flex;align-items:center;gap:11px;padding:13px 15px;cursor:pointer;user-select:none}
+.card-head:hover{background:var(--bg3)}
+.card-name{flex:1;font-weight:600;font-size:.97rem}
+.cat-chip{font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.03em}
+.cat-Payoff{background:rgba(232,113,138,.16);color:#e8718a}
+.cat-Valuación{background:rgba(61,191,138,.16);color:#3dbf8a}
+.cat-Límites{background:rgba(79,163,232,.16);color:#4fa3e8}
+.cat-Paridad{background:rgba(180,140,255,.16);color:#b48cff}
+.cat-Estrategia{background:rgba(232,168,61,.16);color:#e8a83d}
+.cat-Binomial{background:rgba(95,217,154,.16);color:#5fd99a}
+.arrow{color:var(--text3);transition:transform .2s;font-size:.75rem}
+.card.open .arrow{transform:rotate(180deg)}
+.card-body{display:none;padding:0 15px 15px;border-top:1px solid var(--border)}
+.card.open .card-body{display:block}
+.tabs{display:flex;gap:6px;margin:13px 0 0;flex-wrap:wrap}
+.tab{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:5px 12px;border-radius:6px;cursor:pointer;font-size:.8rem;font-weight:600}
+.tab.active{background:var(--bg4);color:#fff;border-color:var(--text3)}
+.eq{background:#0b0b0b;border:1px solid var(--border2);border-radius:8px;padding:13px 15px;margin:11px 0;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1rem;color:#d6e9ff;overflow-x:auto;white-space:pre-wrap}
+.vars{margin:10px 0}
+.vars .v{display:flex;gap:10px;padding:4px 0;font-size:.87rem;border-bottom:1px solid var(--border)}
+.vars .v:last-child{border:0}
+.vars .v code{color:#ffd479;font-family:"SF Mono",Menlo,monospace;min-width:54px;font-weight:600}
+.vars .v span{color:var(--text2)}
+.uso{margin-top:10px;font-size:.85rem;color:var(--text2);border-left:3px solid var(--border2);padding:6px 12px;background:var(--bg3);border-radius:0 6px 6px 0}
+.uso b{color:var(--text)}
+.empty{text-align:center;color:var(--text3);padding:40px;display:none}
+.footer{margin-top:26px;text-align:center;color:var(--text3);font-size:.78rem;border-top:1px solid var(--border);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="title">Derivados I — Fórmulas</div>
+<div class="subtitle">Segundo parcial · <b>Unidades 5, 6 y 8</b> (Opciones) · Material cátedra Perrone · Hull caps. 10–11, 13–15, 17–18</div>
+
+<div class="controls">
+  <input id="search" type="text" placeholder="🔍 Buscar fórmula, concepto o variable… (ej: parity, delta, black scholes, payoff)">
+  <div class="filters">
+    <button class="fbtn active" data-f="all" onclick="filt(this,'u','all')">Todas</button>
+    <button class="fbtn" data-u="U5" data-f="U5" onclick="filt(this,'u','U5')">U5</button>
+    <button class="fbtn" data-u="U6" data-f="U6" onclick="filt(this,'u','U6')">U6</button>
+    <button class="fbtn" data-u="U8" data-f="U8" onclick="filt(this,'u','U8')">U8</button>
+    <span style="width:14px"></span>
+    <button class="fbtn active" data-c="all" onclick="filt(this,'c','all')">Toda categoría</button>
+    <button class="fbtn" data-c="Payoff" onclick="filt(this,'c','Payoff')">Payoff</button>
+    <button class="fbtn" data-c="Límites" onclick="filt(this,'c','Límites')">Límites</button>
+    <button class="fbtn" data-c="Paridad" onclick="filt(this,'c','Paridad')">Paridad</button>
+    <button class="fbtn" data-c="Binomial" onclick="filt(this,'c','Binomial')">Binomial</button>
+    <button class="fbtn" data-c="Valuación" onclick="filt(this,'c','Valuación')">Valuación</button>
+    <button class="fbtn" data-c="Estrategia" onclick="filt(this,'c','Estrategia')">Estrategia</button>
+  </div>
+</div>
+
+<div id="list"></div>
+<div class="empty" id="empty">Sin resultados para tu búsqueda.</div>
+
+<div class="footer">Compilado de fórmulas · Derivados I · UADE 1C 2026 · Solo fórmulas presentes en el material de cátedra</div>
+
+<script>
+const UNITS={U5:"Mecánica y propiedades",U6:"Valuación",U8:"Estrategias con opciones"};
+const F=[
+// ---------- U5 ----------
+{u:"U5",cat:"Payoff",name:"Payoff de un call",variants:[
+  {label:"Long",eq:"Payoff = max(Sᴛ − K ; 0)"},
+  {label:"Short",eq:"Payoff = − max(Sᴛ − K ; 0)"}],
+  vars:[{s:"Sᴛ",d:"Precio spot del subyacente en maturity"},{s:"K",d:"Strike"}],
+  uso:"<b>Trader direccional alcista</b>: long call para apostar a la suba con pérdida limitada a la prima."},
+{u:"U5",cat:"Payoff",name:"Payoff de un put",variants:[
+  {label:"Long",eq:"Payoff = max(K − Sᴛ ; 0)"},
+  {label:"Short",eq:"Payoff = − max(K − Sᴛ ; 0)"}],
+  vars:[{s:"Sᴛ",d:"Precio spot en maturity"},{s:"K",d:"Strike"}],
+  uso:"<b>Trader bajista / hedger</b>: long put para apostar a la baja o asegurar una posición long en el subyacente."},
+{u:"U5",cat:"Límites",name:"Bandas superiores de no arbitraje",variants:[
+  {label:"Call",eq:"c ≤ S₀   ;   C ≤ S₀"},
+  {label:"Put",eq:"p ≤ K·e^(−rT)   ;   P ≤ K"}],
+  vars:[{s:"c / C",d:"Call europeo / americano"},{s:"p / P",d:"Put europeo / americano"},{s:"S₀",d:"Spot hoy"},{s:"r",d:"Risk-free (compos. continua)"},{s:"T",d:"Tiempo a maturity (años)"}],
+  uso:"<b>Arbitrajista</b>: un call nunca vale más que la acción; un put europeo nunca más que el VP del strike."},
+{u:"U5",cat:"Límites",name:"Bandas inferiores (europeas)",variants:[
+  {label:"Call",eq:"c ≥ max(S₀ − K·e^(−rT) ; 0)"},
+  {label:"Put",eq:"p ≥ max(K·e^(−rT) − S₀ ; 0)"}],
+  vars:[{s:"S₀",d:"Spot hoy"},{s:"K",d:"Strike"},{s:"r",d:"Risk-free"},{s:"T",d:"Maturity (años)"}],
+  uso:"<b>Arbitrajista</b>: cotas que el precio de la opción no puede violar sin generar arbitraje (construidas con portfolios)."},
+{u:"U5",cat:"Límites",name:"Rango de valor del put (eur. vs amer.)",variants:[
+  {label:"Europeo",eq:"max(K·e^(−rT) − S₀ ; 0) ≤ p ≤ K·e^(−rT)"},
+  {label:"Americano",eq:"max(K − S₀ ; 0) ≤ P ≤ K"}],
+  vars:[{s:"p / P",d:"Put europeo / americano"},{s:"K",d:"Strike"},{s:"S₀",d:"Spot"}],
+  uso:"<b>Estudiante / quant</b>: el put americano (P) puede valer su intrínseco antes de T; el europeo no."},
+{u:"U5",cat:"Paridad",name:"Put-Call Parity",variants:[
+  {label:"Europeas",eq:"c + K·e^(−rT) = p + S₀"},
+  {label:"Americanas",eq:"S₀ − K ≤ C − P ≤ S₀ − K·e^(−rT)"}],
+  vars:[{s:"c, p",d:"Call y put europeos (mismo K y T)"},{s:"C, P",d:"Call y put americanos"},{s:"S₀",d:"Spot hoy"},{s:"K",d:"Strike"}],
+  uso:"<b>Arbitrajista / armador de estrategias</b>: vincula el precio de call y put; base de covered call, protective put y box spread."},
+{u:"U5",cat:"Paridad",name:"Límite inferior del call americano",variants:[
+  {label:"Con put",eq:"C ≥ S₀ − K + P"}],
+  vars:[{s:"C, P",d:"Call y put americanos"},{s:"S₀",d:"Spot"},{s:"K",d:"Strike"}],
+  uso:"<b>Quant</b>: muestra el 'put implícito' que se pierde al ejercer un call americano anticipadamente."},
+// ---------- U6 ----------
+{u:"U6",cat:"Binomial",name:"Portfolio replicante — Δ y B (1 paso)",variants:[
+  {label:"Delta",eq:"Δ = (Cᵤ − C_d) / [ S₀·(u − d) ]"},
+  {label:"Bono B",eq:"B = e^(−rT) · (u·C_d − d·Cᵤ) / (u − d)"},
+  {label:"Precio",eq:"C₀ = Δ·S₀ + B"}],
+  vars:[{s:"Cᵤ,C_d",d:"Payoff de la opción en estado up / down"},{s:"u,d",d:"Factores de suba / baja"},{s:"S₀",d:"Spot hoy"},{s:"Δ",d:"Delta (cobertura)"},{s:"B",d:"Posición en caución"}],
+  uso:"<b>Market maker</b>: replica la opción con Δ acciones + caución; Δ es el ratio de cobertura."},
+{u:"U6",cat:"Binomial",name:"Calibración de u y d",variants:[
+  {label:"u, d",eq:"u = e^(σ·√dt)\nd = e^(−σ·√dt) = 1/u"}],
+  vars:[{s:"σ",d:"Volatilidad del subyacente"},{s:"dt",d:"Longitud del paso (en años)"}],
+  uso:"<b>Quant</b>: liga los factores del árbol con la volatilidad para que el binomial converja al continuo."},
+{u:"U6",cat:"Binomial",name:"Condición de no arbitraje del árbol",variants:[
+  {label:"Desigualdad",eq:"d < e^(rT) < u"}],
+  vars:[{s:"u,d",d:"Factores up/down"},{s:"r",d:"Risk-free"},{s:"T",d:"Paso (años)"}],
+  uso:"<b>Arbitrajista</b>: si se viola, hay arbitraje (tomar/colocar y comprar/shortear el subyacente)."},
+{u:"U6",cat:"Binomial",name:"Probabilidad neutral al riesgo",variants:[
+  {label:"p",eq:"p = (e^(rT) − d) / (u − d)"}],
+  vars:[{s:"p",d:"Prob. NR de suba"},{s:"u,d",d:"Factores up/down"},{s:"r",d:"Risk-free"},{s:"T",d:"Paso (años)"}],
+  uso:"<b>Quant</b>: probabilidad ficticia bajo la cual todo activo rinde la risk-free; no es la probabilidad real."},
+{u:"U6",cat:"Valuación",name:"Valuación neutral al riesgo (binomial)",variants:[
+  {label:"1 paso",eq:"C₀ = e^(−rT)·[ p·Cᵤ + (1−p)·C_d ]"},
+  {label:"2 pasos",eq:"C₀ = e^(−2rΔt)·[ p²·C_uu + 2p(1−p)·C_ud + (1−p)²·C_dd ]"},
+  {label:"n pasos",eq:"C₀ = e^(−nrΔt) · Σⱼ [ n!/(j!(n−j)!) · pʲ(1−p)^(n−j) · max(0 ; uʲ d^(n−j) S₀ − K) ]"}],
+  vars:[{s:"p",d:"Prob. neutral al riesgo"},{s:"C_..",d:"Payoff en cada nodo terminal"},{s:"j",d:"Cantidad de pasos al alza"},{s:"Δt",d:"Longitud del paso"}],
+  uso:"<b>Quant / estudiante</b>: valor = esperanza del payoff (bajo p) descontada a la risk-free. Sirve para calls, puts y cualquier payoff conocido."},
+{u:"U6",cat:"Valuación",name:"Black-Scholes (sin dividendos)",variants:[
+  {label:"Call",eq:"c = S₀·N(d₁) − K·e^(−rT)·N(d₂)"},
+  {label:"Put",eq:"p = K·e^(−rT)·N(−d₂) − S₀·N(−d₁)"},
+  {label:"d₁, d₂",eq:"d₁ = [ ln(S₀/K) + (r + σ²/2)·T ] / (σ·√T)\nd₂ = d₁ − σ·√T"}],
+  vars:[{s:"N(x)",d:"Normal estándar acumulada"},{s:"S₀",d:"Spot hoy"},{s:"K",d:"Strike"},{s:"r",d:"Risk-free (continua)"},{s:"σ",d:"Volatilidad"},{s:"T",d:"Maturity (años)"}],
+  uso:"<b>Trader de opciones</b>: precio de europeas en tiempo continuo. Único input no observable: la volatilidad."},
+{u:"U6",cat:"Valuación",name:"Black-Scholes con dividendos (δ)",variants:[
+  {label:"Call",eq:"c = S·e^(−δ(T−t))·N(d₁) − K·e^(−r(T−t))·N(d₂)"},
+  {label:"d₁, d₂",eq:"d₁ = [ ln(S/K) + (r − δ + σ²/2)(T−t) ] / (σ·√(T−t))\nd₂ = d₁ − σ·√(T−t)"}],
+  vars:[{s:"δ",d:"Dividend yield continuo"},{s:"S",d:"Spot"},{s:"K",d:"Strike"},{s:"r",d:"Risk-free"},{s:"σ",d:"Volatilidad"},{s:"T−t",d:"Tiempo restante"}],
+  uso:"<b>Trader de equity/índices</b>: ajusta BS por el flujo de dividendos del subyacente."},
+{u:"U6",cat:"Valuación",name:"Interpretación de N(d₁) y N(d₂)",variants:[
+  {label:"Delta",eq:"N(d₁) = Δ = ∂c/∂S₀"},
+  {label:"Descomposición",eq:"call = (Asset-or-Nothing, long) − K·(Cash-or-Nothing, short)"}],
+  vars:[{s:"N(d₁)",d:"Prob. NR de recibir el subyacente / delta"},{s:"N(d₂)",d:"Prob. NR de ejercicio"}],
+  uso:"<b>Quant</b>: N(d₂)=prob. de ejercicio (Cash-or-Nothing); N(d₁)=delta (Asset-or-Nothing)."},
+// ---------- U8 ----------
+{u:"U8",cat:"Estrategia",name:"Spreads verticales (2 opciones, distinto K)",variants:[
+  {label:"Bull Call",eq:"Long call K₁ + Short call K₂   (K₁<K₂)\n→ Net Debit · payoff bruto ≥ 0"},
+  {label:"Bull Put",eq:"Short put K₂ + Long put K₁\n→ Net Credit · payoff bruto ≤ 0"},
+  {label:"Bear Put",eq:"Long put K₂ + Short put K₁\n→ Net Debit · payoff bruto ≥ 0"},
+  {label:"Bear Call",eq:"Short call K₁ + Long call K₂\n→ Net Credit · payoff bruto ≤ 0"}],
+  vars:[{s:"K₁,K₂",d:"Strikes (K₁<K₂)"},{s:"Debit",d:"Requiere desembolso inicial"},{s:"Credit",d:"Genera cash flow inicial"}],
+  uso:"<b>Trader con view acotado</b>: apuesta direccional con ganancia y pérdida limitadas, más barata que la opción sola."},
+{u:"U8",cat:"Estrategia",name:"Box Spread (tasa sintética)",variants:[
+  {label:"Payoff",eq:"Payoff = K₂ − K₁  (constante)"},
+  {label:"Valor hoy",eq:"VP = (K₂ − K₁)·e^(−rT)"}],
+  vars:[{s:"K₁,K₂",d:"Strikes del bull call + bear put"},{s:"r",d:"Risk-free"},{s:"T",d:"Maturity"}],
+  uso:"<b>Arbitrajista</b>: Bull Call + Bear Put con mismos K → flujo cierto. Debe rendir la risk-free; si no, hay arbitraje (vale para europeas)."},
+{u:"U8",cat:"Estrategia",name:"Butterfly Spread (4 opciones, 3 strikes)",variants:[
+  {label:"Long (NO vol)",eq:"Ganancia máx = K₃ − K₁ − π_pagada\nPérdida máx = π_pagada\nNeto = 0 en K₁+π y K₃−π"},
+  {label:"Short (vol)",eq:"Ganancia máx = π_cobrada\nPérdida máx = K₃ − K₁ − π_cobrada"}],
+  vars:[{s:"K₁,K₂,K₃",d:"Strikes (K₂ = promedio)"},{s:"π",d:"Prima neta (pagada/cobrada)"}],
+  uso:"<b>Trader de volatilidad</b>: long butterfly gana si el precio queda cerca de K₂ (Net Debit); short si se aleja (Net Credit)."},
+{u:"U8",cat:"Estrategia",name:"Straddle (mismo K)",variants:[
+  {label:"Bottom (vol)",eq:"Long call + Long put (mismo K)\n→ ganancia ilimitada, pérdida = π_pagada"},
+  {label:"Top (NO vol)",eq:"Short call + Short put (mismo K)\n→ ganancia = π_cobrada, pérdida ilimitada"}],
+  vars:[{s:"K",d:"Strike común"},{s:"π",d:"Prima neta"}],
+  uso:"<b>Trader de eventos</b>: bottom straddle antes de un anuncio (espera gran movimiento); top straddle si espera calma."},
+{u:"U8",cat:"Estrategia",name:"Strip y Strap (mismo K)",variants:[
+  {label:"Strip",eq:"Long 1 call + Long 2 puts → sesgo bajista"},
+  {label:"Strap",eq:"Long 2 calls + Long 1 put → sesgo alcista"}],
+  vars:[{s:"K",d:"Strike común"}],
+  uso:"<b>Trader de volatilidad con sesgo</b>: apuesta a movimiento fuerte pero con mayor probabilidad de una dirección."},
+{u:"U8",cat:"Estrategia",name:"Strangle (distinto K)",variants:[
+  {label:"Long (vol)",eq:"Long call K₂ + Long put K₁\n→ ganancia ilimitada, pérdida = π_pagada"},
+  {label:"Short (NO vol)",eq:"Short call K₂ + Short put K₁\n→ ganancia = π_cobrada, pérdida ilimitada"}],
+  vars:[{s:"K₁,K₂",d:"Strikes (K₁<K₂)"},{s:"π",d:"Prima neta"}],
+  uso:"<b>Trader de volatilidad</b>: similar al straddle pero más barato (strikes separados); necesita un movimiento mayor para entrar en ganancia."},
+{u:"U8",cat:"Estrategia",name:"Subyacente + opción (vía parity)",variants:[
+  {label:"Covered Call",eq:"Long subyacente + Short call → limita ganancia, reduce pérdida"},
+  {label:"Protective Put",eq:"Long subyacente + Long put → mantiene upside, asegura piso"}],
+  vars:[{s:"K",d:"Strike de la opción"}],
+  uso:"<b>Tenedor de acciones</b>: covered call para generar ingreso por la prima; protective put como seguro de cartera."}
+];
+
+let curU="all", curC="all", curQ="";
+const list=document.getElementById('list'), empty=document.getElementById('empty');
+
+function render(){
+  list.innerHTML='';
+  let any=false;
+  for(const uk of Object.keys(UNITS)){
+    if(curU!=='all' && curU!==uk) continue;
+    const items=F.filter(f=>f.u===uk
+      && (curC==='all'||f.cat===curC)
+      && match(f,curQ));
+    if(!items.length) continue;
+    any=true;
+    const g=document.createElement('div'); g.className='unit-group';
+    g.innerHTML=`<div class="unit-label"><span class="dot ${uk}"></span>${uk} — ${UNITS[uk]}<span class="cap">${items.length} fórmula(s)</span></div>`;
+    items.forEach(f=>g.appendChild(card(f)));
+    list.appendChild(g);
+  }
+  empty.style.display=any?'none':'block';
+}
+function match(f,q){
+  if(!q) return true;
+  const hay=(f.name+' '+f.cat+' '+f.variants.map(v=>v.label+' '+v.eq).join(' ')+' '+f.vars.map(v=>v.s+' '+v.d).join(' ')+' '+f.uso).toLowerCase();
+  return q.toLowerCase().split(/\s+/).every(t=>hay.includes(t));
+}
+function card(f){
+  const c=document.createElement('div'); c.className='card';
+  const vars=f.vars.map(v=>`<div class="v"><code>${v.s}</code><span>${v.d}</span></div>`).join('');
+  const tabs=f.variants.length>1?`<div class="tabs">${f.variants.map((v,i)=>`<button class="tab ${i===0?'active':''}" onclick="swap(this,${'`'}${i}${'`'})">${v.label}</button>`).join('')}</div>`:'';
+  const eqs=f.variants.map((v,i)=>`<div class="eq eqv" data-i="${i}" style="${i===0?'':'display:none'}">${v.eq}</div>`).join('');
+  c.innerHTML=`<div class="card-head" onclick="this.parentElement.classList.toggle('open')">
+      <span class="card-name">${f.name}</span>
+      <span class="cat-chip cat-${f.cat}">${f.cat}</span>
+      <span class="arrow">▼</span></div>
+    <div class="card-body">${tabs}${eqs}
+      <div class="vars">${vars}</div>
+      <div class="uso">${f.uso}</div></div>`;
+  return c;
+}
+function swap(btn,i){
+  const body=btn.closest('.card-body');
+  body.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  body.querySelectorAll('.eqv').forEach(e=>e.style.display=(e.dataset.i==i)?'block':'none');
+}
+function filt(btn,type,val){
+  const row=btn.parentElement.querySelectorAll(type==='u'?'.fbtn[data-f]':'.fbtn[data-c]');
+  // toggle within its group
+  btn.parentElement.querySelectorAll('.fbtn').forEach(b=>{
+    if((type==='u' && b.hasAttribute('data-f')) || (type==='c' && b.hasAttribute('data-c'))){}
+  });
+  if(type==='u'){curU=val; document.querySelectorAll('.fbtn[data-f]').forEach(b=>b.classList.toggle('active',b.getAttribute('data-f')===val));}
+  else{curC=val; document.querySelectorAll('.fbtn[data-c]').forEach(b=>b.classList.toggle('active',b.getAttribute('data-c')===val));}
+  render();
+}
+document.getElementById('search').addEventListener('input',e=>{curQ=e.target.value;render();});
+render();
+</script>
+</body>
+</html>

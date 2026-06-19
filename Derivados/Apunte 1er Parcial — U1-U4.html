@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Derivados I — Apunte 1.er Parcial (U1 · U2 · U3 · U4)</title>
+<style>
+  :root{
+    --bg:#0f1115; --bg2:#161a22; --card:#1c212c; --card2:#232a38;
+    --txt:#e8eaf0; --txt2:#9aa3b5; --line:#2c3444;
+    --u1:#4fc3f7; --u2:#4ade80; --u3:#a78bfa; --u4:#fb923c; --warn:#fbbf24; --hull:#60a5fa; --cat:#34d399;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--txt); font-family:-apple-system,'Segoe UI',Roboto,sans-serif; line-height:1.55; padding-bottom:60px;}
+  header{padding:28px 20px 14px; text-align:center; background:linear-gradient(180deg,#141927,var(--bg));}
+  header h1{font-size:1.45rem; letter-spacing:.5px;}
+  header p{color:var(--txt2); font-size:.85rem; margin-top:6px;}
+  .tabs{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; padding:14px 16px; position:sticky; top:0; background:rgba(15,17,21,.96); z-index:10; border-bottom:1px solid var(--line); backdrop-filter:blur(6px);}
+  .tab{border:1px solid var(--line); background:var(--card); color:var(--txt2); padding:8px 16px; border-radius:20px; cursor:pointer; font-size:.88rem; transition:.15s;}
+  .tab:hover{color:var(--txt);}
+  .tab.active{color:#0f1115; font-weight:700;}
+  .tab.t1.active{background:var(--u1); border-color:var(--u1);}
+  .tab.t2.active{background:var(--u2); border-color:var(--u2);}
+  .tab.t3.active{background:var(--u3); border-color:var(--u3);}
+  .tab.t4.active{background:var(--u4); border-color:var(--u4);}
+  .tab.tf.active{background:#f472b6; border-color:#f472b6;}
+  .tab.tg.active{background:#facc15; border-color:#facc15;}
+  .search{display:flex; justify-content:center; padding:10px 16px 0;}
+  .search input{width:min(520px,92%); background:var(--card); border:1px solid var(--line); border-radius:10px; color:var(--txt); padding:9px 14px; font-size:.9rem; outline:none;}
+  .search input:focus{border-color:var(--u1);}
+  main{max-width:880px; margin:0 auto; padding:18px 16px;}
+  section.unit{display:none;}
+  section.unit.show{display:block;}
+  .uhead{margin:10px 0 16px; padding:14px 16px; border-radius:12px; background:var(--card);}
+  .uhead h2{font-size:1.15rem;}
+  .uhead p{color:var(--txt2); font-size:.84rem; margin-top:4px;}
+  .b1{border-left:4px solid var(--u1);} .b2{border-left:4px solid var(--u2);} .b3{border-left:4px solid var(--u3);} .b4{border-left:4px solid var(--u4);}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin-bottom:10px; overflow:hidden;}
+  details[open]{background:var(--card2);}
+  summary{cursor:pointer; padding:13px 16px; font-weight:600; font-size:.95rem; list-style:none; display:flex; align-items:center; gap:10px;}
+  summary::-webkit-details-marker{display:none;}
+  summary .chip{font-size:.66rem; padding:2px 8px; border-radius:10px; font-weight:700; letter-spacing:.4px; flex-shrink:0;}
+  .c1{background:rgba(79,195,247,.15); color:var(--u1);} .c2{background:rgba(74,222,128,.15); color:var(--u2);} .c3{background:rgba(167,139,250,.15); color:var(--u3);} .c4{background:rgba(251,146,60,.15); color:var(--u4);}
+  summary::after{content:"+"; margin-left:auto; color:var(--txt2); font-size:1.1rem;}
+  details[open] summary::after{content:"–";}
+  .body{padding:0 18px 16px; font-size:.9rem; color:#d4d9e3;}
+  .body p{margin:8px 0;}
+  .body ul{margin:8px 0 8px 18px;}
+  .body li{margin:4px 0;}
+  .frm{background:#10141c; border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin:10px 0; text-align:center; font-family:'SF Mono',Consolas,monospace; font-size:.88rem; color:#9be7ff; overflow-x:auto;}
+  .ej{border-left:3px solid var(--hull); background:rgba(96,165,250,.07); border-radius:0 10px 10px 0; padding:10px 14px; margin:10px 0; font-size:.86rem;}
+  .ej.cat{border-left-color:var(--cat); background:rgba(52,211,153,.07);}
+  .ej b.tag{display:block; font-size:.7rem; letter-spacing:.6px; text-transform:uppercase; margin-bottom:4px; color:var(--hull);}
+  .ej.cat b.tag{color:var(--cat);}
+  .ojo{border-left:3px solid var(--warn); background:rgba(251,191,36,.08); border-radius:0 10px 10px 0; padding:10px 14px; margin:10px 0; font-size:.86rem;}
+  .ojo b.tag{display:block; color:var(--warn); font-size:.7rem; letter-spacing:.6px; text-transform:uppercase; margin-bottom:4px;}
+  table{width:100%; border-collapse:collapse; margin:10px 0; font-size:.83rem;}
+  th{background:#10141c; color:var(--txt2); text-align:left; padding:7px 9px; border:1px solid var(--line); font-size:.76rem; text-transform:uppercase; letter-spacing:.4px;}
+  td{padding:7px 9px; border:1px solid var(--line);}
+  .pos{color:#4ade80; font-weight:700;} .neg{color:#f87171; font-weight:700;}
+  sub,sup{font-size:.72em;}
+  .hide{display:none !important;}
+  .note{color:var(--txt2); font-size:.8rem; font-style:italic; margin-top:6px;}
+  .glos td:first-child{color:var(--u1); font-weight:600;}
+  .glos td:nth-child(2){color:var(--txt2); font-style:italic;}
+  .chartgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; margin:12px 0;}
+  .chartgrid.small{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));}
+  figure.chart{background:#10141c; border:1px solid var(--line); border-radius:10px; padding:10px 10px 8px; margin:0;}
+  figure.chart svg{width:100%; height:auto; display:block;}
+  figure.chart figcaption{color:var(--txt2); font-size:.76rem; margin-top:6px; line-height:1.4;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📊 Derivados I — Apunte 1.er Parcial</h1>
+  <p>Unidades 1 · 2 · 3 · 4 — PPTs de la cátedra + desarrollo y ejemplos del Hull (6.ª ed. español, caps. 1-5 y 7)</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab t1 active" data-t="u1">U1 · Futuros</button>
+  <button class="tab t2" data-t="u2">U2 · Cobertura</button>
+  <button class="tab t3" data-t="u3">U3 · Tasas y Forwards</button>
+  <button class="tab t4" data-t="u4">U4 · Swaps</button>
+  <button class="tab tf" data-t="for">Σ Fórmulas</button>
+  <button class="tab tg" data-t="glo">Glosario</button>
+</nav>
+<div class="search"><input id="q" type="search" placeholder="Buscar en el apunte… (ej: base, FRA, margin call)"></div>
+
+<main>
+<!-- ============ U1 ============ -->
+<section class="unit show" id="u1">
+  <div class="uhead b1"><h2>Unidad 1 — Derivados, mercados y mecánica de futuros</h2>
+  <p>Hull caps. 1 y 2 (la numeración coincide en inglés y español)</p></div>
+
+  <details open><summary><span class="chip c1">U1</span>Qué es un derivado: usos e instrumentos</summary><div class="body">
+    <p>Instrumento cuyo valor <b>deriva</b> de un subyacente (acción, bono, commodity, divisa, tasa). Usos: <b>cobertura</b> (reducir riesgo — no garantiza mejor resultado), <b>especulación</b> (apostar con apalancamiento) y <b>arbitraje</b> (ganancia sin capital propio; dura poco y deja a los precios dentro de bandas de no arbitraje).</p>
+    <div class="ej cat"><b class="tag">Ejemplo cátedra — especulación apalancada (dólar futuro)</b>Capital $55MM; S=1.100, F=1.150. Spot: long USD 50.000. Futuros: 500 contratos (size 1.000, margen 100). Si S=F=1.200: +5MM vs <b>+25MM</b>. Si 1.050: −2,5MM vs <b>−50MM</b>. El apalancamiento multiplica para ambos lados.</div>
+    <div class="ojo"><b class="tag">Ojo — ejemplo GGAL (PPT pág. 14)</b>El "+1,5MM" del call con S=9.000 es payoff <b>bruto</b>: neto de la prima ($0,7MM) la ganancia es <b>+0,8MM</b>. Hull netea la prima en sus ejemplos. Además, en la tabla de la pág. 4, la definición de "Exchange-Traded" repite por error el texto de forwards.</div>
+    <p><b>Instrumentos</b>: forwards/futuros (obligación, payoff lineal, suma cero, valor inicial 0) · swaps (intercambio de flujos; el de tasas = conjunto de FRAs) · opciones (derecho contra prima; en BYMA son americanas).</p>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg" role="img"><line x1="34" y1="12" x2="34" y2="134" stroke="#2c3444"/><line x1="34" y1="134" x2="260" y2="134" stroke="#2c3444"/><line x1="34" y1="73.0" x2="260" y2="73.0" stroke="#566075" stroke-dasharray="4 3"/><text x="30" y="76.0" fill="#9aa3b5" font-size="9" text-anchor="end">0</text><polygon points="34.0,73.0 34.0,117.9 147.0,73.0 260.0,28.1 260.0,73.0" fill="#4ade80" opacity="0.10"/><polyline points="34.0,117.9 147.0,73.0 260.0,28.1" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linejoin="round"/><line x1="147.0" y1="12" x2="147.0" y2="134" stroke="#222a38" stroke-dasharray="2 3"/><text x="147.0" y="146" fill="#9aa3b5" font-size="9" text-anchor="middle">K=500</text><text x="260" y="146" fill="#9aa3b5" font-size="9" text-anchor="end">S<tspan font-size="7" dy="2">T</tspan></text><text x="12" y="18" fill="#9aa3b5" font-size="9">P&amp;L</text></svg><figcaption><b>Long forward/futuro</b> — soja a K=500 (PPT U1). <b>Lectura:</b> payoff lineal S<sub>T</sub>−K, sin prima y sin piso ni techo: con S<sub>T</sub>=600 gano 100, con 400 pierdo 100. El valor de entrar hoy es cero y es un juego de suma cero con el short. Compará con un call: acá la baja NO está capeada.</figcaption></figure><figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg" role="img"><line x1="34" y1="12" x2="34" y2="134" stroke="#2c3444"/><line x1="34" y1="134" x2="260" y2="134" stroke="#2c3444"/><line x1="34" y1="73.0" x2="260" y2="73.0" stroke="#566075" stroke-dasharray="4 3"/><text x="30" y="76.0" fill="#9aa3b5" font-size="9" text-anchor="end">0</text><polygon points="34.0,73.0 34.0,28.1 147.0,73.0 260.0,117.9 260.0,73.0" fill="#f87171" opacity="0.10"/><polyline points="34.0,28.1 147.0,73.0 260.0,117.9" fill="none" stroke="#f87171" stroke-width="2.2" stroke-linejoin="round"/><line x1="147.0" y1="12" x2="147.0" y2="134" stroke="#222a38" stroke-dasharray="2 3"/><text x="147.0" y="146" fill="#9aa3b5" font-size="9" text-anchor="middle">K=500</text><text x="260" y="146" fill="#9aa3b5" font-size="9" text-anchor="end">S<tspan font-size="7" dy="2">T</tspan></text><text x="12" y="18" fill="#9aa3b5" font-size="9">P&amp;L</text></svg><figcaption><b>Short forward/futuro</b> — espejo exacto (K−S<sub>T</sub>). <b>Lectura:</b> gana cuando el precio cae: es la posición del que cubre una cosecha o del especulador bajista. Lo que gana el long lo pierde el short, peso a peso.</figcaption></figure></div>
+  </div></details>
+
+  <details><summary><span class="chip c1">U1</span>Forwards vs. futuros · organizado vs. OTC</summary><div class="body">
+    <table><tr><th></th><th>Forwards</th><th>Futuros</th></tr>
+    <tr><td>Mercado</td><td>OTC</td><td>Exchange</td></tr>
+    <tr><td>Contrato</td><td>Personalizado</td><td>Estandarizado</td></tr>
+    <tr><td>Contraparte</td><td>Riesgo alto</td><td>Clearing house</td></tr>
+    <tr><td>Liquidación</td><td>Al vencimiento</td><td>Diaria (MtM)</td></tr>
+    <tr><td>Entrega</td><td>Usual</td><td>Cash settlement o delivery; suele cerrarse antes</td></tr></table>
+    <p>Organizado: productos limitados, márgenes requeridos, electrónico, horario limitado (*futuros de crypto 24/7). OTC: a medida, sin margen requerido, chat/teléfono/plataformas, 24/7, contratos menos pero más grandes.</p>
+    <p class="note">Extra Hull (2.2, 2.6): el exchange define activo, calidades, size, límites de precio y posición. La <b>parte corta</b> elige cuándo/dónde/qué calidad entregar.</p>
+  </div></details>
+
+  <details><summary><span class="chip c1">U1</span>Convergencia, contango y backwardation</summary><div class="body">
+    <p>Spot y futuro <b>convergen en maturity</b> (si no, arbitraje). PPT: <b>contango</b> = futuro arriba del spot (converge bajando); <b>backwardation</b> = futuro abajo (converge subiendo).</p>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="14" x2="14" y2="134" stroke="#2c3444"/><line x1="14" y1="134" x2="260" y2="134" stroke="#2c3444"/><polyline points="14.0,32.0 22.2,32.6 30.4,33.6 38.6,34.7 46.8,35.9 55.0,37.3 63.2,38.7 71.4,40.1 79.6,41.7 87.8,43.3 96.0,44.9 104.2,46.7 112.4,48.4 120.6,50.2 128.8,52.0 137.0,53.9 145.2,55.9 153.4,57.8 161.6,59.8 169.8,61.8 178.0,63.9 186.2,66.0 194.4,68.1 202.6,70.2 210.8,72.4 219.0,74.6 227.2,76.8 235.4,79.1 243.6,81.4 251.8,83.7 260.0,86.0" fill="none" stroke="#4fc3f7" stroke-width="2.2"/><polyline points="14.0,86.0 22.2,86.0 30.4,86.0 38.6,86.0 46.8,86.0 55.0,86.0 63.2,86.0 71.4,86.0 79.6,86.0 87.8,86.0 96.0,86.0 104.2,86.0 112.4,86.0 120.6,86.0 128.8,86.0 137.0,86.0 145.2,86.0 153.4,86.0 161.6,86.0 169.8,86.0 178.0,86.0 186.2,86.0 194.4,86.0 202.6,86.0 210.8,86.0 219.0,86.0 227.2,86.0 235.4,86.0 243.6,86.0 251.8,86.0 260.0,86.0" fill="none" stroke="#4ade80" stroke-width="2.2"/><text x="23.8" y="40.4" fill="#4fc3f7" font-size="9.5">Futuro</text><text x="23.8" y="94.4" fill="#4ade80" font-size="9.5">Spot</text><line x1="260.0" y1="14" x2="260.0" y2="134" stroke="#222a38" stroke-dasharray="2 3"/><text x="260.0" y="146" fill="#9aa3b5" font-size="9" text-anchor="middle">t = T</text><text x="260" y="146" fill="#9aa3b5" font-size="9" text-anchor="end">tiempo</text></svg><figcaption><b>Contango</b> (PPT U1) — el futuro cotiza <b>arriba</b> del spot y converge bajando hacia él en T. Típico de mercados bien abastecidos, bajos costos de almacenamiento y <b>baja convenience yield</b>. Si no convergieran, habría arbitraje (vendo futuro, compro spot, entrego).</figcaption></figure><figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="14" x2="14" y2="134" stroke="#2c3444"/><line x1="14" y1="134" x2="260" y2="134" stroke="#2c3444"/><polyline points="14.0,116.0 22.2,115.4 30.4,114.4 38.6,113.3 46.8,112.1 55.0,110.7 63.2,109.3 71.4,107.9 79.6,106.3 87.8,104.7 96.0,103.1 104.2,101.3 112.4,99.6 120.6,97.8 128.8,96.0 137.0,94.1 145.2,92.1 153.4,90.2 161.6,88.2 169.8,86.2 178.0,84.1 186.2,82.0 194.4,79.9 202.6,77.8 210.8,75.6 219.0,73.4 227.2,71.2 235.4,68.9 243.6,66.6 251.8,64.3 260.0,62.0" fill="none" stroke="#4fc3f7" stroke-width="2.2"/><polyline points="14.0,62.0 22.2,62.0 30.4,62.0 38.6,62.0 46.8,62.0 55.0,62.0 63.2,62.0 71.4,62.0 79.6,62.0 87.8,62.0 96.0,62.0 104.2,62.0 112.4,62.0 120.6,62.0 128.8,62.0 137.0,62.0 145.2,62.0 153.4,62.0 161.6,62.0 169.8,62.0 178.0,62.0 186.2,62.0 194.4,62.0 202.6,62.0 210.8,62.0 219.0,62.0 227.2,62.0 235.4,62.0 243.6,62.0 251.8,62.0 260.0,62.0" fill="none" stroke="#4ade80" stroke-width="2.2"/><text x="23.8" y="118.4" fill="#4fc3f7" font-size="9.5">Futuro</text><text x="23.8" y="54.8" fill="#4ade80" font-size="9.5">Spot</text><line x1="260.0" y1="14" x2="260.0" y2="134" stroke="#222a38" stroke-dasharray="2 3"/><text x="260.0" y="146" fill="#9aa3b5" font-size="9" text-anchor="middle">t = T</text><text x="260" y="146" fill="#9aa3b5" font-size="9" text-anchor="end">tiempo</text></svg><figcaption><b>Backwardation</b> — el futuro cotiza <b>debajo</b> del spot y converge subiendo. Típico de mercados ajustados con <b>alta convenience yield</b> (escasez: prefiero el físico). Ojo Hull 5.14: la definición formal compara F₀ contra el spot <b>esperado</b> E(S<sub>T</sub>).</figcaption></figure></div>
+    <div class="ojo"><b class="tag">Ojo — definición formal de Hull (5.14)</b>Hull define contango/backwardation contra el <b>spot esperado</b>: contango F₀ &gt; E(S<sub>T</sub>), (normal) backwardation F₀ &lt; E(S<sub>T</sub>). La PPT usa la definición de mercado (vs. spot actual): conviene saber ambas.</div>
+  </div></details>
+
+  <details><summary><span class="chip c1">U1</span>Cuentas de margen y marking to market</summary><div class="body">
+    <p>Garantía contra el riesgo de contraparte: <b>initial margin</b> al abrir → <b>MtM diario</b> (el contrato "se cierra y reabre" cada día) → si el saldo perfora el <b>maintenance margin</b> (~75% del inicial) hay <b>margin call</b> que repone hasta el <b>inicial</b> → si no se cumple, liquidación forzada. Se puede integrar en especie (T-bills ~90%, acciones ~50%) y retirar excedentes.</p>
+    <div class="ej cat"><b class="tag">Ejemplo cátedra — long 3 futuros de trigo</b>F₀=100, size 100. Inicial $6.000, mantenimiento $4.500. Rueda 5: F=89 → saldo 2.700 &lt; 4.500 → <b>margin call $3.300</b> (repone a 6.000). Cierra en rueda 9 con F=101: saldo 9.600 = 6.000 + 3.300 + 300 de P&L ✓.</div>
+    <div class="ej"><b class="tag">Ejemplo Hull (tabla 2.1) — long 2 futuros de oro</b>F₀=$600, 100 oz. Inicial $4.000, mantenimiento $3.000. Margin calls de $1.340 (13/6) y $1.260 (19/6); cierra a 592,30 con pérdida acumulada $1.540.</div>
+    <figure class="chart"><svg viewBox="0 0 560 210" xmlns="http://www.w3.org/2000/svg"><line x1="44" y1="14" x2="44" y2="180" stroke="#2c3444"/><line x1="44" y1="180" x2="548" y2="180" stroke="#2c3444"/><line x1="44" y1="85.1" x2="548" y2="85.1" stroke="#4fc3f7" stroke-dasharray="4 3" opacity="0.7"/><text x="548" y="81.1" fill="#4fc3f7" font-size="9" text-anchor="end">inicial 6.000</text><line x1="44" y1="108.9" x2="548" y2="108.9" stroke="#f87171" stroke-dasharray="4 3" opacity="0.7"/><text x="548" y="104.9" fill="#f87171" font-size="9" text-anchor="end">mantenimiento 4.500</text><polyline points="44.0,85.1 107.0,80.4 170.0,80.4 233.0,104.1 296.0,137.3 359.0,99.4 422.0,61.4 485.0,33.0 548.0,28.2" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linejoin="round"/><circle cx="44.0" cy="85.1" r="3" fill="#4ade80"/><text x="44.0" y="192" fill="#9aa3b5" font-size="9" text-anchor="middle">R1</text><circle cx="107.0" cy="80.4" r="3" fill="#4ade80"/><text x="107.0" y="192" fill="#9aa3b5" font-size="9" text-anchor="middle">R2</text><circle cx="170.0" cy="80.4" r="3" fill="#4ade80"/><text x="170.0" y="192" fill="#9aa3b5" font-size="9" text-anchor="middle">R3</text><circle cx="233.0" cy="104.1" r="3" fill="#4ade80"/><text x="233.0" y="192" fill="#9aa3b5" font-size="9" text-anchor="middle">R4</text><circle cx="296.0" cy="137.3" r="3" fill="#4ade80"/><text x="296.0" y="192" fill="#9aa3b5" font-size="9" text-anchor="middle">R5</text><circle cx="359.0" cy="99.4" r="3" fill="#4ade80"/><text x="359.0" y="192" fill="#9aa3b5" font-size="9" text-anchor="middle">R6</text><circle cx="422.0" cy="61.4" r="3" fill="#4ade80"/><text x="422.0" y="192" fill="#9aa3b5" font-size="9" text-anchor="middle">R7</text><circle cx="485.0" cy="33.0" r="3" fill="#4ade80"/><text x="485.0" y="192" fill="#9aa3b5" font-size="9" text-anchor="middle">R8</text><circle cx="548.0" cy="28.2" r="3" fill="#4ade80"/><text x="548.0" y="192" fill="#9aa3b5" font-size="9" text-anchor="middle">R9</text><line x1="296.0" y1="137.3" x2="359.0" y2="121.4" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3 3"/><text x="304.0" y="151.3" fill="#fbbf24" font-size="10" font-weight="700">margin call +3.300</text></svg><figcaption><b>Cuenta de margen — long 3 futuros de trigo (PPT U1)</b>. Inicial $6.000, mantenimiento $4.500. <b>Lectura:</b> el saldo sigue el MtM diario del futuro (F: 100→101→101→96→89→86→94→100→101). En la rueda 5 el saldo (2.700) perfora el mantenimiento → <b>margin call de $3.300</b>, que repone hasta el <b>inicial</b> (no hasta el mantenimiento). En la rueda 4 (4.800 ≥ 4.500) no pasa nada: solo dispara al perforar el piso. Si no se repone: liquidación forzada.</figcaption></figure>
+  </div></details>
+
+  <details><summary><span class="chip c1">U1</span>Volumen, open interest y mercado normal/invertido</summary><div class="body">
+    <p><b>Volumen</b>: contratos negociados en el día (se resetea). <b>Open interest</b>: posiciones abiertas (acumulativo). Volumen alto + O.I. ↑ = entran participantes nuevos; volumen alto + O.I. ↓ = cierre de posiciones, posible reversión.</p>
+    <p><b>Mercado normal</b>: la curva de futuros crece con la maturity. <b>Invertido</b>: decrece. <b>NO confundir</b> con contango/backwardation (relación futuro-spot en el tiempo).</p>
+    <div class="chartgrid small"><figure class="chart"><svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><line x1="12" y1="10" x2="12" y2="98" stroke="#2c3444"/><line x1="12" y1="98" x2="192" y2="98" stroke="#2c3444"/><polyline points="12.0,76.0 18.0,74.4 24.0,72.8 30.0,71.2 36.0,69.5 42.0,67.9 48.0,66.3 54.0,64.7 60.0,63.1 66.0,61.5 72.0,59.9 78.0,58.3 84.0,56.6 90.0,55.0 96.0,53.4 102.0,51.8 108.0,50.2 114.0,48.6 120.0,47.0 126.0,45.3 132.0,43.7 138.0,42.1 144.0,40.5 150.0,38.9 156.0,37.3 162.0,35.7 168.0,34.1 174.0,32.4 180.0,30.8 186.0,29.2 192.0,27.6" fill="none" stroke="#4fc3f7" stroke-width="2"/><text x="100" y="113" fill="#9aa3b5" font-size="9.5" text-anchor="middle">maturity →</text></svg><figcaption><b>Mercado normal</b> — los precios de futuros crecen con la maturity (curva de futuros ascendente).</figcaption></figure><figure class="chart"><svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><line x1="12" y1="10" x2="12" y2="98" stroke="#2c3444"/><line x1="12" y1="98" x2="192" y2="98" stroke="#2c3444"/><polyline points="12.0,27.6 18.0,29.2 24.0,30.8 30.0,32.4 36.0,34.1 42.0,35.7 48.0,37.3 54.0,38.9 60.0,40.5 66.0,42.1 72.0,43.7 78.0,45.3 84.0,47.0 90.0,48.6 96.0,50.2 102.0,51.8 108.0,53.4 114.0,55.0 120.0,56.6 126.0,58.3 132.0,59.9 138.0,61.5 144.0,63.1 150.0,64.7 156.0,66.3 162.0,67.9 168.0,69.5 174.0,71.2 180.0,72.8 186.0,74.4 192.0,76.0" fill="none" stroke="#4fc3f7" stroke-width="2"/><text x="100" y="113" fill="#9aa3b5" font-size="9.5" text-anchor="middle">maturity →</text></svg><figcaption><b>Mercado invertido</b> — decrecen con la maturity. <b>Lectura clave (PPT):</b> esto describe la <b>curva por vencimientos en un instante</b>; contango/backwardation describen la <b>evolución temporal</b> futuro vs. spot. No mezclar.</figcaption></figure></div>
+  </div></details>
+</section>
+
+<!-- ============ U2 ============ -->
+<section class="unit" id="u2">
+  <div class="uhead b2"><h2>Unidad 2 — Cobertura con futuros</h2>
+  <p>Hull cap. 3 (la convenience yield está en el cap. 5 del libro)</p></div>
+
+  <details open><summary><span class="chip c2">U2</span>Cobertura short y long</summary><div class="body">
+    <p><b>Short hedge</b> (vendo futuros): poseo el activo y temo la baja (agricultor). <b>Long hedge</b> (compro futuros): voy a comprar y temo la suba (importador). Definir: dirección, contrato, maturity, cantidad.</p>
+    <div class="ej cat"><b class="tag">Ejemplo cátedra</b>Soja: short futuro a 100 (spot 90) → con S<sub>T</sub>=120 o 80, el precio final siempre es <b>100</b>. Dólar: long futuro a 1.000 → costo final 1.000 con S<sub>T</sub>=1.100 o 900.</div>
+    <p class="note">Extra Hull (3.2): por qué muchas empresas no cubren — los accionistas diversifican solos; si los competidores no cubren, cubrir hace fluctuar el margen (joyeros de oro, tabla 3.1); y el riesgo del tesorero (diálogo "presidente vs. tesorero": el neteo es difícil de explicar). Mineras de oro: el banco que les compra forward se cubre pidiendo oro al banco central (lease rate ~1,5%).</p>
+  </div></details>
+
+  <details><summary><span class="chip c2">U2</span>Convenience yield y cost of carry</summary><div class="body">
+    <p>La <b>CY (y)</b> es el beneficio de tener el activo físico (disponibilidad). Sube con escasez; baja con mercado abastecido o almacenamiento caro.</p>
+    <div class="frm">F₀ = S₀·e<sup>(r+u−y)T</sup> &nbsp;·&nbsp; y = r + u − (1/T)·ln(F₀/S₀)</div>
+    <p>y &gt; u → el físico vale más que el futuro (backwardation típica). y &lt; u → el futuro es más atractivo (contango típico).</p>
+    <div class="ojo"><b class="tag">Ojo — la "c" de la PPT (pág. 6)</b>La PPT define c = "costos de almacenamiento <b>y financiamiento</b>", pero el financiamiento ya está en r: según Hull (5.11-5.12) la letra extra es <b>solo almacenamiento</b> (u). Como está escrita, cuenta el financiamiento dos veces. Cost of carry = r + u − q; activos financieros: y = 0.</div>
+  </div></details>
+
+  <details><summary><span class="chip c2">U2</span>Riesgo base</summary><div class="body">
+    <div class="frm">BASE b = S − F &nbsp;·&nbsp; Resultado del hedge = F₁ + b₂</div>
+    <p>F₁ se conoce al armar la cobertura; toda la incertidumbre es <b>b₂</b> (riesgo base). Base ↑ = se <b>fortalece</b> (mejora el short hedge, empeora el long); base ↓ = se <b>debilita</b> (al revés). Con subyacente distinto: F₁ + (S*₂−F₂) + (S₂−S*₂) — riesgo de timing + riesgo de activo distinto.</p>
+    <div class="ej"><b class="tag">Hull ej. 3.3 (short, yenes)</b>Vende futuros sept. a 0,7800; cierra con spot 0,7200 y futuro 0,7250 → b₂ = −0,0050 → tipo de cambio efectivo 0,7800 − 0,0050 = <b>0,7750</b> ($387.500 por ¥50MM).</div>
+    <div class="ej"><b class="tag">Hull ej. 3.4 (long, petróleo)</b>Compra futuros dic. a $68; el 10/11 spot $75 y futuro $72 → b₂ = 3 → costo efectivo 68 + 3 = <b>$71/bbl</b>.</div>
+    <p><b>Elección del contrato</b>: subyacente igual o el más correlacionado; mes de entrega <b>cercano pero posterior</b> al fin de la cobertura (precios erráticos en el mes de entrega + riesgo de delivery para el long).</p>
+    <figure class="chart"><svg viewBox="0 0 270 170" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="14" x2="14" y2="144" stroke="#2c3444"/><line x1="14" y1="144" x2="260" y2="144" stroke="#2c3444"/><polyline points="14.0,50.4 22.2,51.7 30.4,53.0 38.6,54.3 46.8,55.6 55.0,56.9 63.2,58.2 71.4,59.5 79.6,60.8 87.8,62.1 96.0,63.4 104.2,64.7 112.4,66.0 120.6,67.3 128.8,68.6 137.0,69.9 145.2,71.2 153.4,72.5 161.6,73.8 169.8,75.1 178.0,76.4 186.2,77.7 194.4,79.0 202.6,80.3 210.8,81.6 219.0,82.9 227.2,84.2 235.4,85.5 243.6,86.8 251.8,88.1 260.0,89.4" fill="none" stroke="#4ade80" stroke-width="2.2"/><text x="21.4" y="47.8" fill="#4ade80" font-size="9.5">Spot</text><polyline points="14.0,79.0 22.2,79.5 30.4,80.0 38.6,80.6 46.8,81.1 55.0,81.6 63.2,82.1 71.4,82.6 79.6,83.2 87.8,83.7 96.0,84.2 104.2,84.7 112.4,85.2 120.6,85.8 128.8,86.3 137.0,86.8 145.2,87.3 153.4,87.8 161.6,88.4 169.8,88.9 178.0,89.4 186.2,89.9 194.4,90.4 202.6,91.0 210.8,91.5 219.0,92.0 227.2,92.5 235.4,93.0 243.6,93.6 251.8,94.1 260.0,94.6" fill="none" stroke="#4fc3f7" stroke-width="2.2"/><text x="21.4" y="86.8" fill="#4fc3f7" font-size="9.5">Futuro</text><line x1="75.5" y1="14" x2="75.5" y2="144" stroke="#222a38" stroke-dasharray="2 3"/><text x="75.5" y="156" fill="#9aa3b5" font-size="9" text-anchor="middle">t₁</text><line x1="75.5" y1="60.1" x2="75.5" y2="82.9" stroke="#fbbf24" stroke-width="2.5"/><line x1="210.8" y1="14" x2="210.8" y2="144" stroke="#222a38" stroke-dasharray="2 3"/><text x="210.8" y="156" fill="#9aa3b5" font-size="9" text-anchor="middle">t₂</text><line x1="210.8" y1="81.6" x2="210.8" y2="91.5" stroke="#fbbf24" stroke-width="2.5"/><text x="80.5" y="71.5" fill="#fbbf24" font-size="10" font-weight="700">b₁</text><text x="215.8" y="86.5" fill="#fbbf24" font-size="10" font-weight="700">b₂</text><text x="260" y="156" fill="#9aa3b5" font-size="9" text-anchor="end">tiempo</text></svg><figcaption><b>La base y su riesgo (Hull fig. 3.1)</b> — b = S − F se achica a medida que el futuro converge al spot. <b>Lectura:</b> el hedge se abre en t₁ (conozco F₁) y se cierra en t₂: el resultado es <b>F₁ + b₂</b>, así que toda la incertidumbre quedó comprimida en la base final b₂ — eso es el riesgo base. Si b se <b>fortalece</b> (sube) gana el short hedge; si se <b>debilita</b>, el long.</figcaption></figure>
+  </div></details>
+
+  <details><summary><span class="chip c2">U2</span>Hedge ratio óptimo y contratos</summary><div class="body">
+    <div class="frm">h* = ρ·σ<sub>S</sub>/σ<sub>F</sub> &nbsp;·&nbsp; N* = h*·Q<sub>A</sub>/Q<sub>F</sub> &nbsp;·&nbsp; Efectividad = R² = ρ²</div>
+    <p>h* es la pendiente de la regresión ΔS vs ΔF y <b>minimiza la varianza</b> de la posición cubierta. <b>h* = 1 NO implica hedge perfecto</b> (hace falta ρ = 1): con ρ=0,5 y σ<sub>S</sub>=2σ<sub>F</sub>, h*=1 y la cobertura es mala.</p>
+    <div class="ej cat"><b class="tag">Ejemplo cátedra — cebada con trigo</b>σ<sub>F</sub>=0,022; σ<sub>S</sub>=0,027; ρ=0,91 → h* = 0,91×(0,027/0,022) = <b>1,117</b> → N* = 1,117×1.200/25 ≈ <b>54 contratos</b>.</div>
+    <div class="ej"><b class="tag">Hull ej. 3.5 — aerolínea con diesel</b>σ<sub>F</sub>=0,0313; σ<sub>S</sub>=0,0263; ρ=0,928 → h*=<b>0,78</b> → N* = 0,78×2MM/42.000 ≈ <b>37</b>. Con tailing (V<sub>A</sub>/V<sub>F</sub>): 36.</div>
+    <figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="14" x2="14" y2="134" stroke="#2c3444"/><line x1="14" y1="134" x2="260" y2="134" stroke="#2c3444"/><polyline points="14.0,26.0 20.1,34.0 26.3,41.6 32.5,48.9 38.6,55.8 44.8,62.3 50.9,68.4 57.0,74.2 63.2,79.6 69.3,84.6 75.5,89.2 81.7,93.5 87.8,97.4 94.0,100.9 100.1,104.1 106.2,106.9 112.4,109.3 118.5,111.4 124.7,113.0 130.8,114.3 137.0,115.3 143.2,115.8 149.3,116.0 155.4,115.8 161.6,115.3 167.8,114.3 173.9,113.0 180.1,111.4 186.2,109.3 192.3,106.9 198.5,104.1 204.7,100.9 210.8,97.4 216.9,93.5 223.1,89.2 229.2,84.6 235.4,79.6 241.6,74.2 247.7,68.4 253.8,62.3 260.0,55.8" fill="none" stroke="#4ade80" stroke-width="2.2"/><line x1="149.3" y1="14" x2="149.3" y2="134" stroke="#222a38" stroke-dasharray="2 3"/><circle cx="149.3" cy="116.0" r="3.5" fill="#fbbf24"/><text x="149.3" y="146" fill="#fbbf24" font-size="10" font-weight="700" text-anchor="middle">h*</text><text x="18" y="24" fill="#9aa3b5" font-size="9">varianza de la posición</text><text x="260" y="146" fill="#9aa3b5" font-size="9" text-anchor="end">h</text></svg><figcaption><b>Varianza de la posición cubierta vs. hedge ratio (Hull fig. 3.2)</b>. <b>Lectura:</b> la varianza es una parábola en h con mínimo en <b>h* = ρ·σ<sub>S</sub>/σ<sub>F</sub></b> (la pendiente de la regresión ΔS vs ΔF). Cubrir de más (h &gt; h*) vuelve a agregar riesgo — más cobertura no siempre es mejor. La fracción de varianza eliminada en el óptimo es ρ².</figcaption></figure>
+  </div></details>
+
+  <details><summary><span class="chip c2">U2</span>Cobertura con índices (beta) y rolling</summary><div class="body">
+    <div class="frm">N* = β·V<sub>A</sub>/V<sub>F</sub> &nbsp;·&nbsp; cambiar el beta: N* = (β − β*)·V<sub>A</sub>/V<sub>F</sub></div>
+    <div class="ej cat"><b class="tag">Ejemplo cátedra (= Hull) — fondo global con S&P 500</b>Índice 1.000, futuro 1.010, contrato $250×índice, portfolio $5.050.000, β=1,5 → <b>30 contratos short</b>. Con índice 900/futuro 902: hedge +$810.000; CAPM: r = 1% + 1,5(−9,75%−1%) = −15,125% → portfolio 4.286.187 → total <b>5.096.187</b> ≈ rinde r<sub>f</sub> (1% trim.). La cobertura genera β = 0.</div>
+    <p><b>¿Por qué cubrir y no vender?</b> Fees de desarmar, convicción en el alpha (neutralizo mercado, mantengo overweights), horizonte largo con cobertura corta.</p>
+    <p><b>Rolling</b>: si no existe la maturity, encadeno contratos cortos (más líquidos). Hull tabla 3.5: tres rolls de petróleo suman +1,70 contra una caída del spot de 3 — solo se asegura el precio futuro "implícito". <b>Metallgesellschaft</b>: rolleó futuros largos contra contratos a 5-10 años; los margin calls de hoy contra cobros lejanos la fundieron ($1.330MM).</p>
+  </div></details>
+</section>
+
+<!-- ============ U3 ============ -->
+<section class="unit" id="u3">
+  <div class="uhead b3"><h2>Unidad 3 — Tasas de interés y valuación de forwards</h2>
+  <p>Hull caps. 4 y 5 (la PPT cita también el 6, pero no usa su contenido)</p></div>
+
+  <details open><summary><span class="chip c3">U3</span>Tasas: composición, ceros, bootstrap y forwards</summary><div class="body">
+    <div class="frm">A(1+R<sub>d</sub>/m)<sup>mT</sup> ↔ A·e<sup>r·T</sup> &nbsp;·&nbsp; r = m·ln(1+R<sub>d</sub>/m) &nbsp;·&nbsp; R<sub>d</sub> = m(e<sup>r/m</sup>−1)</div>
+    <p>$100 al 10%: 110,00 anual · 110,38 trimestral · 110,52 continua (≈ diaria). Convención de la materia: <b>30/360 y tasas anuales continuas</b>. TNA₃₀ 32% → efectiva 90d: (1+0,32/12)³−1 = <b>8,22%</b>.</p>
+    <p><b>Tasa cero (spot)</b>: inversión sin flujos intermedios; se usa una por plazo para descontar. Se construyen <b>stripeando</b> o por <b>bootstrap</b>.</p>
+    <div class="ej cat"><b class="tag">Bootstrap (cátedra = Hull tabla 4.3)</b>Cero 3m: 100 = 97,5e<sup>R·0,25</sup> → <b>10,127%</b>; 6m <b>10,469%</b>; 12m <b>10,536%</b>; con el bono 1,5a (cupón $4 sem., precio 96) → <b>10,681%</b>; 2a <b>10,808%</b>. Extremos: curva flat.</div>
+    <div class="frm">R<sub>fwd</sub> = (R₂T₂ − R₁T₁)/(T₂ − T₁)</div>
+    <div class="ej"><b class="tag">Hull tabla 4.5</b>Ceros 3/4/4,6/5/5,3% (1-5a) → forwards 5; 5,8; 6,2; 6,5%. La forward se asegura pidiendo corto e invirtiendo largo. Curva creciente → R<sub>fwd</sub> &gt; R₂.</div>
+    <p class="note">Extra Hull: estrategias de curva (Condado de Orange, −$1.500MM en 1994) y teorías de la curva (expectativas, segmentación, preferencia por liquidez).</p>
+  </div></details>
+
+  <details><summary><span class="chip c3">U3</span>FRAs</summary><div class="body">
+    <p><b>F<sub>m×n</sub></b>: fija hoy la tasa del período m→n; vence en m. <b>Long = borrower</b>: paga fija, recibe variable (cobra si la LIBOR sube). <b>Short = lender</b>: al revés. Settlement al inicio del período, descontado:</p>
+    <div class="frm">Pago (en m) = L·(R<sub>M</sub>−R<sub>K</sub>)·(T₂−T₁) / [1 + R<sub>M</sub>(T₂−T₁)] &nbsp;·&nbsp; V<sub>FRA</sub> = L·(R<sub>K</sub>−R<sub>f</sub>)(T₂−T₁)·e<sup>−R₂T₂</sup></div>
+    <div class="ej cat"><b class="tag">Cátedra = Hull ej. 4.2</b>FRA 4% por 3 meses dentro de 3 años, L=$100MM; LIBOR resulta 4,5% → lender paga $125.000 en 3,25a = <b>$123.609</b> en t=3.</div>
+    <div class="ej"><b class="tag">Hull ej. 4.3 — valuación</b>FRA que recibe 6% anual entre años 1 y 2; forward 5% continua = 5,127% anual → V = 100MM×0,00873×e<sup>−0,08</sup> = <b>$805.800</b>.</div>
+    <figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg" role="img"><line x1="34" y1="12" x2="34" y2="134" stroke="#2c3444"/><line x1="34" y1="134" x2="260" y2="134" stroke="#2c3444"/><line x1="34" y1="81.7" x2="260" y2="81.7" stroke="#566075" stroke-dasharray="4 3"/><text x="30" y="84.7" fill="#9aa3b5" font-size="9" text-anchor="end">0</text><polygon points="34.0,81.7 34.0,116.6 124.4,81.7 260.0,29.4 260.0,81.7" fill="#4ade80" opacity="0.10"/><polyline points="34.0,116.6 124.4,81.7 260.0,29.4" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linejoin="round"/><line x1="124.4" y1="12" x2="124.4" y2="134" stroke="#222a38" stroke-dasharray="2 3"/><text x="124.4" y="146" fill="#9aa3b5" font-size="9" text-anchor="middle">R_K=4%</text><circle cx="124.4" cy="81.7" r="3" fill="#fbbf24"/><text x="260" y="146" fill="#9aa3b5" font-size="9" text-anchor="end">S<tspan font-size="7" dy="2">T</tspan></text><text x="12" y="18" fill="#9aa3b5" font-size="9">P&amp;L</text></svg><figcaption><b>Payoff del long FRA (borrower)</b> vs. la tasa observada R<sub>M</sub> — pactado al 4%. <b>Lectura:</b> paga fija/recibe variable: si la LIBOR sale arriba de R<sub>K</sub> <b>cobra</b> la diferencia (sobre el nocional, prorrateada y descontada al inicio del período); si sale abajo, paga. Es el seguro del que va a endeudarse; el short (lender) es el espejo. En R<sub>M</sub> = R<sub>K</sub> el FRA vale cero — así se setea la fija en inception.</figcaption></figure>
+  </div></details>
+
+  <details><summary><span class="chip c3">U3</span>Valuación de forwards (C&C / RC&C)</summary><div class="body">
+    <div class="frm">Sin ingresos: F₀ = S₀e<sup>rT</sup> &nbsp;·&nbsp; Con ingresos: F₀ = (S₀−I)e<sup>rT</sup> &nbsp;·&nbsp; Con yield: F₀ = S₀e<sup>(r−q)T</sup></div>
+    <div class="ej cat"><b class="tag">Cátedra = Hull tabla 5.2 — Cash & Carry</b>S=40, r=5%, 3m → F* = <b>40,50</b>. Si F=43: pido 40, compro spot, vendo fwd → +2,50. Si F=39: short-sell, coloco 40, long fwd → +1,50.</div>
+    <div class="ej cat"><b class="tag">Cátedra = Hull 5.5 — bono con cupón</b>S=900, cupón 40 en 4m (r₄=3%), T=9m (r₉=4%): I=39,60 → F₀=(900−39,60)e<sup>0,03</sup> = <b>886,60</b>. F=910 → C&C gana 23,40; F=870 → RC&C gana 16,60.</div>
+    <p class="note">Extra Hull: short selling (se pagan los dividendos del prestado) y Kidder Peabody (registrar F−S como ganancia = confundir costo de financiamiento con utilidad; −$350MM reales).</p>
+    <figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="14" x2="14" y2="134" stroke="#2c3444"/><line x1="14" y1="134" x2="260" y2="134" stroke="#2c3444"/><line x1="14" y1="71.2" x2="260" y2="71.2" stroke="#566075" stroke-dasharray="4 3"/><text x="18" y="66.2" fill="#9aa3b5" font-size="9">S₀</text><polyline points="14.0,71.2 22.2,70.3 30.4,69.5 38.6,68.6 46.8,67.7 55.0,66.8 63.2,65.9 71.4,64.9 79.6,63.9 87.8,62.8 96.0,61.8 104.2,60.7 112.4,59.5 120.6,58.4 128.8,57.2 137.0,55.9 145.2,54.6 153.4,53.3 161.6,52.0 169.8,50.6 178.0,49.1 186.2,47.6 194.4,46.1 202.6,44.5 210.8,42.9 219.0,41.2 227.2,39.5 235.4,37.7 243.6,35.8 251.8,34.0 260.0,32.0" fill="none" stroke="#a78bfa" stroke-width="2.2"/><text x="173.9" y="40.4" fill="#a78bfa" font-size="10">F₀ = S₀e^rT</text><text x="260" y="146" fill="#9aa3b5" font-size="9" text-anchor="end">T</text></svg><figcaption><b>Precio forward vs. plazo (activo sin ingresos)</b>. <b>Lectura:</b> F₀ = S₀e<sup>rT</sup> crece exponencialmente con T: el forward refleja el <b>costo de financiar</b> la compra spot hasta T — no una expectativa de suba. Si el mercado cotiza arriba de la curva → <b>cash & carry</b> (pido prestado, compro spot, vendo forward); abajo → <b>reverse C&C</b>. Con ingresos I o yield q la curva baja: (S₀−I)e<sup>rT</sup> o S₀e<sup>(r−q)T</sup>; con divisas, e<sup>(r−r_f)T</sup>.</figcaption></figure>
+  </div></details>
+
+  <details><summary><span class="chip c3">U3</span>F vs. f: el valor del contrato</summary><div class="body">
+    <div class="frm">f<sub>long</sub> = (F₀ − K)·e<sup>−rT</sup> = S − I − K·e<sup>−rT</sup> &nbsp;(f = 0 en inception, K = F₀)</div>
+    <p>F es el precio que se congela al entrar; f es el valor de la posición a medida que F se mueve y K queda fijo. Se descuenta porque el P&L se cobra en T.</p>
+    <div class="ej"><b class="tag">Hull ej. 5.4</b>Long fwd con K=24; hoy S=25, r=10%, restan 6m → F₀=26,28 → f = 25 − 24e<sup>−0,05</sup> = <b>$2,17</b>.</div>
+    <figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg" role="img"><line x1="34" y1="12" x2="34" y2="134" stroke="#2c3444"/><line x1="34" y1="134" x2="260" y2="134" stroke="#2c3444"/><line x1="34" y1="81.7" x2="260" y2="81.7" stroke="#566075" stroke-dasharray="4 3"/><text x="30" y="84.7" fill="#9aa3b5" font-size="9" text-anchor="end">0</text><polygon points="34.0,81.7 34.0,117.9 125.0,81.7 260.0,28.1 260.0,81.7" fill="#4fc3f7" opacity="0.10"/><polyline points="34.0,117.9 125.0,81.7 260.0,28.1" fill="none" stroke="#4fc3f7" stroke-width="2.2" stroke-linejoin="round"/><line x1="125.0" y1="12" x2="125.0" y2="134" stroke="#222a38" stroke-dasharray="2 3"/><text x="125.0" y="146" fill="#9aa3b5" font-size="9" text-anchor="middle">Ke⁻ʳᵀ</text><line x1="147.0" y1="12" x2="147.0" y2="134" stroke="#222a38" stroke-dasharray="2 3"/><text x="147.0" y="146" fill="#9aa3b5" font-size="9" text-anchor="middle">K</text><circle cx="125.0" cy="81.7" r="3" fill="#fbbf24"/><text x="260" y="146" fill="#9aa3b5" font-size="9" text-anchor="end">S<tspan font-size="7" dy="2">T</tspan></text><text x="12" y="18" fill="#9aa3b5" font-size="9">P&amp;L</text></svg><figcaption><b>Valor del contrato forward (long) vs. S</b> — ejemplo Hull 5.4 (K=24, r=10%, T=0,5). <b>Lectura:</b> f = S − Ke<sup>−rT</sup>: una recta de pendiente 1 que cruza cero en <b>Ke<sup>−rT</sup> = 22,83</b> (no en K). En inception K se fija = F₀ y f = 0; después la posición gana $1 por cada $1 de suba del spot. Con S = 25, f = <b>2,17</b>. No confundir F (precio) con f (valor de la posición).</figcaption></figure>
+  </div></details>
+
+  <details><summary><span class="chip c3">U3</span>Divisas (paridad de tasas) y commodities</summary><div class="body">
+    <div class="frm">F₀ = S₀·e<sup>(r−r_f)T</sup> (paridad de tasas) &nbsp;·&nbsp; Commodities: F₀ = (S₀+U)e<sup>rT</sup> = S₀e<sup>(r+u)T</sup>; consumo: F₀ ≤ … y F₀ = S₀e<sup>(r+u−y)T</sup></div>
+    <div class="ej cat"><b class="tag">Cátedra — arbitraje AUDUSD</b>Spot 0,98; r<sub>USA</sub>=1%, r<sub>AUS</sub>=3%, T=2 → F* = <b>0,9416</b>. F=0,96 (caro): short fwd + long spot AUD → +USD 19,97. F=0,93 (barato): long fwd + short spot → +USD 12,29. Intuición: si una tasa "debería ser menor", coloco en esa moneda; si "debería ser mayor", me endeudo en ella.</div>
+    <p>Imperfecciones (fees, tasas activas/pasivas, aforos) → <b>banda de no arbitraje</b>. En commodities <b>de consumo</b> nadie quiere shortear el físico: solo vale la cota superior, y la convenience yield cierra la ecuación. Forwards ≈ futuros con r constante (difieren con correlación S-tasas; Panorámica 5.2: el forward cobra el VP, el futuro cobra hoy).</p>
+  </div></details>
+</section>
+
+<!-- ============ U4 ============ -->
+<section class="unit" id="u4">
+  <div class="uhead b4"><h2>Unidad 4 — Swaps de tasas y de monedas</h2>
+  <p>Hull cap. 7</p></div>
+
+  <details open><summary><span class="chip c4">U4</span>Mecánica y usos del swap de tasas</summary><div class="body">
+    <p>A paga variable (floating-rate payer), B paga fija (fixed-rate payer) sobre un <b>nocional que nunca se intercambia</b>. La variable se <b>fija al inicio y se paga al final</b> de cada período (el 1.er pago es cierto). Se liquida por compensación; la fija se calibra para que el swap valga 0 en inception.</p>
+    <div class="ej cat"><b class="tag">Ejemplo cátedra</b>Swap 4 años: B paga 5% TNA₁₈₀ semestral sobre $100MM, A paga LIBOR 6m. 1.er neto (LIBOR 4,5%): B paga <b>$0,25MM</b>; 2.º (4,7%): <b>$0,15MM</b>.</div>
+    <p><b>Transformaciones</b>: deuda fija 5,2% → LIBOR+0,20% (A); deuda LIBOR+0,10% → fija 5,10% (B); colocación LIBOR−0,20% → fija 4,80%; colocación fija 4,7% → LIBOR−0,30%. El <b>intermediario</b> cobra fee (3 pb) y asume el riesgo de contraparte.</p>
+    <figure class="chart"><svg viewBox="0 0 560 190" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="58" width="110" height="44" rx="9" fill="#10141c" stroke="#2c3444"/><text x="80" y="76" fill="#e8eaf0" font-size="12" font-weight="700" text-anchor="middle">Cía. A</text><text x="80" y="93" fill="#a78bfa" font-size="11" text-anchor="middle">paga 4% fija</text><rect x="230" y="58" width="100" height="44" rx="9" fill="#10141c" stroke="#2c3444"/><text x="280" y="76" fill="#e8eaf0" font-size="12" font-weight="700" text-anchor="middle">Interm.</text><text x="280" y="93" fill="#a78bfa" font-size="11" text-anchor="middle">fee 4 pb</text><rect x="425" y="58" width="110" height="44" rx="9" fill="#10141c" stroke="#2c3444"/><text x="480" y="76" fill="#e8eaf0" font-size="12" font-weight="700" text-anchor="middle">Cía. B</text><text x="480" y="93" fill="#a78bfa" font-size="11" text-anchor="middle">paga L+0,60%</text><defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#4ade80"/></marker></defs><line x1="138" y1="60" x2="227" y2="60" stroke="#4ade80" stroke-width="1.6"/><text x="183" y="50" fill="#4ade80" font-size="10" text-anchor="middle">← 4,33% fija</text><line x1="138" y1="100" x2="227" y2="100" stroke="#f87171" stroke-width="1.6"/><text x="183" y="118" fill="#f87171" font-size="10" text-anchor="middle">LIBOR →</text><line x1="333" y1="60" x2="422" y2="60" stroke="#4ade80" stroke-width="1.6"/><text x="378" y="50" fill="#4ade80" font-size="10" text-anchor="middle">← 4,37% fija</text><line x1="333" y1="100" x2="422" y2="100" stroke="#f87171" stroke-width="1.6"/><text x="378" y="118" fill="#f87171" font-size="10" text-anchor="middle">LIBOR →</text><text x="80" y="150" fill="#9aa3b5" font-size="10" text-anchor="middle">neto: LIBOR − 0,33%</text><text x="480" y="150" fill="#9aa3b5" font-size="10" text-anchor="middle">neto: 4,97% fija</text><text x="280" y="150" fill="#9aa3b5" font-size="10" text-anchor="middle">gana 4 pb</text><text x="280" y="172" fill="#9aa3b5" font-size="9.5" text-anchor="middle" font-style="italic">A quería variable (ventaja en fija) · B quería fija (ventaja relativa en variable) · ganancia total a−b = 50 pb</text></svg><figcaption><b>Swap con intermediario (ejemplo cátedra: A 4%/L−0,10 · B 5,2%/L+0,60)</b>. <b>Lectura:</b> cada empresa se endeuda afuera donde tiene <b>ventaja relativa</b> (A en fija, B en variable) y el swap convierte la naturaleza de la deuda: A termina pagando LIBOR−0,33% (vs. L−0,10 directo) y B 4,97% (vs. 5,2%). Los 50 pb de ganancia (a−b = 1,2%−0,7%) se reparten: 23 + 23 + 4 de fee. El intermediario asume el riesgo de contraparte: las puntas no se conocen.</figcaption></figure>
+  </div></details>
+
+  <details><summary><span class="chip c4">U4</span>Ventaja comparativa</summary><div class="body">
+    <div class="frm">Ganancia total = a − b (spread fijo − spread variable)</div>
+    <div class="ej cat"><b class="tag">Ejemplo cátedra</b>A: 4,0% / L−0,10; B: 5,2% / L+0,60 → a=1,2, b=0,7 → <b>50 pb</b>. Fee 4 pb → 23 pb c/u: A termina en <b>L−0,33%</b> y B en <b>4,97%</b>.</div>
+    <div class="ej"><b class="tag">Hull tabla 7.4</b>AAACorp 4,0%/L+0,3; BBBCorp 5,2%/L+1,0 → misma ganancia 0,5%. Directo (swap 3,95%): L+0,05% y 4,95%. Con intermediario: L+0,07% y 4,97%.</div>
+    <p class="note">Extra Hull — crítica (7.4): los spreads no son comparables (fijo a 5 años vs. variable revisable cada 6 meses); el spread fijo mayor refleja que el default de BBB crece más rápido. El "4,97% fijo" supone renovar siempre a L+1%. Y la <b>tasa swap</b> (7.5) ≈ riesgo de prestar consecutivamente a 6m a bancos AA → menor que la tasa AA a 5 años.</p>
+  </div></details>
+
+  <details><summary><span class="chip c4">U4</span>Valuación: bonos y FRAs</summary><div class="body">
+    <div class="frm">V = B<sub>fix</sub> − B<sub>fl</sub> (recibe fija) &nbsp;·&nbsp; B<sub>fl</sub> = (L + k*)·e<sup>−r*t*</sup> (par tras cada pago)</div>
+    <div class="ej cat"><b class="tag">Ejemplo cátedra (verificado)</b>Recibe LIBOR, paga 3% TNA₁₈₀ sobre $100MM; restan 15m; ceros 2,8/3,2/3,4%; última LIBOR 2,9%. B<sub>fix</sub>=100,2306; B<sub>fl</sub>=101,45·e<sup>−0,007</sup>=100,7423 → <b>V = +0,5117MM</b> (fixed-rate payer).</div>
+    <div class="ej"><b class="tag">Hull ej. 7.4</b>Recibe 8% sem., paga LIBOR; ceros 10/10,5/11%; última LIBOR 10,2% → B<sub>fix</sub>=98,238, B<sub>fl</sub>=102,505 → V = <b>−4,267MM</b>.</div>
+    <p><b>Por FRAs</b>: cada intercambio (salvo el 1.º) es un FRA; se calculan las forwards, los flujos como si se realizaran, y se descuenta. Cátedra: −0,0497 + 0,2094 + 0,3519 = <b>+0,5117</b> ✓ idéntico. Al inicio el swap vale 0 pero cada FRA no: con curva creciente, quien paga fija tiene FRAs cortos negativos y largos positivos (Hull fig. 7.8).</p>
+    <figure class="chart"><svg viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="87.8" x2="408" y2="87.8" stroke="#566075" stroke-dasharray="4 3"/><text x="36" y="90.8" fill="#9aa3b5" font-size="9" text-anchor="end">0</text><rect x="53.8" y="87.8" width="33.7" height="46.6" rx="3" fill="#f87171" opacity="0.75"/><text x="70.7" y="162" fill="#9aa3b5" font-size="9" text-anchor="middle">FRA 1</text><rect x="115.1" y="87.8" width="33.7" height="27.2" rx="3" fill="#f87171" opacity="0.75"/><text x="132.0" y="162" fill="#9aa3b5" font-size="9" text-anchor="middle">FRA 2</text><rect x="176.5" y="87.8" width="33.7" height="7.8" rx="3" fill="#f87171" opacity="0.75"/><text x="193.3" y="162" fill="#9aa3b5" font-size="9" text-anchor="middle">FRA 3</text><rect x="237.8" y="74.2" width="33.7" height="13.6" rx="3" fill="#4ade80" opacity="0.75"/><text x="254.7" y="162" fill="#9aa3b5" font-size="9" text-anchor="middle">FRA 4</text><rect x="299.1" y="52.9" width="33.7" height="35.0" rx="3" fill="#4ade80" opacity="0.75"/><text x="316.0" y="162" fill="#9aa3b5" font-size="9" text-anchor="middle">FRA 5</text><rect x="360.5" y="29.5" width="33.7" height="58.3" rx="3" fill="#4ade80" opacity="0.75"/><text x="377.3" y="162" fill="#9aa3b5" font-size="9" text-anchor="middle">FRA 6</text><text x="408" y="162" fill="#9aa3b5" font-size="9" text-anchor="end">vencimiento →</text></svg><figcaption><b>Valor de los FRAs que componen un swap (Hull fig. 7.8)</b> — caso: curva de tasas <b>creciente</b>, posición que <b>paga fija</b> / recibe variable. <b>Lectura:</b> el swap nace con valor total cero, pero no cada intercambio: las forwards cortas están <b>debajo</b> de la tasa fija (FRAs cercanos negativos) y las largas <b>encima</b> (FRAs lejanos positivos). Con curva decreciente, o desde la otra punta, el patrón se invierte. Por eso el paso del tiempo redistribuye el valor del swap aunque las tasas no se muevan.</figcaption></figure>
+  </div></details>
+
+  <details><summary><span class="chip c4">U4</span>Swaps de monedas</summary><div class="body">
+    <p><b>Fixed-for-fixed</b> en dos monedas; el <b>nocional SÍ se intercambia</b> (inicio en sentido opuesto, final con los intereses).</p>
+    <div class="ej cat"><b class="tag">Flujos (cátedra)</b>A paga 5% GBP / recibe 6% USD; nocionales USD 15MM y GBP 10MM: 2025: −15 USD/+10 GBP; 2026-29: +0,90/−0,50; 2030: +15,90/−10,50.</div>
+    <div class="ej cat"><b class="tag">Ventaja comparativa USD/AUD (= Hull)</b>A: 5% USD/7,6% AUD; B: 7%/8% → spreads 200 y 40 pb → ganancia 160; fee 20 → 70 pb c/u: A paga <b>AUD 6,9%</b>, B paga <b>USD 6,3%</b>. El descalce de monedas del intermediario se cubre con forwards.</div>
+    <div class="frm">V = S₀·B<sub>foránea</sub> − B<sub>doméstica</sub> (recibe foránea) &nbsp;·&nbsp; o netear cada flujo al TC forward y descontar</div>
+    <div class="ej cat"><b class="tag">Valuación JPY/USD (= Hull)</b>Recibe 5% JPY, paga 8% USD; JPY 1.200MM/USD 10MM; 3 años; curvas flat 4% y 9%; USDJPY 110. B<sub>USD</sub>=9,6439; B<sub>JPY</sub>=1.230,55 → V = 1.230,55/110 − 9,6439 = <b>+1,5430MM</b>. Por forwards (0,009557/0,010047/0,010562): −0,2071 −0,1647 +1,9148 = <b>+1,5430</b> ✓.</div>
+    <p>Variantes: fixed-for-floating entre monedas = swap de moneda + swap de tasas; floating-for-floating = + dos swaps de tasas. Extra Hull (7.10): el riesgo de crédito existe solo si el swap vale positivo; en currency swaps es mayor por el intercambio final de nocionales.</p>
+  </div></details>
+</section>
+
+<!-- ============ FORMULAS ============ -->
+<section class="unit" id="for">
+  <div class="uhead" style="border-left:4px solid #f472b6;"><h2>Σ Todas las fórmulas</h2><p>Repaso rápido</p></div>
+  <details open><summary><span class="chip c1">U1</span>Futuros</summary><div class="body">
+    <div class="frm">Payoff: long S<sub>T</sub>−K · short K−S<sub>T</sub> · valor inicial 0 · F→S en T</div>
+    <div class="frm">Margin call si saldo &lt; mantenimiento → reponer al inicial</div>
+  </div></details>
+  <details open><summary><span class="chip c2">U2</span>Cobertura</summary><div class="body">
+    <div class="frm">b = S − F · resultado = F₁ + b₂</div>
+    <div class="frm">h* = ρ·σ<sub>S</sub>/σ<sub>F</sub> · N* = h*·Q<sub>A</sub>/Q<sub>F</sub> (tailing: V<sub>A</sub>/V<sub>F</sub>) · R² = ρ²</div>
+    <div class="frm">Índices: N* = β·V<sub>A</sub>/V<sub>F</sub> · cambiar beta: (β−β*)·V<sub>A</sub>/V<sub>F</sub></div>
+    <div class="frm">F₀ = S₀e<sup>(r+u−y)T</sup> · y = r + u − (1/T)ln(F₀/S₀)</div>
+  </div></details>
+  <details open><summary><span class="chip c3">U3</span>Tasas y forwards</summary><div class="body">
+    <div class="frm">r = m·ln(1+R/m) · R = m(e<sup>r/m</sup>−1) · 30/360, continuas</div>
+    <div class="frm">R<sub>fwd</sub> = (R₂T₂−R₁T₁)/(T₂−T₁) · FRA: pago = L(R<sub>M</sub>−R<sub>K</sub>)Δt/(1+R<sub>M</sub>Δt); V = L(R<sub>K</sub>−R<sub>f</sub>)Δt·e<sup>−R₂T₂</sup></div>
+    <div class="frm">F₀ = S₀e<sup>rT</sup> · (S₀−I)e<sup>rT</sup> · S₀e<sup>(r−q)T</sup> · divisas: S₀e<sup>(r−r_f)T</sup> · commodities: (S₀+U)e<sup>rT</sup></div>
+    <div class="frm">f = (F₀−K)e<sup>−rT</sup> = S − I − Ke<sup>−rT</sup></div>
+  </div></details>
+  <details open><summary><span class="chip c4">U4</span>Swaps</summary><div class="body">
+    <div class="frm">Ganancia = a − b · V = B<sub>fix</sub> − B<sub>fl</sub> · B<sub>fl</sub> = (L+k*)e<sup>−r*t*</sup></div>
+    <div class="frm">Currency: V = S₀B<sub>for</sub> − B<sub>dom</sub> · o flujos al TC forward F<sub>t</sub> = S₀e<sup>(r−r_f)t</sup></div>
+  </div></details>
+</section>
+
+<!-- ============ GLOSARIO ============ -->
+<section class="unit" id="glo">
+  <div class="uhead" style="border-left:4px solid #facc15;"><h2>Glosario español / inglés</h2><p>Términos clave U1-U4</p></div>
+  <div class="body" style="padding:0;">
+  <table class="glos">
+    <tr><th>Español</th><th>English</th><th>Definición</th></tr>
+    <tr><td>Forward / Futuro</td><td>Forward / Futures</td><td>Compra/venta futura a precio fijo; OTC vs. exchange con MtM diario</td></tr>
+    <tr><td>Ajuste al mercado</td><td>Marking to market</td><td>Liquidación diaria; el contrato se "reabre" a precio nuevo</td></tr>
+    <tr><td>Margen inicial / mantenimiento</td><td>Initial / maintenance margin</td><td>Depósito al abrir / piso del margin call (repone al inicial)</td></tr>
+    <tr><td>Volumen / interés abierto</td><td>Volume / open interest</td><td>Negociado en el día / posiciones vivas</td></tr>
+    <tr><td>Contango / backwardation</td><td>—</td><td>F sobre/bajo el spot (Hull: sobre/bajo E(S<sub>T</sub>))</td></tr>
+    <tr><td>Mercado normal / invertido</td><td>Normal / inverted</td><td>Curva de futuros creciente / decreciente</td></tr>
+    <tr><td>Base / riesgo base</td><td>Basis / basis risk</td><td>S − F; incertidumbre sobre b₂</td></tr>
+    <tr><td>Cobertura cruzada</td><td>Cross hedge</td><td>Subyacente distinto correlacionado</td></tr>
+    <tr><td>Razón de cobertura</td><td>Hedge ratio h*</td><td>ρ·σS/σF; efectividad ρ²</td></tr>
+    <tr><td>Seguimiento / renovación</td><td>Tailing / rolling</td><td>Ajuste por MtM diario / encadenar contratos cortos</td></tr>
+    <tr><td>Rendimiento de conveniencia</td><td>Convenience yield</td><td>Beneficio del activo físico; cierra la fórmula de consumo</td></tr>
+    <tr><td>Costo de mantenimiento</td><td>Cost of carry</td><td>r + almacenamiento − ingresos</td></tr>
+    <tr><td>Venta en corto</td><td>Short selling</td><td>Vender prestado; pagar los dividendos</td></tr>
+    <tr><td>Cash & carry / reverse</td><td>C&C / RC&C</td><td>Arbitrajes que fuerzan F = Se<sup>rT</sup></td></tr>
+    <tr><td>Tasa cero / bootstrap</td><td>Zero rate / bootstrapping</td><td>Spot sin flujos intermedios / construcción secuencial</td></tr>
+    <tr><td>Tasa forward</td><td>Forward rate</td><td>Implícita entre spots</td></tr>
+    <tr><td>Acuerdo de tasa futura</td><td>FRA F<sub>m×n</sub></td><td>Fija la tasa de m→n; vence en m; long = borrower</td></tr>
+    <tr><td>Paridad de tasas</td><td>Interest rate parity</td><td>F = Se<sup>(r−r_f)T</sup></td></tr>
+    <tr><td>Pagador de fija / variable</td><td>Fixed / floating-rate payer</td><td>Posiciones espejo del swap</td></tr>
+    <tr><td>Ventaja comparativa</td><td>Comparative advantage</td><td>Spreads distintos: ganancia a − b</td></tr>
+    <tr><td>Tasa swap</td><td>Swap rate</td><td>Fija que iguala el swap a 0; casi libre de riesgo</td></tr>
+    <tr><td>Permuta de divisas</td><td>Currency swap</td><td>Fija por fija en 2 monedas; nocionales se intercambian</td></tr>
+    <tr><td>Nocional</td><td>Notional</td><td>Base de cálculo; no se intercambia en swaps de tasa</td></tr>
+  </table>
+  </div>
+</section>
+</main>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const units = document.querySelectorAll('section.unit');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    units.forEach(u => u.classList.toggle('show', u.id === t.dataset.t));
+    document.getElementById('q').value = ''; filter('');
+  }));
+  const input = document.getElementById('q');
+  input.addEventListener('input', () => filter(input.value.trim().toLowerCase()));
+  function filter(q){
+    document.querySelectorAll('section.unit.show details').forEach(d => {
+      if(!q){ d.classList.remove('hide'); return; }
+      const hit = d.textContent.toLowerCase().includes(q);
+      d.classList.toggle('hide', !hit);
+      if(hit && q.length > 2) d.open = true;
+    });
+  }
+</script>
+</body>
+</html>
