@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administración de Portafolios — Apunte 2º Parcial (Unidades IV–VII)</title>
+<style>
+  :root{
+    --bg:#0f1115; --bg2:#161a22; --card:#1c212c; --card2:#232a38;
+    --txt:#e8eaf0; --txt2:#9aa3b5; --line:#2c3444;
+    --u1:#4fc3f7; --u2:#a78bfa; --u3:#4ade80; --u4:#fb923c; --warn:#fbbf24; --libro:#60a5fa; --cat:#34d399;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--txt); font-family:-apple-system,'Segoe UI',Roboto,sans-serif; line-height:1.55; padding-bottom:60px;}
+  header{padding:28px 20px 14px; text-align:center; background:linear-gradient(180deg,#141927,var(--bg));}
+  header h1{font-size:1.45rem; letter-spacing:.5px;}
+  header p{color:var(--txt2); font-size:.85rem; margin-top:6px;}
+  .tabs{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; padding:14px 16px; position:sticky; top:0; background:rgba(15,17,21,.96); z-index:10; border-bottom:1px solid var(--line); backdrop-filter:blur(6px); transition:transform .3s ease;}
+  .tabs.nav-hidden{transform:translateY(-130%);}
+  .tab{border:1px solid var(--line); background:var(--card); color:var(--txt2); padding:8px 16px; border-radius:20px; cursor:pointer; font-size:.85rem; transition:.15s;}
+  .tab:hover{color:var(--txt);}
+  .tab.active{color:#0f1115; font-weight:700;}
+  .tab.t1.active{background:var(--u1); border-color:var(--u1);}
+  .tab.t2.active{background:var(--u2); border-color:var(--u2);}
+  .tab.t3.active{background:var(--u3); border-color:var(--u3);}
+  .tab.t4.active{background:var(--u4); border-color:var(--u4);}
+  .tab.tf.active{background:#f472b6; border-color:#f472b6;}
+  .tab.tg.active{background:#22d3ee; border-color:#22d3ee;}
+  .search{display:flex; justify-content:center; padding:10px 16px 0;}
+  .search input{width:min(520px,92%); background:var(--card); border:1px solid var(--line); border-radius:10px; color:var(--txt); padding:9px 14px; font-size:.9rem; outline:none;}
+  .search input:focus{border-color:var(--u1);}
+  main{max-width:900px; margin:0 auto; padding:18px 16px;}
+  section.unit{display:none;}
+  section.unit.show{display:block;}
+  .uhead{margin:10px 0 16px; padding:14px 16px; border-radius:12px; background:var(--card);}
+  .uhead h2{font-size:1.15rem;}
+  .uhead p{color:var(--txt2); font-size:.84rem; margin-top:4px;}
+  .b1{border-left:4px solid var(--u1);} .b2{border-left:4px solid var(--u2);} .b3{border-left:4px solid var(--u3);} .b4{border-left:4px solid var(--u4);}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin-bottom:10px; overflow:hidden;}
+  details[open]{background:var(--card2);}
+  summary{cursor:pointer; padding:13px 16px; font-weight:600; font-size:.95rem; list-style:none; display:flex; align-items:center; gap:10px;}
+  summary::-webkit-details-marker{display:none;}
+  summary .chip{font-size:.66rem; padding:2px 8px; border-radius:10px; font-weight:700; letter-spacing:.4px; flex-shrink:0;}
+  .c1{background:rgba(79,195,247,.15); color:var(--u1);} .c2{background:rgba(167,139,250,.15); color:var(--u2);} .c3{background:rgba(74,222,128,.15); color:var(--u3);} .c4{background:rgba(251,146,60,.15); color:var(--u4);}
+  summary::after{content:"+"; margin-left:auto; color:var(--txt2); font-size:1.1rem;}
+  details[open] summary::after{content:"–";}
+  .body{padding:0 18px 16px; font-size:.9rem; color:#d4d9e3;}
+  .body p{margin:8px 0;}
+  .body ul{margin:8px 0 8px 18px;}
+  .body li{margin:4px 0;}
+  .frm{background:#10141c; border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin:10px 0; text-align:center; font-family:'SF Mono',Consolas,monospace; font-size:.9rem; color:#9be7ff; overflow-x:auto;}
+  .ej{border-left:3px solid var(--libro); background:rgba(96,165,250,.07); border-radius:0 10px 10px 0; padding:10px 14px; margin:10px 0; font-size:.86rem;}
+  .ej.cat{border-left-color:var(--cat); background:rgba(52,211,153,.07);}
+  .ej b.tag{display:block; font-size:.7rem; letter-spacing:.6px; text-transform:uppercase; margin-bottom:4px; color:var(--libro);}
+  .ej.cat b.tag{color:var(--cat);}
+  .ojo{border-left:3px solid var(--warn); background:rgba(251,191,36,.08); border-radius:0 10px 10px 0; padding:10px 14px; margin:10px 0; font-size:.86rem;}
+  .ojo b.tag{display:block; color:var(--warn); font-size:.7rem; letter-spacing:.6px; text-transform:uppercase; margin-bottom:4px;}
+  .note-box{border-left:3px solid var(--u2); background:rgba(167,139,250,.07); border-radius:0 10px 10px 0; padding:10px 14px; margin:10px 0; font-size:.86rem;}
+  .note-box b.tag{display:block; color:var(--u2); font-size:.7rem; letter-spacing:.6px; text-transform:uppercase; margin-bottom:4px;}
+  table{width:100%; border-collapse:collapse; margin:10px 0; font-size:.83rem;}
+  th{background:#10141c; color:var(--txt2); text-align:left; padding:7px 9px; border:1px solid var(--line); font-size:.74rem; text-transform:uppercase; letter-spacing:.4px;}
+  td{padding:7px 9px; border:1px solid var(--line); vertical-align:top;}
+  .pos{color:#4ade80; font-weight:700;} .neg{color:#f87171; font-weight:700;} .q{color:var(--warn); font-weight:700;}
+  sub,sup{font-size:.72em;}
+  .hide{display:none !important;}
+  .note{color:var(--txt2); font-size:.8rem; font-style:italic; margin-top:6px;}
+  .glos td:first-child{color:var(--u1); font-weight:600;}
+  .glos td:nth-child(2){color:var(--txt2); font-style:italic;}
+  .chartgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin:12px 0;}
+  figure.chart{background:#10141c; border:1px solid var(--line); border-radius:10px; padding:10px 10px 8px; margin:0;}
+  figure.chart svg{width:100%; height:auto; display:block;}
+  figure.chart figcaption{color:var(--txt2); font-size:.76rem; margin-top:6px; line-height:1.4;}
+  figure.chart figcaption b{color:var(--txt);}
+  .controls{display:flex; gap:8px; justify-content:center; padding:8px 16px 0;}
+  .controls button{border:1px solid var(--line); background:var(--card); color:var(--txt2); padding:5px 14px; border-radius:16px; cursor:pointer; font-size:.78rem; transition:.15s;}
+  .controls button:hover{color:var(--txt); border-color:var(--u1);}
+</style>
+</head>
+<body>
+<header>
+  <h1>📚 Administración de Portafolios — Apunte 2º Parcial</h1>
+  <p>Unidades IV–VII · Clases 8–16 · UADE Q1 2026 · Cátedra Guma · Parcial 24/06</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab t1 active" data-t="u1">IV · Macro y Valuación</button>
+  <button class="tab t2" data-t="u2">V · Equity y Factores</button>
+  <button class="tab t3" data-t="u3">VI · Renta Fija</button>
+  <button class="tab t4" data-t="u4">VII · Derivados y Alt.</button>
+  <button class="tab tf" data-t="for">Σ Fórmulas</button>
+  <button class="tab tg" data-t="glo">Glosario</button>
+</nav>
+<div class="search"><input id="q" type="search" placeholder="Buscar en el apunte…"></div>
+<div class="controls"><button id="openAll">⊕ Abrir todo</button><button id="closeAll">⊖ Cerrar todo</button></div>
+
+<main>
+
+<!-- ============================ UNIDAD IV ============================ -->
+<section class="unit show" id="u1">
+  <div class="uhead b1"><h2>Unidad IV — Análisis Macro y Valuación de Activos</h2>
+  <p>Clases 8 y 9 · El «puente macro-micro»: la macro fija las tasas de descuento con las que valuamos bonos y acciones.</p></div>
+
+  <details open><summary><span class="chip c1">Clase 8</span>Enfoque Top-Down y motores de crecimiento</summary><div class="body">
+    <p>Entre el <b>50% y 70% del retorno</b> de un activo se explica por factores macro (el beta). A eso se suman eventos exógenos (crisis, guerras, desastres). Por eso el proceso arranca mirando la macro.</p>
+    <div class="frm">Crecimiento = ΔFuerza Laboral (L) + ΔCapital (K) + ΔProductividad (TFP)</div>
+    <ul>
+      <li><b>L · Demografía:</b> población y participación laboral (Japón vs. India).</li>
+      <li><b>K · Inversión:</b> stock de capital, infraestructura, maquinaria.</li>
+      <li><b>TFP · Productividad:</b> tecnología y eficiencia — el verdadero motor de riqueza de largo plazo.</li>
+    </ul>
+  </div></details>
+
+  <details><summary><span class="chip c1">Clase 8</span>Ciclos económicos: el crédito como driver</summary><div class="body">
+    <p>La economía fluctúa alrededor de su tendencia; el driver fundamental es <b>el crédito</b> (Ray Dalio). Los mercados se <b>anticipan</b> a la economía real.</p>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 460 200" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="120" x2="448" y2="120" stroke="#445" stroke-dasharray="4 4"/><text x="44" y="113" fill="#9aa3b5" font-size="10">tendencia</text><path d="M40,160 C92,92 130,86 176,116 C212,140 232,64 282,72 C322,79 344,166 392,162 C414,160 430,140 448,140" fill="none" stroke="#4fc3f7" stroke-width="2.6"/><circle cx="124" cy="93" r="3.6" fill="#4ade80"/><text x="124" y="86" fill="#4ade80" font-size="9" text-anchor="middle">Recup.</text><circle cx="200" cy="116" r="3.6" fill="#22d3ee"/><text x="200" y="109" fill="#22d3ee" font-size="9" text-anchor="middle">Exp. inicial</text><circle cx="282" cy="72" r="3.6" fill="#fbbf24"/><text x="282" y="65" fill="#fbbf24" font-size="9" text-anchor="middle">Exp. tardía</text><circle cx="340" cy="150" r="3.6" fill="#fb923c"/><text x="340" y="143" fill="#fb923c" font-size="9" text-anchor="middle">Desacel.</text><circle cx="392" cy="162" r="3.6" fill="#f87171"/><text x="392" y="155" fill="#f87171" font-size="9" text-anchor="middle">Recesión</text><text x="244" y="192" fill="#9aa3b5" font-size="10" text-anchor="middle">tiempo →</text></svg><figcaption><b>Ciclo económico (driver: el crédito — Dalio).</b> <b>Lectura:</b> la actividad gira en torno a la tendencia. En la recuperación las acciones suben aunque la economía siga floja (descuentan futuro); en la expansión tardía tocan techo con más volatilidad; en la recesión tasas y acciones caen, pero el equity rebota en las últimas etapas. Los mercados se anticipan a la economía real.</figcaption></figure></div>
+    <table>
+      <tr><th>Fase</th><th>Tasas / curva</th><th>Activos</th></tr>
+      <tr><td>Recuperación inicial</td><td>Cortas en mínimos; largos en su tasa más baja</td><td class="pos">Acciones ↑, cíclicos, HY, small caps</td></tr>
+      <tr><td>Expansión inicial</td><td>Cortas <b>suben</b>; curva pierde empinamiento</td><td class="pos">Acciones ↑</td></tr>
+      <tr><td>Expansión tardía</td><td>BC contractivo; cortas y largas ↑</td><td class="q">Acciones en techo, más vol.</td></tr>
+      <tr><td>Desaceleración</td><td>Cortas en máximos; largas empiezan a bajar (inversión)</td><td class="neg">Acciones ↓</td></tr>
+      <tr><td>Recesión</td><td>BC relaja: cortas y largas ↓</td><td class="neg">Acciones ↓ (rebote al final)</td></tr>
+    </table>
+  </div></details>
+
+  <details><summary><span class="chip c1">Clase 8</span>Política fiscal/monetaria y dominancia fiscal argentina</summary><div class="body">
+    <p>Fiscal expansiva → déficit → más emisión de deuda → sube riesgo país → <b>crowding out</b>. Monetaria expansiva → tasa real baja + expectativa inflación alta → tasas nominales altas. Clave: independencia del BC vs. dominancia fiscal.</p>
+    <div class="ej cat"><b class="tag">El caso argentino vs. «el libro»</b>
+      Teoría: BC sube tasa → encarece crédito → baja demanda → baja inflación. Realidad local: con déficit financiado por el BCRA, subir la tasa hace pagar más por los pasivos remunerados → más emisión → más inflación. La tasa real positiva es <b>necesaria pero no suficiente</b>: hace falta <b>ancla fiscal</b> (superávit).</div>
+    <div class="note-box"><b class="tag">Complemento — Investment Clock</b>El «reloj de inversión» rota entre bonos, acciones, commodities y cash según crecimiento × inflación. La PPT lo menciona sin desarrollarlo — confirmar con la cátedra si entra el detalle.</div>
+  </div></details>
+
+  <details><summary><span class="chip c1">Clase 9</span>Building blocks de tasa y Grinold-Kroner</summary><div class="body">
+    <p>La yield de un bono se arma sumando primas sobre la risk-free corta:</p>
+    <div class="frm">y = r<sub>f</sub> + prima plazo + prima crédito + prima liquidez</div>
+    <p>En emergentes la base de risk-free suele ser en <b>moneda dura</b>. Para equity, <b>Grinold-Kroner</b> descompone el retorno esperado:</p>
+    <div class="frm">E(R) = D/P − ΔS + ΔE + Δ(P/E)</div>
+    <ul>
+      <li><b>D/P − ΔS:</b> cash flow (dividendos + recompras; emisiones diluyen).</li>
+      <li><b>ΔE:</b> crecimiento de ganancias.</li>
+      <li><b>Δ(P/E) — «Factor X»:</b> re-rating del múltiplo. Marginal en mercados desarrollados, <b>dominante en Argentina</b>.</li>
+    </ul>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 460 210" xmlns="http://www.w3.org/2000/svg"><line x1="50" y1="172" x2="442" y2="172" stroke="#445"/><rect x="70" y="120" width="60" height="52" fill="#4fc3f7"/><text x="100" y="188" fill="#9aa3b5" font-size="9.5" text-anchor="middle">D/P</text><rect x="160" y="96" width="60" height="76" fill="#22d3ee"/><text x="190" y="188" fill="#9aa3b5" font-size="9.5" text-anchor="middle">ΔE</text><rect x="250" y="60" width="60" height="112" fill="#a78bfa"/><text x="280" y="188" fill="#9aa3b5" font-size="9.5" text-anchor="middle">Δ(P/E)</text><rect x="352" y="40" width="60" height="132" fill="#4ade80"/><text x="382" y="188" fill="#9aa3b5" font-size="9.5" text-anchor="middle">E(R)</text><text x="246" y="26" fill="#e8eaf0" font-size="11" text-anchor="middle">Aporte de cada fuente al retorno (Grinold-Kroner)</text></svg><figcaption><b>Descomposición Grinold-Kroner</b> E(R)=D/P−ΔS+ΔE+Δ(P/E). <b>Lectura:</b> esquema cualitativo de cómo se suman las fuentes hasta el retorno total. En Argentina la barra de Δ(P/E) puede ser la más grande (re-rating ≈ hasta 80% del retorno); en mercados desarrollados domina D/P+ΔE.</figcaption></figure></div>
+  </div></details>
+
+  <details><summary><span class="chip c1">Clase 9</span>Psicología: Keynes, Soros, Diamond-Dybvig</summary><div class="body">
+    <ul>
+      <li><b>Keynes — concurso de belleza:</b> no elegís lo que te gusta sino lo que creés que la mayoría elegirá. Niveles de pensamiento encadenados.</li>
+      <li><b>Soros — reflexividad:</b> el precio afecta al fundamento (bucle), no solo al revés. Los mercados no son eficientes, son reflexivos.</li>
+      <li><b>Diamond-Dybvig — corridas:</b> equilibrio de Nash «malo» con equilibrios múltiples. El <b>pánico es racional</b> ante la falta de liquidez.</li>
+    </ul>
+  </div></details>
+
+  <details><summary><span class="chip c1">Clase 9</span>Macro Argentina: 4 curvas, EMBI+ y reflexividad criolla</summary><div class="body">
+    <table>
+      <tr><th>Curva</th><th>Building block</th><th>Quién la usa</th></tr>
+      <tr><td>USD Hard (AL30/GD30)</td><td>Country risk (EMBI+)</td><td>Asset managers globales</td></tr>
+      <tr><td>ARS Nominal (LECAP)</td><td>Inflación esp. + riesgo ARS</td><td>FCI Inciso A / Money Market</td></tr>
+      <tr><td>CER (TX26, DICP)</td><td>Tasa real + CER</td><td>Pensión y seguros (LDI)</td></tr>
+      <tr><td>Dólar-linked (TV25)</td><td>Devaluación esperada</td><td>Expo/impo (cobertura FX)</td></tr>
+    </table>
+    <p><b>EMBI+:</b> spread de soberanos emergentes vs. Treasury US; termómetro del riesgo país. Contamina todo: si cae (en la PPT, de 1.500 a 700 bps en H2 2024) el AL30 sube por duration y se comprime la tasa de descuento del equity (re-rating directo).</p>
+    <p><b>Nominalidad en Grinold-Kroner ARS:</b> convertir D/P a USD-CCL; separar EPS real = EPS nominal / (1 + inflación); Δ(P/E) explica hasta el 80% del retorno.</p>
+    <div class="ej cat"><b class="tag">Reflexividad criolla — tres corridas</b>
+      <b>2001 Corralito:</b> Diamond-Dybvig puro (liquidity mismatch; el corralito llegó tarde). <b>2018 LEBAC:</b> reflexividad de Soros (stock &gt; reservas → ventas → suba de tasa señaliza desesperación → más ventas). <b>2023 FCI MM:</b> D-D aplicado a fondos. Patrón: el pánico fue racional; la falla estuvo en el diseño institucional previo.</div>
+  </div></details>
+</section>
+
+<!-- ============================ UNIDAD V ============================ -->
+<section class="unit" id="u2">
+  <div class="uhead b2"><h2>Unidad V — Gestión de Equity y Factor Investing</h2>
+  <p>Clases 11 y 12 (+ workshop Clase 10). De la gestión pasiva (replicar al menor TE) a la activa (alpha por stock picking y factores).</p></div>
+
+  <details open><summary><span class="chip c2">Clase 11</span>Por qué equity · universo · gestión pasiva</summary><div class="body">
+    <p><b>Razón principal:</b> apreciación de capital. También: dividendos (las maduras pagan cuando no hay proyectos), diversificación y cobertura vs. inflación (no siempre).</p>
+    <p><b>Universo:</b> matriz 3×3 tamaño (large/mid/small cap) × estilo (value/core/growth). Value = P/B y P/E bajos, dividend yield alto, sectores maduros.</p>
+    <p><b>Inversión pasiva:</b> reglas replicables, NO busca mispricings; se apoya en la EMH. Bajo costo, diversificación, eficiencia impositiva. Índices <b>exhaustivos</b> (CRSP) o <b>selectivos</b> (S&P 500).</p>
+    <table>
+      <tr><th>Ponderación</th><th>Cómo</th><th>Nota</th></tr>
+      <tr><td>Market-cap</td><td>w = cap / cap total (± float)</td><td>S&P 500</td></tr>
+      <tr><td>Por precio</td><td>1 acción de cada papel</td><td>Dow Jones</td></tr>
+      <tr><td>Equal weight</td><td>w = 1/n</td><td>Más vol, sesgo small cap, mucho rebalanceo</td></tr>
+    </table>
+  </div></details>
+
+  <details><summary><span class="chip c2">Clase 11</span>Concentración (HHI) y Tracking Error</summary><div class="body">
+    <div class="frm">HHI = Σ w<sub>i</sub><sup>2</sup>   ·   Nº efectivo de acciones = 1 / HHI</div>
+    <div class="frm">TE = σ( R<sub>p</sub> − R<sub>B</sub> )</div>
+    <p>El TE mide la habilidad de replicar; <b>penaliza desvíos al alza y a la baja</b> (la lógica pasiva es seguir, no ganar). Fuente principal del TE: <b>fees y costos de trading</b>.</p>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 460 215" xmlns="http://www.w3.org/2000/svg"><line x1="50" y1="178" x2="442" y2="178" stroke="#445"/><line x1="50" y1="28" x2="50" y2="178" stroke="#445"/><text x="246" y="204" fill="#9aa3b5" font-size="10" text-anchor="middle">Nº de activos en el portafolio →</text><text x="20" y="105" fill="#9aa3b5" font-size="10" transform="rotate(-90 20,105)">costo / TE</text><path d="M62,52 C140,142 240,166 432,172" fill="none" stroke="#4fc3f7" stroke-width="2.5"/><text x="120" y="66" fill="#4fc3f7" font-size="10">TE de réplica ↓</text><path d="M62,172 C200,166 320,142 432,52" fill="none" stroke="#fb923c" stroke-width="2.5"/><text x="300" y="88" fill="#fb923c" font-size="10">costos de trading ↑</text><line x1="248" y1="28" x2="248" y2="178" stroke="#4ade80" stroke-dasharray="4 4"/><text x="254" y="42" fill="#4ade80" font-size="10">óptimo</text></svg><figcaption><b>Trade-off de construcción de un portafolio pasivo.</b> <b>Lectura:</b> al sumar activos nos parecemos más al benchmark y el tracking error de réplica cae; pero al incorporar los papeles ilíquidos del índice los costos de trading se disparan. El punto óptimo minimiza la <b>suma</b> de ambos, no el TE solo.</figcaption></figure></div>
+    <p><b>Construcción:</b> réplica total · optimización por muestra · réplica sintética con derivados.</p>
+  </div></details>
+
+  <details><summary><span class="chip c2">Clase 12</span>Top-Down vs Bottom-Up · Fundamental vs Quant</summary><div class="body">
+    <table>
+      <tr><th>Eje</th><th>A</th><th>B</th></tr>
+      <tr><td>Análisis</td><td>Top-Down (macro→ETF, temáticas, factores, activismo)</td><td>Bottom-Up (stock picking)</td></tr>
+      <tr><td>Ejecución</td><td>Fundamental (discrecional, research humano)</td><td>Cuantitativo (objetivo, optimizadores)</td></tr>
+    </table>
+    <p><b>Bottom-up value:</b> valor relativo, contrarian, income, deep value, distressed, situaciones especiales (spin-offs, M&A). <b>Growth:</b> crecimiento LP, momentum, GARP (PEG).</p>
+  </div></details>
+
+  <details><summary><span class="chip c2">Clase 12</span>Ley Fundamental (FLAM), factores y Regla de Grinold</summary><div class="body">
+    <div class="frm">E(R<sub>A</sub>) = IC · √BR · σ<sub>RA</sub> · TC</div>
+    <ul>
+      <li><b>IC</b> (Information Coefficient): la puntería.</li>
+      <li><b>BR</b> (Breadth): nº de decisiones <b>independientes</b> (terreno del quant).</li>
+      <li><b>TC</b> (Transfer Coefficient): libertad del portafolio (sin restricción = 1).</li>
+      <li><b>σ<sub>RA</sub></b>: el tracking error asumido.</li>
+    </ul>
+    <p>Lección: <b>poco IC → necesitás mucho BR</b> (diversificar apuestas) para sobrevivir.</p>
+    <div class="ojo"><b class="tag">Cuidado con los factores</b>Que un factor sea estadísticamente significativo NO significa que <b>explique</b> el retorno (correlación ≠ causalidad). Muchos factores no dan retorno consistente. Factores típicos: Value, Size, Yield, Momentum, Quality, Low Vol.</div>
+    <div class="frm">R<sub>i</sub> − R<sub>f</sub> = α + β<sub>1</sub>(R<sub>M</sub>−R<sub>f</sub>) + β<sub>2</sub>·SMB + β<sub>3</sub>·HML + … + e<sub>i</sub></div>
+    <p><b>Regla de Grinold:</b></p>
+    <div class="frm">α<sub>i</sub> = IC · σ<sub>i</sub> · Z<sub>i</sub></div>
+    <table>
+      <tr><th></th><th>Enfoque Absoluto</th><th>Enfoque Relativo</th></tr>
+      <tr><td>Objetivo</td><td>Max Sharpe</td><td>Max Information Ratio</td></tr>
+      <tr><td>Restr. activos</td><td>Ponderación máx por sector/activo</td><td>Desvío máx vs. benchmark</td></tr>
+      <tr><td>Restr. riesgo</td><td>Volatilidad máx</td><td>Tracking error máx</td></tr>
+    </table>
+    <p><b>Argentina:</b> índice concentrado (energía + bancos), sin short, baja liquidez (limita BR), spreads que comen alpha. Gestionar liquidez ≈ tan importante como elegir el activo.</p>
+  </div></details>
+</section>
+
+<!-- ============================ UNIDAD VI ============================ -->
+<section class="unit" id="u3">
+  <div class="uhead b3"><h2>Unidad VI — Estrategias de Renta Fija</h2>
+  <p>Clases 13 y 14. De la inmunización de pasivos (LDI) a la gestión activa de curva, rolldown y crédito.</p></div>
+
+  <details open><summary><span class="chip c3">Clase 13</span>Mandatos y la paradoja de la renta fija</summary><div class="body">
+    <p><b>Liability-based (inmunización):</b> cash flow matching · duration matching · contingent · horizon matching. <b>Total return (activo):</b> pure indexing → enhanced → active.</p>
+    <div class="ojo"><b class="tag">Fixed Income Paradox</b>
+      <b>Correlación +1</b> con acciones en inflación alta (&gt;3%): la diversificación desaparece cuando más se necesita. <b>Trampa de convexidad:</b> con tasas bajas la duración se dispara y +25 bps anulan años de cupón. <b>Ilusión de liquidez:</b> en estrés el bid-ask impide cumplir el cash flow matching.</div>
+  </div></details>
+
+  <details><summary><span class="chip c3">Clase 13</span>Medidas de riesgo y modelo de retorno del bono</summary><div class="body">
+    <p>Modified Duration (promedio ponderado por MV), Key Rate Duration (curva no paralela), Convexidad (2º orden), Effective Duration (flujos inciertos).</p>
+    <div class="frm">EffDur = (PV<sub>−</sub> − PV<sub>+</sub>) / (2 · ΔCurva · PV<sub>0</sub>)</div>
+    <div class="frm">E(R) = Yield + Roll + E(Δp por tasas) − E(pérdida crédito) + E(FX)</div>
+    <div class="frm">E(Δp) = −MD · Δy + ½ · Convexidad · Δy<sup>2</sup></div>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 270 158" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="16" x2="40" y2="128" stroke="#2c3444"/><line x1="40" y1="128" x2="258" y2="128" stroke="#2c3444"/><polyline points="40.0,30.0 258.0,141.0" fill="none" stroke="#566075" stroke-width="1.4" stroke-dasharray="4 3"/><polyline points="40.0,20.0 61.8,35.7 83.6,49.9 105.4,62.8 127.2,74.4 149.0,85.0 170.8,94.6 192.6,103.4 214.4,111.3 236.2,118.6 258.0,125.2" fill="none" stroke="#a78bfa" stroke-width="2.4"/><circle cx="127.2" cy="74.4" r="3.2" fill="#fbbf24"/><text x="127.2" y="67.4" fill="#fbbf24" font-size="9" text-anchor="middle">y₀=5%</text><text x="60" y="34" fill="#a78bfa" font-size="9.5">precio real (convexo)</text><text x="120" y="118" fill="#9aa3b5" font-size="9">recta de duration</text><text x="146" y="150" fill="#9aa3b5" font-size="9" text-anchor="middle">yield (TIR) →</text><text x="12" y="20" fill="#9aa3b5" font-size="9">Precio</text></svg><figcaption><b>Relación precio-tasa de un bono</b> (10 años, cupón 5%). <b>Lectura:</b> la curva real (violeta) es <b>convexa</b>: cae menos cuando la tasa sube y sube más cuando baja, frente a lo que predice la recta de duration (gris, derivada en y₀=5%). Esa brecha es la convexidad — aliada en total return, riesgo en inmunización. La duration sola subestima la pérdida ante grandes movimientos.</figcaption></figure></div><p><b>Roll (rolldown):</b> cambio de precio por el solo paso del tiempo con curva constante. En curvas empinadas es un componente <b>fundamental</b> del retorno.</p>
+  </div></details>
+
+  <details><summary><span class="chip c3">Clase 13</span>Inmunización de un pasivo · reglas · overlay</summary><div class="body">
+    <div class="ej cat"><b class="tag">Ejemplo cátedra — pasivo bullet a 5 años</b>
+      Bonos de duration 2 y 7. Igualamos duration: <b>w·2 + (1−w)·7 = 5 → w = 40% (2y) / 60% (7y)</b>. Riesgo estructural por convexidad. La inmunización <b>no</b> tiene riesgo cero y <b>no</b> es estática.</div>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 270 158" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="16" x2="40" y2="128" stroke="#2c3444"/><line x1="40" y1="128" x2="258" y2="128" stroke="#2c3444"/><rect x="44" y="99.4" width="52" height="28.6" fill="#4fc3f7" opacity="0.85"/><text x="70" y="95.4" fill="#e8eaf0" font-size="9" text-anchor="middle">2 años</text><text x="70" y="140" fill="#9aa3b5" font-size="8.5" text-anchor="middle">Bono 2y</text><text x="70" y="151" fill="#9aa3b5" font-size="8.5" text-anchor="middle">40%</text><rect x="104" y="28.0" width="52" height="100.0" fill="#22d3ee" opacity="0.85"/><text x="130" y="24.0" fill="#e8eaf0" font-size="9" text-anchor="middle">7 años</text><text x="130" y="140" fill="#9aa3b5" font-size="8.5" text-anchor="middle">Bono 7y</text><text x="130" y="151" fill="#9aa3b5" font-size="8.5" text-anchor="middle">60%</text><rect x="174" y="56.6" width="52" height="71.4" fill="#fbbf24" opacity="0.85"/><text x="200" y="52.6" fill="#e8eaf0" font-size="9" text-anchor="middle">5 años</text><text x="200" y="140" fill="#9aa3b5" font-size="8.5" text-anchor="middle">Pasivo 5y</text><line x1="40" y1="56.6" x2="172" y2="56.6" stroke="#4ade80" stroke-dasharray="4 3"/><text x="46" y="52.6" fill="#4ade80" font-size="8.5">dur. cartera = 0,4·2 + 0,6·7 = 5</text></svg><figcaption><b>Inmunización por duration matching</b> (ejemplo cátedra: pasivo bullet a 5 años). <b>Lectura:</b> mezclando 40% de un bono de duration 2 y 60% de uno de duration 7 se obtiene una duration de cartera de 5, igual a la del pasivo (línea verde). Así activo y pasivo se mueven parejo ante cambios de tasa. Riesgo residual: la convexidad y los movimientos no paralelos de la curva.</figcaption></figure></div><p><b>Reglas:</b> (1) PV activos ≥ PV pasivo; (2) Dur activos = Dur pasivo; (3) convexidad mínima (dispersión mínima); (4) rebalanceo (duration drift).</p>
+    <div class="frm">BPV = MD · MV · 0,0001</div>
+    <div class="frm">N<sub>f</sub> = (Liability BPV − Asset BPV) / Futures BPV</div>
+    <p><b>Contingent immunization:</b> PV activos &gt; pasivos → el excedente se gestiona activo. Si las tasas van a caer, subir el hedge (&gt;100%). <b>Safety net:</b> piso que, si se toca, fuerza inmunización total.</p>
+  </div></details>
+
+  <details><summary><span class="chip c3">Clase 14</span>Estrategias de curva: nivel, pendiente y curvatura</summary><div class="body">
+    <p>Tres movimientos: <b>nivel</b> (toda la curva), <b>pendiente</b> (largo vs corto) y <b>curvatura</b> (media vs puntas).</p>
+    <div class="frm">Butterfly = − Y<sub>corta</sub> + 2 · Y<sub>media</sub> − Y<sub>larga</sub></div>
+    <p>Diferencia entre la tasa media y la interpolación lineal de las puntas. <b>Positivo → cóncava → Bullet</b> (concentrar en la media). <b>Negativo → convexa → Barbell</b> (concentrar en las puntas).</p>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 270 158" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="16" x2="40" y2="128" stroke="#2c3444"/><line x1="40" y1="128" x2="258" y2="128" stroke="#2c3444"/><path d="M52,104 Q149,40 246,66" fill="none" stroke="#4ade80" stroke-width="2.4"/><line x1="52" y1="104" x2="246" y2="66" stroke="#9aa3b5" stroke-dasharray="4 3"/><circle cx="149" cy="62" r="3.2" fill="#fbbf24"/><text x="156" y="60" fill="#fbbf24" font-size="8.5">Y media real</text><circle cx="149" cy="85" r="3" fill="#9aa3b5"/><text x="156" y="92" fill="#9aa3b5" font-size="8.5">interpolación</text><text x="120" y="34" fill="#4ade80" font-size="9.5" text-anchor="middle">cóncava → Bullet (butterfly +)</text><text x="60" y="120" fill="#9aa3b5" font-size="8.5">corta</text><text x="230" y="120" fill="#9aa3b5" font-size="8.5">larga</text><text x="146" y="150" fill="#9aa3b5" font-size="9" text-anchor="middle">plazo / duration →</text></svg><figcaption><b>Butterfly spread y forma de la curva.</b> <b>Lectura:</b> compara la tasa de la parte media real (punto amarillo) con la recta que une corta y larga (gris). Si la real está <b>por encima</b> de la recta, la curva es cóncava → butterfly positivo → conviene <b>Bullet</b> (concentrar en la media). Si está por debajo, convexa → <b>Barbell</b> (concentrar en las puntas).</figcaption></figure><figure class="chart"><svg viewBox="0 0 270 158" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="16" x2="40" y2="128" stroke="#2c3444"/><line x1="40" y1="128" x2="258" y2="128" stroke="#2c3444"/><polyline points="52,100 110,86 170,76 246,70" fill="none" stroke="#9aa3b5" stroke-width="2" stroke-dasharray="3 3"/><text x="200" y="84" fill="#9aa3b5" font-size="8.5">base</text><polyline points="52,80 110,66 170,56 246,50" fill="none" stroke="#4fc3f7" stroke-width="2.2"/><text x="60" y="74" fill="#4fc3f7" font-size="8.5">nivel ↑</text><polyline points="52,100 110,82 170,64 246,42" fill="none" stroke="#fb923c" stroke-width="2.2"/><text x="180" y="40" fill="#fb923c" font-size="8.5">steepener</text><polyline points="52,100 110,92 170,88 246,86" fill="none" stroke="#4ade80" stroke-width="2.2"/><text x="180" y="100" fill="#4ade80" font-size="8.5">flattener</text><text x="146" y="150" fill="#9aa3b5" font-size="9" text-anchor="middle">plazo →</text><text x="12" y="20" fill="#9aa3b5" font-size="9">yield</text></svg><figcaption><b>Movimientos de la curva.</b> <b>Lectura:</b> <b>nivel</b> (celeste): toda la curva sube en paralelo → manejo de duration. <b>Steepener</b> (naranja): la parte larga sube más que la corta (se empina). <b>Flattener</b> (verde): la larga baja/aplana. Las apuestas de pendiente (barbell, steepener/flattener) se montan según cuál pata se espera que mueva.</figcaption></figure></div>
+    <div class="ojo"><b class="tag">Ojo — discrepancia del butterfly</b>En la práctica de cátedra la fórmula de la PPT daba <b>4,5</b> pero el número que cerraba con la respuesta oficial fue <b>2,0</b>. Si lo piden en el parcial, usar el procedimiento que cierra con la oficial (2,0) y dejar constancia de la fórmula PPT. Verificar signo y convención con la cátedra.</div>
+    <p><b>Curva estable:</b> el <b>rolldown</b> es el motor (Bullet, Roll &amp; leverage con caución). <b>Curva dinámica:</b> manejo de duration, Barbell (short la pata que expande tasa), Steepener/Flattener (bull o bear).</p>
+  </div></details>
+
+  <details><summary><span class="chip c3">Clase 14</span>Riesgo de crédito y medidas de spread</summary><div class="body">
+    <p>Spread <b>emisor</b>: prob. default + severidad (recupero/LGD). Spread <b>emisión</b>: + seniority, garantías, monto, liquidez.</p>
+    <table>
+      <tr><th>Medida</th><th>Benchmark / método</th></tr>
+      <tr><td>G-spread</td><td>Treasuries a maturity constante (interpola)</td></tr>
+      <tr><td>I-spread</td><td>Curva de swaps; cotización rápida</td></tr>
+      <tr><td>Z-spread</td><td>No-arbitraje, una tasa spot por flujo; mejor con cupones altos/irregulares</td></tr>
+      <tr><td>OAS</td><td>Z-spread + pricing de opciones (opcionalidad)</td></tr>
+    </table>
+    <p><b>Análisis bottom-up:</b> EBITDA/Activo (rentabilidad), Deuda/PN (apalancamiento), EBITDA/Intereses (cobertura) → buscar mispricing en la curva del emisor. <b>Top-down:</b> view macro → sectores → activos.</p>
+  </div></details>
+</section>
+
+<!-- ============================ UNIDAD VII ============================ -->
+<section class="unit" id="u4">
+  <div class="uhead b4"><h2>Unidad VII — Derivados e Inversiones Alternativas</h2>
+  <p>Clases 15 (derivados) y 16 (ETFs activos, alternativos, cripto). Ajustar riesgos al instante y ampliar el universo más allá de lo líquido.</p></div>
+
+  <details open><summary><span class="chip c4">Clase 15</span>Rol de los derivados · swaps · futuros</summary><div class="body">
+    <p><b>Para qué:</b> modificar payoffs (no linealidad), exposición eficiente sin mover el subyacente, gestión de riesgos, trades tácticos.</p>
+    <p><b>Swaps</b> (OTC, fija↔variable). Nocional para hedge de pasivos:</p>
+    <div class="frm">N<sub>s</sub> = [ (MD<sub>T</sub> − MD<sub>p</sub>) / MD<sub>S</sub> ] · (MV / P)   ·   hedge completo: MD<sub>T</sub> = 0</div>
+    <p><b>Futuros RF:</b> cheapest to deliver (CTD) + factor de conversión (CF) → el hedge es imperfecto (el CTD cambia). Se piensa como hedge de duration vía BPV:</p>
+    <div class="frm">BPV = MD · 0,01% · MV</div>
+    <div class="frm">BPV<sub>HR</sub> = [ (BPV<sub>T</sub> − BPV<sub>P</sub>) / BPV<sub>CTD</sub> ] · CF</div>
+    <p><b>Equity (hedge o «equitizar» cash):</b></p>
+    <div class="frm">N<sub>f</sub> = [ (β<sub>T</sub> − β<sub>P</sub>) / β<sub>f</sub> ] · (S / F)   ·   F = precio futuro × multiplicador</div>
+  </div></details>
+
+  <details><summary><span class="chip c4">Clase 15</span>Riesgo moneda</summary><div class="body">
+    <p>Futuros de moneda cotizan en <b>puntos sobre el spot</b> (4º decimal). Ej.: spot 1,1400 + 5,1/10.000 = <b>1,14051</b>.</p>
+    <div class="frm">R<sub>DC</sub> = (1 + R<sub>FC</sub>)(1 + R<sub>FX</sub>) − 1</div>
+    <div class="frm">σ²<sub>Rdc</sub> = σ²(R<sub>FC</sub>) + σ²(R<sub>FX</sub>) + 2·σ(R<sub>FC</sub>)·σ(R<sub>FX</sub>)·ρ</div>
+    <p><b>Full hedge</b> (cubrir 100% si el timing de monedas no es nuestro fuerte) vs. <b>hedge parcial</b> (dejar exposición por un view). Siempre dentro del IPS.</p>
+  </div></details>
+
+  <details><summary><span class="chip c4">Clase 15</span>Opciones, Taleb y Rofex</summary><div class="body">
+    <p><b>Opciones</b> = convexidad + opcionalidad (derecho, no obligación → capturás upside; el futuro obliga).</p>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg" role="img"><line x1="38" y1="16" x2="38" y2="130" stroke="#2c3444"/><line x1="38" y1="130" x2="258" y2="130" stroke="#2c3444"/><line x1="38" y1="88.1" x2="258" y2="88.1" stroke="#566075" stroke-dasharray="4 3"/><text x="34" y="91.1" fill="#9aa3b5" font-size="9" text-anchor="end">0</text><polygon points="38.0,88.1 38.0,114.9 120.5,114.9 258.0,31.1 258.0,88.1" fill="#4fc3f7" opacity="0.10"/><polyline points="38.0,114.9 120.5,114.9 258.0,31.1" fill="none" stroke="#4fc3f7" stroke-width="2.2" stroke-linejoin="round"/><line x1="120.5" y1="16" x2="120.5" y2="130" stroke="#222a38" stroke-dasharray="2 3"/><text x="120.5" y="143" fill="#9aa3b5" font-size="9" text-anchor="middle">K=95</text><line x1="164.5" y1="16" x2="164.5" y2="130" stroke="#222a38" stroke-dasharray="2 3"/><text x="164.5" y="143" fill="#9aa3b5" font-size="9" text-anchor="middle">BE=103</text><circle cx="164.5" cy="88.1" r="3" fill="#fbbf24"/><text x="258" y="143" fill="#9aa3b5" font-size="9" text-anchor="end">S<tspan font-size='7' dy='2'>T</tspan></text><text x="12" y="20" fill="#9aa3b5" font-size="9">P&amp;L</text></svg><figcaption><b>Protective put</b> — acción comprada a 100 + put largo K=95, prima 3 (valores ilustrativos). <b>Lectura:</b> tres zonas. S<sub>T</sub>&lt;95: el put fija un <b>piso</b> de pérdida en −8 (=K−S₀−prima), pase lo que pase. 95–103: pérdida que se achica al subir la acción. S<sub>T</sub>&gt;103 (BE=S₀+prima): ganancia neta sin techo. Es el «seguro» de cartera.</figcaption></figure><figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg" role="img"><line x1="38" y1="16" x2="38" y2="130" stroke="#2c3444"/><line x1="38" y1="130" x2="258" y2="130" stroke="#2c3444"/><line x1="38" y1="57.9" x2="258" y2="57.9" stroke="#566075" stroke-dasharray="4 3"/><text x="34" y="60.9" fill="#9aa3b5" font-size="9" text-anchor="end">0</text><polygon points="38.0,57.9 38.0,114.9 175.5,31.1 258.0,31.1 258.0,57.9" fill="#4ade80" opacity="0.10"/><polyline points="38.0,114.9 175.5,31.1 258.0,31.1" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linejoin="round"/><line x1="175.5" y1="16" x2="175.5" y2="130" stroke="#222a38" stroke-dasharray="2 3"/><text x="175.5" y="143" fill="#9aa3b5" font-size="9" text-anchor="middle">K=105</text><line x1="131.5" y1="16" x2="131.5" y2="130" stroke="#222a38" stroke-dasharray="2 3"/><text x="131.5" y="143" fill="#9aa3b5" font-size="9" text-anchor="middle">BE=97</text><circle cx="131.5" cy="57.9" r="3" fill="#fbbf24"/><text x="258" y="143" fill="#9aa3b5" font-size="9" text-anchor="end">S<tspan font-size='7' dy='2'>T</tspan></text><text x="12" y="20" fill="#9aa3b5" font-size="9">P&amp;L</text></svg><figcaption><b>Covered call</b> — acción + call vendido K=105, prima 3 (ilustrativo). <b>Lectura:</b> cobro la prima (sube el yield) y bajo el break-even a 97. Pero por encima de K=105 la ganancia se <b>topa</b> en +8 (=K−S₀+prima): resigno el upside extremo a cambio de renta. Es venta de volatilidad.</figcaption></figure><figure class="chart"><svg viewBox="0 0 270 160" xmlns="http://www.w3.org/2000/svg" role="img"><line x1="38" y1="16" x2="38" y2="130" stroke="#2c3444"/><line x1="38" y1="130" x2="258" y2="130" stroke="#2c3444"/><line x1="38" y1="82.7" x2="258" y2="82.7" stroke="#566075" stroke-dasharray="4 3"/><text x="34" y="85.7" fill="#9aa3b5" font-size="9" text-anchor="end">0</text><polygon points="38.0,82.7 38.0,114.9 120.5,114.9 192.0,31.1 258.0,31.1 258.0,82.7" fill="#a78bfa" opacity="0.10"/><polyline points="38.0,114.9 120.5,114.9 192.0,31.1 258.0,31.1" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linejoin="round"/><line x1="120.5" y1="16" x2="120.5" y2="130" stroke="#222a38" stroke-dasharray="2 3"/><text x="120.5" y="143" fill="#9aa3b5" font-size="9" text-anchor="middle">Kput=95</text><line x1="192.0" y1="16" x2="192.0" y2="130" stroke="#222a38" stroke-dasharray="2 3"/><text x="192.0" y="143" fill="#9aa3b5" font-size="9" text-anchor="middle">Kcall=108</text><text x="258" y="143" fill="#9aa3b5" font-size="9" text-anchor="end">S<tspan font-size='7' dy='2'>T</tspan></text><text x="12" y="20" fill="#9aa3b5" font-size="9">P&amp;L</text></svg><figcaption><b>Collar</b> — acción + put 95 comprado + call 108 vendido (prima neta ≈ 0). <b>Lectura:</b> el put pone un <b>piso</b> (−5) y el call un <b>techo</b> (+8). El P&amp;L queda «encajonado» entre ambos strikes: estabiliza el NAV resignando las dos colas. Costo casi nulo porque la prima cobrada financia la pagada.</figcaption></figure></div><p class="note">Valores ilustrativos — la PPT de Portafolios no da números de opciones; se usan para ver la forma del payoff.</p>
+    <p><b>Collar:</b> put comprada + call vendida → limita pérdida y ganancia (estabiliza el NAV).</p>
+    <div class="note-box"><b class="tag">Taleb — falacia de la normalidad</b>Black-Scholes y VaR asumen Gauss y subestiman las colas (Mediocristán vs Extremistán). En crisis las correlaciones tienden a 1. No alcanza con diversificar: hace falta <b>convexidad positiva</b> (opciones compradas) para sobrevivir a los cisnes negros.</div>
+    <p><b>Rofex:</b> futuros de dólar <b>NDF</b> (liquidan por diferencia en pesos). <b>Basis risk:</b> oficial vs MEP/CCL hace imperfecto el hedge. Márgenes y liquidación forzosa.</p>
+    <div class="ej cat"><b class="tag">Caso cátedra — pago de USD 100.000 en 3 meses</b>Pasos: extraer curva de futuros de dólar → spot y TNA implícitas → margen de garantía → si el spot sube 10% el futuro se ajusta (calcular inflow/outflow del MTM) → si el spot no se mueve, el MTM converge (el futuro tiende al spot al vencimiento).</div>
+  </div></details>
+
+  <details><summary><span class="chip c4">Clase 16</span>ETFs 2.0, CEDEARs y prima de iliquidez</summary><div class="body">
+    <p><b>Comoditización del alpha:</b> lo que era skill de hedge fund hoy es beta de factores empaquetado. <b>Smart beta</b> (tilt a Value/Momentum/Quality/Low Vol), <b>Active ETFs</b> (ARKK, JEPI). Reto: separar el alpha de Jensen real de los factores.</p>
+    <p><b>CEDEARs de ETFs</b> (SPY, QQQ, DIA, IWM, EEM): sortean el control de capitales y combaten el home bias. Riesgo: <b>factor CCL</b> (dos motores de volatilidad: índice + tipo de cambio implícito).</p>
+    <p><b>Prima de iliquidez:</b> 300-500 bps sobre equity público por bloquear capital (PE, RE). Hedge funds 2/20 + sesgo de supervivencia. <b>Smoothing:</b> mark-to-model alisa precios y subestima vol y correlación.</p>
+    <p><b>Commodities:</b> no generan cash flow → importan las <b>curvas de futuros</b>. Contango (&gt; spot) vs Backwardation (futuro &lt; spot).</p>
+    <div class="chartgrid"><figure class="chart"><svg viewBox="0 0 270 165" xmlns="http://www.w3.org/2000/svg"><line x1="34" y1="14" x2="34" y2="136" stroke="#2c3444"/><line x1="34" y1="136" x2="258" y2="136" stroke="#2c3444"/><circle cx="34" cy="86" r="3" fill="#e8eaf0"/><text x="30" y="80" fill="#9aa3b5" font-size="9" text-anchor="end">spot</text><polyline points="34,86 146,58 258,40" fill="none" stroke="#fb923c" stroke-width="2.4"/><text x="150" y="46" fill="#fb923c" font-size="9.5">Contango (&gt; spot)</text><polyline points="34,86 146,110 258,128" fill="none" stroke="#4ade80" stroke-width="2.4"/><text x="108" y="126" fill="#4ade80" font-size="9.5">Backwardation (&lt; spot)</text><text x="146" y="152" fill="#9aa3b5" font-size="9" text-anchor="middle">vencimiento del contrato →</text></svg><figcaption><b>Curva de futuros de commodities.</b> <b>Lectura:</b> desde el spot, en <b>contango</b> el futuro sube con el plazo: rolear contratos cuesta (roll yield negativo). En <b>backwardation</b> baja: rolear suma. Es lo que define si un ETF de futuros gana o pierde al renovar.</figcaption></figure></div>
+  </div></details>
+
+  <details><summary><span class="chip c4">Clase 16</span>Criptoactivos en el mandato institucional</summary><div class="body">
+    <ul>
+      <li><b>Distribución:</b> fat tails + asimetría positiva → no aplica la Normal.</li>
+      <li><b>Correlación oscilante:</b> a menudo baja → reduce riesgo no sistemático.</li>
+      <li><b>Regulación:</b> ETF Spot US elimina riesgo de custodia; en AR, registro PSAVs (CNV, AML).</li>
+    </ul>
+    <div class="note-box"><b class="tag">La ilusión del sizing</b>3% de capital ≠ 3% de riesgo. Con vol BTC ≈65-75% vs S&P ≈16% vs Treasuries ≈6%, su contribución marginal al riesgo es desproporcionada: <b>3% de capital ≈ 15-20% del riesgo</b> de un 60/40.</div>
+    <div class="chartgrid small"><figure class="chart"><svg viewBox="0 0 270 168" xmlns="http://www.w3.org/2000/svg"><line x1="46" y1="16" x2="46" y2="132" stroke="#2c3444"/><line x1="46" y1="132" x2="256" y2="132" stroke="#2c3444"/><rect x="86" y="124" width="48" height="8" fill="#4fc3f7"/><text x="110" y="120" fill="#4fc3f7" font-size="9" text-anchor="middle">3%</text><text x="110" y="146" fill="#9aa3b5" font-size="8.5" text-anchor="middle">% de capital</text><rect x="170" y="60" width="48" height="72" fill="#fb923c"/><text x="194" y="54" fill="#fb923c" font-size="9" text-anchor="middle">≈15-20%</text><text x="194" y="146" fill="#9aa3b5" font-size="8.5" text-anchor="middle">% del riesgo</text><text x="151" y="28" fill="#e8eaf0" font-size="9.5" text-anchor="middle">Bitcoin en un 60/40</text></svg><figcaption><b>La «ilusión del sizing» en cripto.</b> <b>Lectura:</b> un 3% del capital en Bitcoin NO es 3% del riesgo. Como su volatilidad (≈65-75%) es muy superior a la del S&amp;P (≈16%) y los Treasuries (≈6%), su contribución marginal al riesgo es desproporcionada: ese 3% puede pesar 15-20% del riesgo total del portafolio.</figcaption></figure><figure class="chart"><svg viewBox="0 0 270 168" xmlns="http://www.w3.org/2000/svg"><line x1="44" y1="18" x2="44" y2="130" stroke="#2c3444"/><line x1="44" y1="130" x2="256" y2="130" stroke="#2c3444"/><polyline points="46.6,129.7 49.3,129.4 52.0,129.1 54.6,128.8 57.2,128.5 59.9,128.2 62.5,127.9 65.2,127.6 67.8,127.2 70.5,126.9 73.1,126.5 75.8,126.2 78.5,125.8 81.1,125.4 83.8,125.1 86.4,124.7 89.0,124.3 91.7,123.9 94.3,123.4 97.0,123.0 99.6,122.6 102.3,122.1 104.9,121.6 107.6,121.2 110.2,120.7 112.9,120.2 115.6,119.6 118.2,119.1 120.8,118.6 123.5,118.0 126.1,117.4 128.8,116.8 131.4,116.2 134.1,115.6 136.8,114.9 139.4,114.2 142.1,113.6 144.7,112.8 147.3,112.1 150.0,111.3 152.6,110.5 155.3,109.7 157.9,108.9 160.6,108.0 163.2,107.1 165.9,106.1 168.5,105.2 171.2,104.2 173.8,103.1 176.5,102.0 179.1,100.9 181.8,99.7 184.4,98.4 187.1,97.1 189.8,95.8 192.4,94.4 195.0,92.9 197.7,91.3 200.3,89.7 203.0,88.0 205.6,86.2 208.3,84.3 210.9,82.3 213.6,80.2 216.2,78.0 218.9,75.6 221.6,73.2 224.2,70.5 226.8,67.7 229.5,64.7 232.1,61.4 234.8,58.0 237.4,54.3 240.1,50.3 242.8,46.0 245.4,41.3" fill="none" stroke="#f87171" stroke-width="2.4"/><line x1="176.5" y1="18" x2="176.5" y2="130" stroke="#222a38" stroke-dasharray="2 3"/><circle cx="176.5" cy="102.0" r="3.4" fill="#fbbf24"/><text x="176.5" y="143" fill="#9aa3b5" font-size="9" text-anchor="middle">−50%</text><text x="252" y="86.0" fill="#fbbf24" font-size="9" text-anchor="end">+100% recuperar</text><text x="146" y="143" fill="#9aa3b5" font-size="9" text-anchor="middle">caída →</text><text x="12" y="22" fill="#9aa3b5" font-size="9">ganancia req.</text></svg><figcaption><b>Volatility drag.</b> <b>Lectura:</b> recuperar una caída exige una suba mayor: ganancia = pérdida/(1−pérdida). Una caída del 50% necesita un <b>+100%</b> para volver al punto de partida (no +50%). Por eso, con activos muy volátiles como BTC, el buy &amp; hold sufre arrastre y conviene el rebalanceo por umbrales.</figcaption></figure></div><p><b>Refugio? No:</b> en crisis (COVID 2020, desarme carry yen) la correlación → 1 y BTC es «esponja de liquidez» de alto beta (se liquida por margin calls). <b>Volatility drag:</b> caer 50% exige subir 100%. Solución: <b>rebalanceo por umbrales</b> (vender picos, comprar caídas) → captura prima de volatilidad («demonio de Shannon»).</p>
+  </div></details>
+</section>
+
+<!-- ============================ FÓRMULAS ============================ -->
+<section class="unit" id="for">
+  <div class="uhead" style="border-left:4px solid #f472b6;"><h2>Σ Todas las fórmulas</h2><p>Resumen rápido por unidad para repasar</p></div>
+  <details open><summary><span class="chip c1">Unidad IV</span>Macro y Valuación</summary><div class="body">
+    <div class="frm">Crecimiento = ΔL + ΔK + ΔTFP</div>
+    <div class="frm">y = r<sub>f</sub> + prima plazo + prima crédito + prima liquidez</div>
+    <div class="frm">E(R) = D/P − ΔS + ΔE + Δ(P/E)   (Grinold-Kroner)</div>
+    <div class="frm">EPS real = EPS nominal / (1 + inflación)</div>
+  </div></details>
+  <details><summary><span class="chip c2">Unidad V</span>Equity y Factores</summary><div class="body">
+    <div class="frm">HHI = Σ w<sub>i</sub><sup>2</sup>   ·   N efectivo = 1 / HHI</div>
+    <div class="frm">TE = σ(R<sub>p</sub> − R<sub>B</sub>)</div>
+    <div class="frm">E(R<sub>A</sub>) = IC · √BR · σ<sub>RA</sub> · TC   (FLAM)</div>
+    <div class="frm">α<sub>i</sub> = IC · σ<sub>i</sub> · Z<sub>i</sub>   (Grinold)</div>
+    <div class="frm">R<sub>i</sub>−R<sub>f</sub> = α + β<sub>1</sub>(R<sub>M</sub>−R<sub>f</sub>) + β<sub>2</sub>SMB + β<sub>3</sub>HML + …</div>
+  </div></details>
+  <details><summary><span class="chip c3">Unidad VI</span>Renta Fija</summary><div class="body">
+    <div class="frm">E(R) = Yield + Roll + E(Δp tasas) − E(pérdida crédito) + E(FX)</div>
+    <div class="frm">Roll = (P<sub>final</sub> − P<sub>inicio</sub>) / P<sub>inicio</sub></div>
+    <div class="frm">E(Δp) = −MD·Δy + ½·Convexidad·Δy<sup>2</sup></div>
+    <div class="frm">E(pérdida) = P<sub>default</sub> · (1 − %recupero)</div>
+    <div class="frm">EffDur = (PV<sub>−</sub> − PV<sub>+</sub>) / (2·ΔCurva·PV<sub>0</sub>)</div>
+    <div class="frm">BPV = MD · MV · 0,0001</div>
+    <div class="frm">N<sub>f</sub> = (Liability BPV − Asset BPV) / Futures BPV</div>
+    <div class="frm">Butterfly = − Y<sub>corta</sub> + 2·Y<sub>media</sub> − Y<sub>larga</sub></div>
+  </div></details>
+  <details><summary><span class="chip c4">Unidad VII</span>Derivados</summary><div class="body">
+    <div class="frm">N<sub>s</sub> = [(MD<sub>T</sub>−MD<sub>p</sub>)/MD<sub>S</sub>]·(MV/P)</div>
+    <div class="frm">BPV = MD · 0,01% · MV</div>
+    <div class="frm">BPV<sub>HR</sub> = [(BPV<sub>T</sub>−BPV<sub>P</sub>)/BPV<sub>CTD</sub>]·CF</div>
+    <div class="frm">N<sub>f</sub> = [(β<sub>T</sub>−β<sub>P</sub>)/β<sub>f</sub>]·(S/F)</div>
+    <div class="frm">R<sub>DC</sub> = (1+R<sub>FC</sub>)(1+R<sub>FX</sub>) − 1</div>
+    <div class="frm">σ² = σ²(R<sub>FC</sub>) + σ²(R<sub>FX</sub>) + 2σ<sub>FC</sub>σ<sub>FX</sub>ρ</div>
+  </div></details>
+</section>
+
+<!-- ============================ GLOSARIO ============================ -->
+<section class="unit" id="glo">
+  <div class="uhead" style="border-left:4px solid #22d3ee;"><h2>Glosario español / inglés</h2><p>Términos clave del 2º parcial</p></div>
+  <div class="body" style="padding:0;">
+  <table class="glos">
+    <tr><th>Español</th><th>English</th><th>Definición</th></tr>
+    <tr><td>Riesgo país</td><td>Country risk (EMBI+)</td><td>Spread de soberanos emergentes vs. Treasury US.</td></tr>
+    <tr><td>Reflexividad</td><td>Reflexivity</td><td>El precio afecta al fundamento (Soros).</td></tr>
+    <tr><td>Corrida</td><td>Bank run / bad Nash equilibrium</td><td>Pánico racional ante falta de liquidez (Diamond-Dybvig).</td></tr>
+    <tr><td>Apreciación de capital</td><td>Capital appreciation</td><td>Suba de precio; razón principal del equity.</td></tr>
+    <tr><td>Ponderado por cap.</td><td>Market-cap weighted</td><td>w = cap acción / cap total (S&P 500).</td></tr>
+    <tr><td>Error de seguimiento</td><td>Tracking error</td><td>σ(R<sub>p</sub> − R<sub>benchmark</sub>).</td></tr>
+    <tr><td>Índice de Herfindahl</td><td>HHI</td><td>Σ w²; concentración (N efectivo = 1/HHI).</td></tr>
+    <tr><td>Ley Fundamental</td><td>Fundamental Law (FLAM)</td><td>E(R<sub>A</sub>) = IC·√BR·σ·TC.</td></tr>
+    <tr><td>Coef. de información</td><td>Information Coefficient (IC)</td><td>Puntería del manager.</td></tr>
+    <tr><td>Amplitud</td><td>Breadth (BR)</td><td>Nº de decisiones independientes.</td></tr>
+    <tr><td>Coef. de transferencia</td><td>Transfer Coefficient (TC)</td><td>Libertad del portafolio (sin restricción = 1).</td></tr>
+    <tr><td>Inmunización</td><td>Immunization</td><td>Igualar duration de activos y pasivos.</td></tr>
+    <tr><td>Calce de flujos</td><td>Cash flow matching</td><td>Igualar cash flow del portafolio al del pasivo.</td></tr>
+    <tr><td>Convexidad</td><td>Convexity</td><td>Sensibilidad de 2º orden precio-tasa.</td></tr>
+    <tr><td>Duración efectiva</td><td>Effective duration</td><td>Duration para flujos inciertos.</td></tr>
+    <tr><td>Rolldown / carry</td><td>Rolldown</td><td>Cambio de precio por el paso del tiempo con curva constante.</td></tr>
+    <tr><td>Bullet / Barbell</td><td>Bullet / Barbell</td><td>Concentrar en la media / en las puntas de la curva.</td></tr>
+    <tr><td>Z-spread / OAS</td><td>Z-spread / Option-Adjusted Spread</td><td>Spread por no-arbitraje / ajustado por opcionalidad.</td></tr>
+    <tr><td>Valor del punto básico</td><td>Basis Point Value (BPV)</td><td>MD · MV · 0,0001.</td></tr>
+    <tr><td>Más barato de entregar</td><td>Cheapest to Deliver (CTD)</td><td>Bono óptimo a entregar en un futuro de RF.</td></tr>
+    <tr><td>Put protectora</td><td>Protective put</td><td>Seguro de downside con opciones.</td></tr>
+    <tr><td>Call cubierta</td><td>Covered call</td><td>Venta de volatilidad para subir el yield.</td></tr>
+    <tr><td>Cisne negro</td><td>Black swan / fat tails</td><td>Eventos extremos subestimados por la Normal (Taleb).</td></tr>
+    <tr><td>Prima de iliquidez</td><td>Illiquidity premium</td><td>Compensación por bloquear capital (alternativos).</td></tr>
+    <tr><td>Contango / Backwardation</td><td>Contango / Backwardation</td><td>Futuro &gt; spot / Futuro &lt; spot.</td></tr>
+    <tr><td>Arrastre por volatilidad</td><td>Volatility drag</td><td>Pérdida del retorno compuesto por alta volatilidad.</td></tr>
+    <tr><td>Riesgo de base</td><td>Basis risk</td><td>Imperfección del hedge (oficial vs CCL en Rofex).</td></tr>
+  </table>
+  <p class="note" style="padding:0 16px 16px;">Fuente principal: PPTs de la cátedra (Clases 8–16). Los libros (Bodie, Fabozzi, etc.) no se usaron como archivo; el complemento conceptual (recuadros violeta) conviene confirmarlo con la cátedra.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const units = document.querySelectorAll('section.unit');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    units.forEach(u => u.classList.toggle('show', u.id === t.dataset.t));
+    const q = document.getElementById('q'); q.value=''; filter('');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }));
+  document.getElementById('openAll').addEventListener('click', () => {
+    document.querySelectorAll('section.unit.show details').forEach(d => d.open = true);
+  });
+  document.getElementById('closeAll').addEventListener('click', () => {
+    document.querySelectorAll('section.unit.show details').forEach(d => d.open = false);
+  });
+  const input = document.getElementById('q');
+  input.addEventListener('input', () => filter(input.value.trim().toLowerCase()));
+  function filter(q){
+    document.querySelectorAll('section.unit.show details').forEach(d => {
+      if(!q){ d.classList.remove('hide'); return; }
+      const hit = d.textContent.toLowerCase().includes(q);
+      d.classList.toggle('hide', !hit);
+      if(hit && q.length > 2) d.open = true;
+    });
+  }
+
+  // Ocultar la barra de pestañas al deslizar hacia abajo; mostrarla al subir
+  const nav = document.querySelector('.tabs');
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > lastY && y > 80) nav.classList.add('nav-hidden');      // bajando
+    else nav.classList.remove('nav-hidden');                        // subiendo
+    lastY = y;
+  }, { passive: true });
+</script>
+</body>
+</html>
