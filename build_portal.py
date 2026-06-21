@@ -213,6 +213,9 @@ header{{padding:8px 20px 0}}
 .panels{{flex:1;position:relative;background:var(--bg)}}
 .panel{{display:none;position:absolute;inset:0;width:100%;height:100%;border:none;background:var(--bg)}}
 .panel.active{{display:block}}
+#toTop{{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;border:1px solid var(--border2);background:var(--bg3);color:var(--text);font-size:1.3rem;line-height:1;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .2s,transform .2s;z-index:50;box-shadow:0 5px 16px rgba(0,0,0,.45)}}
+#toTop.show{{opacity:1;pointer-events:auto;transform:none}}
+#toTop:hover{{background:var(--bg2);border-color:var(--text3)}}
 @media(max-width:640px){{.tab i{{display:none}}.title{{font-size:1.1rem}}}}
 </style>
 </head>
