@@ -305,6 +305,16 @@ function selectSubj(s){{
 }}
 subjPills.forEach(p=>p.addEventListener('click',()=>selectSubj(p.dataset.subj)));
 tabs.forEach(t=>t.addEventListener('click',()=>selectTab(t.dataset.i)));
+// Restaurar la última pestaña vista (sobrevive al reload)
+(function restore(){{
+  let saved=null;
+  try{{saved=localStorage.getItem('uade-tab');}}catch(e){{}}
+  if(saved===null)return;
+  const t=tabs.find(x=>x.dataset.i===saved);
+  if(!t)return;
+  selectSubj(t.dataset.subj);
+  selectTab(saved);
+}})();
 </script>
 </body>
 </html>"""
