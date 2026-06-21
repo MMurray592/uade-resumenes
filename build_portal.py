@@ -235,6 +235,7 @@ header{{padding:8px 20px 0}}
 <main class="panels">
 {panels}
 </main>
+<button id="toTop" aria-label="Ir arriba y mostrar el menú" title="Ir arriba">↑</button>
 <script>
 const subjPills=[...document.querySelectorAll('.subj')];
 const tabs=[...document.querySelectorAll('.tab')];
