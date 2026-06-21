@@ -295,6 +295,7 @@ function selectTab(i){{
   panels.forEach(p=>p.classList.toggle('active',p.dataset.i===i));
   setTopbar(false);
   hookedDocs.forEach(d=>setStickies(d,false));
+  try{{localStorage.setItem('uade-tab',i);}}catch(e){{}}
 }}
 function selectSubj(s){{
   subjPills.forEach(p=>p.classList.toggle('active',p.dataset.subj===s));
