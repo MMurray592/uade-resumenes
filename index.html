@@ -2861,51 +2861,23 @@ const subjPills=[...document.querySelectorAll('.subj')];
 const tabs=[...document.querySelectorAll('.tab')];
 const panels=[...document.querySelectorAll('.panel')];
 const topbar=document.getElementById('topbar');
+const toTop=document.getElementById('toTop');
 let topbarHidden=false;
-let quietUntil=0;
+// El header se esconde al bajar y se queda quieto (no reaparece solo).
+// Para traerlo de vuelta: el botón flotante ↑ lleva arriba del todo.
 function setTopbar(hide){
   if(hide===topbarHidden)return;
   topbarHidden=hide;
   topbar.style.marginTop=hide?(-topbar.offsetHeight-2)+'px':'0px';
-  quietUntil=Date.now()+450;
+  toTop.classList.toggle('show',hide);
 }
-function stickiesOf(doc){
-  if(!doc.__stickies){
-    try{
-      doc.__stickies=[...doc.querySelectorAll('body *')].filter(el=>{
-        const s=doc.defaultView.getComputedStyle(el);
-        return s.position==='sticky'&&(parseFloat(s.top)||0)<80;
-      });
-      doc.__stickies.forEach(el=>{
-        el.style.transition='transform .28s ease';
-        el.style.willChange='transform';
-      });
-    }catch(e){doc.__stickies=[];}
-  }
-  return doc.__stickies;
-}
-function setStickies(doc,hide){
-  stickiesOf(doc).forEach(el=>{el.style.transform=hide?'translateY(-120%)':'none';});
-}
-const hookedDocs=[];
 function watchScroll(win){
   const doc=win.document;
-  hookedDocs.push(doc);
-  let lastY=win.scrollY||0;
-  let upAcc=0;
-  const UP_THRESHOLD=90;  // px de desliz hacia arriba antes de mostrar el header
   win.addEventListener('scroll',()=>{
     if(win.document!==doc)return;
     const y=win.scrollY;
-    if(Date.now()<quietUntil){lastY=y;return;}
-    const dy=y-lastY;
-    lastY=y;
-    if(y<=20){upAcc=0;setTopbar(false);setStickies(doc,false);return;}
-    if(dy>5){upAcc=0;setTopbar(true);setStickies(doc,true);}
-    else if(dy<0){
-      upAcc+=-dy;
-      if(upAcc>=UP_THRESHOLD){upAcc=0;setTopbar(false);setStickies(doc,false);}
-    }
+    if(y<=20)setTopbar(false);        // arriba del todo → header visible
+    else if(y>140)setTopbar(true);    // ya bajaste → header escondido y quieto
   },{passive:true});
 }
 function hookPanel(f){
@@ -2919,11 +2891,18 @@ function hookPanel(f){
 panels.forEach(f=>f.addEventListener('load',()=>hookPanel(f)));
 panels.forEach(hookPanel);
 setInterval(()=>panels.forEach(hookPanel),1000);
+function goTop(){
+  const p=panels.find(x=>x.classList.contains('active'));
+  if(p&&p.contentWindow){
+    try{p.contentWindow.scrollTo({top:0,behavior:'smooth'});}catch(e){p.contentWindow.scrollTo(0,0);}
+  }
+  setTopbar(false);
+}
+toTop.addEventListener('click',goTop);
 function selectTab(i){
   tabs.forEach(x=>x.classList.toggle('active',x.dataset.i===i));
   panels.forEach(p=>p.classList.toggle('active',p.dataset.i===i));
   setTopbar(false);
-  hookedDocs.forEach(d=>setStickies(d,false));
   try{localStorage.setItem('uade-tab',i);}catch(e){}
 }
 function selectSubj(s){
