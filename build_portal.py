@@ -153,11 +153,11 @@ def build():
             label, sub, _, _ = meta_from_filename(p.stem)
             # primera pestaña de la primera materia = activa
             active = " active" if (si == 0 and j == 0) else ""
-            show = "" if si == 0 else ' style="display:none"'
+            hide = "" if si == 0 else ";display:none"
             subhtml = f"<i>{html.escape(sub)}</i>" if sub else ""
             tabs.append(
                 f'<button class="tab{active}" data-i="{panel_i}" data-subj="{si}" '
-                f'style="--c:{color}"{show}>'
+                f'style="--c:{color}{hide}">'
                 f'<span class="tdot"></span><span><b>{html.escape(label)}</b>{subhtml}</span></button>'
             )
             panels.append(
