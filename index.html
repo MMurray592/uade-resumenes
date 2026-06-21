@@ -2888,15 +2888,20 @@ function watchScroll(win){
   const doc=win.document;
   hookedDocs.push(doc);
   let lastY=win.scrollY||0;
+  let upAcc=0;
+  const UP_THRESHOLD=90;  // px de desliz hacia arriba antes de mostrar el header
   win.addEventListener('scroll',()=>{
     if(win.document!==doc)return;
     const y=win.scrollY;
     if(Date.now()<quietUntil){lastY=y;return;}
     const dy=y-lastY;
     lastY=y;
-    if(y<=20){setTopbar(false);setStickies(doc,false);return;}
-    if(dy>5){setTopbar(true);setStickies(doc,true);}
-    else if(dy<-5){setTopbar(false);setStickies(doc,false);}
+    if(y<=20){upAcc=0;setTopbar(false);setStickies(doc,false);return;}
+    if(dy>5){upAcc=0;setTopbar(true);setStickies(doc,true);}
+    else if(dy<0){
+      upAcc+=-dy;
+      if(upAcc>=UP_THRESHOLD){upAcc=0;setTopbar(false);setStickies(doc,false);}
+    }
   },{passive:true});
 }
 function hookPanel(f){
