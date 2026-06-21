@@ -203,7 +203,7 @@ header{{padding:8px 20px 0}}
 .subj.active{{background:color-mix(in srgb,var(--c) 18%,var(--bg2));border-color:var(--c);color:#fff}}
 .subj.active .scount{{background:color-mix(in srgb,var(--c) 30%,transparent);color:#fff}}
 .tabs{{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px;border-bottom:1px solid var(--border)}}
-.tab{{display:flex;align-items:center;gap:9px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;color:var(--text2);padding:10px 16px;border-radius:9px 9px 0 0;cursor:pointer;font-size:.9rem;transition:all .15s;margin-bottom:-1px}}
+.tab{{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;color:var(--text2);padding:6px 14px;border-radius:9px 9px 0 0;cursor:pointer;font-size:.86rem;transition:all .15s;margin-bottom:-1px}}
 .tab:hover{{background:var(--bg3);color:var(--text)}}
 .tab b{{font-weight:600;display:block;font-size:.9rem;line-height:1.2}}
 .tab i{{font-style:normal;font-size:.74rem;color:var(--text3)}}
