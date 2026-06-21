@@ -42,20 +42,603 @@ header{padding:16px 20px 0}
   <div class="subtitle">Elegí una materia y después un resumen · Teoría y fórmulas de todas las unidades</div>
 </header>
 <nav class="subjects">
-<button class="subj active" data-subj="0" style="--c:#4fa3e8"><span class="sdot"></span>Adm. de Portafolios <span class="scount">1</span></button>
+<button class="subj active" data-subj="0" style="--c:#4fa3e8"><span class="sdot"></span>Adm. de Portafolios <span class="scount">2</span></button>
 <button class="subj" data-subj="1" style="--c:#3dbf8a"><span class="sdot"></span>Derivados <span class="scount">3</span></button>
 <button class="subj" data-subj="2" style="--c:#e8a83d"><span class="sdot"></span>Finanzas Corporativas <span class="scount">1</span></button>
 </nav>
 <nav class="tabs">
-<button class="tab active" data-i="0" data-subj="0" style="--c:#4fa3e8"><span class="tdot"></span><span><b>Apunte 2P · Portafolios</b></span></button>
-<button class="tab" data-i="1" data-subj="1" style="--c:#3dbf8a" style="display:none"><span class="tdot"></span><span><b>Apunte 1er Parcial · U1–U4</b></span></button>
-<button class="tab" data-i="2" data-subj="1" style="--c:#3dbf8a" style="display:none"><span class="tdot"></span><span><b>Apunte 2do Parcial · U5–U6–U8</b></span></button>
-<button class="tab" data-i="3" data-subj="1" style="--c:#3dbf8a" style="display:none"><span class="tdot"></span><span><b>Fórmulas · U5–U6–U8</b><i>Opciones</i></span></button>
-<button class="tab" data-i="4" data-subj="2" style="--c:#e8a83d" style="display:none"><span class="tdot"></span><span><b>Teoría · U2–U3–U4</b><i>2do Parcial</i></span></button>
+<button class="tab active" data-i="0" data-subj="0" style="--c:#4fa3e8"><span class="tdot"></span><span><b>Apunte 1P · Portafolios</b></span></button>
+<button class="tab" data-i="1" data-subj="0" style="--c:#4fa3e8"><span class="tdot"></span><span><b>Apunte 2P · Portafolios</b></span></button>
+<button class="tab" data-i="2" data-subj="1" style="--c:#3dbf8a" style="display:none"><span class="tdot"></span><span><b>Apunte 1er Parcial · U1–U4</b></span></button>
+<button class="tab" data-i="3" data-subj="1" style="--c:#3dbf8a" style="display:none"><span class="tdot"></span><span><b>Apunte 2do Parcial · U5–U6–U8</b></span></button>
+<button class="tab" data-i="4" data-subj="1" style="--c:#3dbf8a" style="display:none"><span class="tdot"></span><span><b>Fórmulas · U5–U6–U8</b><i>Opciones</i></span></button>
+<button class="tab" data-i="5" data-subj="2" style="--c:#e8a83d" style="display:none"><span class="tdot"></span><span><b>Teoría · U2–U3–U4</b><i>2do Parcial</i></span></button>
 </nav>
 </div>
 <main class="panels">
 <iframe class="panel active" data-i="0" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;Administración de Portafolios — Apunte 1º Parcial (Unidades I–III)&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --bg:#0f1115; --bg2:#161a22; --card:#1c212c; --card2:#232a38;
+    --txt:#e8eaf0; --txt2:#9aa3b5; --line:#2c3444;
+    --u1:#4fc3f7; --u2:#a78bfa; --u3:#4ade80; --u4:#fb923c; --warn:#fbbf24; --libro:#60a5fa; --cat:#34d399;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--txt); font-family:-apple-system,&#x27;Segoe UI&#x27;,Roboto,sans-serif; line-height:1.55; padding-bottom:60px;}
+  header{padding:28px 20px 14px; text-align:center; background:linear-gradient(180deg,#141927,var(--bg));}
+  header h1{font-size:1.45rem; letter-spacing:.5px;}
+  header p{color:var(--txt2); font-size:.85rem; margin-top:6px;}
+  .tabs{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; padding:14px 16px; position:sticky; top:0; background:rgba(15,17,21,.96); z-index:10; border-bottom:1px solid var(--line); backdrop-filter:blur(6px); transition:transform .3s ease;}
+  .tabs.nav-hidden{transform:translateY(-130%);}
+  .tab{border:1px solid var(--line); background:var(--card); color:var(--txt2); padding:8px 16px; border-radius:20px; cursor:pointer; font-size:.85rem; transition:.15s;}
+  .tab:hover{color:var(--txt);}
+  .tab.active{color:#0f1115; font-weight:700;}
+  .tab.t1.active{background:var(--u1); border-color:var(--u1);}
+  .tab.t2.active{background:var(--u2); border-color:var(--u2);}
+  .tab.t3.active{background:var(--u3); border-color:var(--u3);}
+  .tab.tf.active{background:#f472b6; border-color:#f472b6;}
+  .tab.tg.active{background:#22d3ee; border-color:#22d3ee;}
+  .search{display:flex; justify-content:center; padding:10px 16px 0;}
+  .search input{width:min(520px,92%); background:var(--card); border:1px solid var(--line); border-radius:10px; color:var(--txt); padding:9px 14px; font-size:.9rem; outline:none;}
+  .search input:focus{border-color:var(--u1);}
+  main{max-width:900px; margin:0 auto; padding:18px 16px;}
+  section.unit{display:none;}
+  section.unit.show{display:block;}
+  .uhead{margin:10px 0 16px; padding:14px 16px; border-radius:12px; background:var(--card);}
+  .uhead h2{font-size:1.15rem;}
+  .uhead p{color:var(--txt2); font-size:.84rem; margin-top:4px;}
+  .b1{border-left:4px solid var(--u1);} .b2{border-left:4px solid var(--u2);} .b3{border-left:4px solid var(--u3);} .b4{border-left:4px solid var(--u4);}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin-bottom:10px; overflow:hidden;}
+  details[open]{background:var(--card2);}
+  summary{cursor:pointer; padding:13px 16px; font-weight:600; font-size:.95rem; list-style:none; display:flex; align-items:center; gap:10px;}
+  summary::-webkit-details-marker{display:none;}
+  summary .chip{font-size:.66rem; padding:2px 8px; border-radius:10px; font-weight:700; letter-spacing:.4px; flex-shrink:0;}
+  .c1{background:rgba(79,195,247,.15); color:var(--u1);} .c2{background:rgba(167,139,250,.15); color:var(--u2);} .c3{background:rgba(74,222,128,.15); color:var(--u3);} .c4{background:rgba(251,146,60,.15); color:var(--u4);}
+  summary::after{content:&quot;+&quot;; margin-left:auto; color:var(--txt2); font-size:1.1rem;}
+  details[open] summary::after{content:&quot;–&quot;;}
+  .body{padding:0 18px 16px; font-size:.9rem; color:#d4d9e3;}
+  .body p{margin:8px 0;}
+  .body ul{margin:8px 0 8px 18px;}
+  .body li{margin:4px 0;}
+  .frm{background:#10141c; border:1px solid var(--line); border-radius:10px; padding:12px 16px; margin:12px 0; text-align:center; font-family:Georgia,&#x27;Times New Roman&#x27;,serif; font-style:italic; font-size:1.12rem; letter-spacing:.2px; color:#e3e8f2; overflow-x:auto;}
+  .frm .w{font-style:normal; font-family:-apple-system,&#x27;Segoe UI&#x27;,Roboto,sans-serif; font-size:.85em; color:#aab3c5; letter-spacing:0;}
+  .frm sub,.frm sup{font-style:normal;}
+  .ej{border-left:3px solid var(--libro); background:rgba(96,165,250,.07); border-radius:0 10px 10px 0; padding:10px 14px; margin:10px 0; font-size:.86rem;}
+  .ej.cat{border-left-color:var(--cat); background:rgba(52,211,153,.07);}
+  .ej b.tag{display:block; font-size:.7rem; letter-spacing:.6px; text-transform:uppercase; margin-bottom:4px; color:var(--libro);}
+  .ej.cat b.tag{color:var(--cat);}
+  .ojo{border-left:3px solid var(--warn); background:rgba(251,191,36,.08); border-radius:0 10px 10px 0; padding:10px 14px; margin:10px 0; font-size:.86rem;}
+  .ojo b.tag{display:block; color:var(--warn); font-size:.7rem; letter-spacing:.6px; text-transform:uppercase; margin-bottom:4px;}
+  .note-box{border-left:3px solid var(--u2); background:rgba(167,139,250,.07); border-radius:0 10px 10px 0; padding:10px 14px; margin:10px 0; font-size:.86rem;}
+  .note-box b.tag{display:block; color:var(--u2); font-size:.7rem; letter-spacing:.6px; text-transform:uppercase; margin-bottom:4px;}
+  table{width:100%; border-collapse:collapse; margin:10px 0; font-size:.83rem;}
+  th{background:#10141c; color:var(--txt2); text-align:left; padding:7px 9px; border:1px solid var(--line); font-size:.74rem; text-transform:uppercase; letter-spacing:.4px;}
+  td{padding:7px 9px; border:1px solid var(--line); vertical-align:top;}
+  .pos{color:#4ade80; font-weight:700;} .neg{color:#f87171; font-weight:700;} .q{color:var(--warn); font-weight:700;}
+  sub,sup{font-size:.72em;}
+  .hide{display:none !important;}
+  .note{color:var(--txt2); font-size:.8rem; font-style:italic; margin-top:6px;}
+  .glos td:first-child{color:var(--u1); font-weight:600;}
+  .glos td:nth-child(2){color:var(--txt2); font-style:italic;}
+  .chartgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin:12px 0;}
+  figure.chart{background:#10141c; border:1px solid var(--line); border-radius:10px; padding:10px 10px 8px; margin:0;}
+  figure.chart svg{width:100%; height:auto; display:block;}
+  figure.chart figcaption{color:var(--txt2); font-size:.76rem; margin-top:6px; line-height:1.4;}
+  figure.chart figcaption b{color:var(--txt);}
+  .controls{display:flex; gap:8px; justify-content:center; padding:8px 16px 0;}
+  .controls button{border:1px solid var(--line); background:var(--card); color:var(--txt2); padding:5px 14px; border-radius:16px; cursor:pointer; font-size:.78rem; transition:.15s;}
+  .controls button:hover{color:var(--txt); border-color:var(--u1);}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;h1&gt;📚 Administración de Portafolios — Apunte 1º Parcial&lt;/h1&gt;
+  &lt;p&gt;Unidades I–III · Clases 1–6 · UADE Q1 2026 · Cátedra Guma · Parcial 22/04&lt;/p&gt;
+&lt;/header&gt;
+
+&lt;nav class=&quot;tabs&quot;&gt;
+  &lt;button class=&quot;tab t1 active&quot; data-t=&quot;u1&quot;&gt;I · Microestructura y Regulación&lt;/button&gt;
+  &lt;button class=&quot;tab t2&quot; data-t=&quot;u2&quot;&gt;II · Performance y Riesgo&lt;/button&gt;
+  &lt;button class=&quot;tab t3&quot; data-t=&quot;u3&quot;&gt;III · Proceso de Inversión&lt;/button&gt;
+  &lt;button class=&quot;tab tf&quot; data-t=&quot;for&quot;&gt;Σ Fórmulas&lt;/button&gt;
+  &lt;button class=&quot;tab tg&quot; data-t=&quot;glo&quot;&gt;Glosario&lt;/button&gt;
+&lt;/nav&gt;
+&lt;div class=&quot;search&quot;&gt;&lt;input id=&quot;q&quot; type=&quot;search&quot; placeholder=&quot;Buscar en el apunte…&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;controls&quot;&gt;&lt;button id=&quot;openAll&quot;&gt;⊕ Abrir todo&lt;/button&gt;&lt;button id=&quot;closeAll&quot;&gt;⊖ Cerrar todo&lt;/button&gt;&lt;/div&gt;
+
+&lt;main&gt;
+
+&lt;!-- ============================ UNIDAD I ============================ --&gt;
+&lt;section class=&quot;unit show&quot; id=&quot;u1&quot;&gt;
+  &lt;div class=&quot;uhead b1&quot;&gt;&lt;h2&gt;Unidad I — Microestructura y Regulación del Mercado Argentino&lt;/h2&gt;
+  &lt;p&gt;Clases 1 y 2 · «La cancha y las reglas»: dónde y cómo se opera, cuánto cuesta ejecutar, qué sesgos arruinan la ejecución, y el marco normativo (CNV, FCI) que define la estrategia antes que el mercado.&lt;/p&gt;&lt;/div&gt;
+
+  &lt;details open&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Clase 1&lt;/span&gt;Topología del mercado: PPT vs. OTC/SENEBI&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;Toda operación vive en uno de dos lugares. La gran idea importa, pero &lt;b&gt;una gran idea con mala ejecución pierde plata&lt;/b&gt;.&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Dimensión&lt;/th&gt;&lt;th&gt;PPT (Prioridad Precio-Tiempo)&lt;/th&gt;&lt;th&gt;OTC / SENEBI (Bilateral)&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Cómo se cruza&lt;/td&gt;&lt;td&gt;Compradores y vendedores en una plaza común; gana la mejor postura compradora (mayor precio) contra la mejor vendedora (menor precio)&lt;/td&gt;&lt;td&gt;Negociación entre dos partes sin un tercero; se pacta de palabra y se carga después en el sistema del mercado&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Prioridad&lt;/td&gt;&lt;td&gt;1º precio, 2º tiempo&lt;/td&gt;&lt;td&gt;Términos a medida: plazo, cantidad, moneda, precio&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Carácter&lt;/td&gt;&lt;td class=&quot;pos&quot;&gt;Transparente, anónimo, «pantalla» (BYMA)&lt;/td&gt;&lt;td class=&quot;q&quot;&gt;Opaco, telefónico/chat, grandes bloques&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Ideal para&lt;/td&gt;&lt;td&gt;Retail y flujo estándar&lt;/td&gt;&lt;td&gt;Institucionales (FCI, seguros)&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p&gt;&lt;b&gt;Ventajas del OTC:&lt;/b&gt; profundidad (mover bloques gigantes, ej. USD 100M, con &lt;i&gt;market impact&lt;/i&gt; casi nulo), discreción (nadie ve la orden hasta cerrarla → evita &lt;i&gt;front running&lt;/i&gt;), y customización de la liquidación.&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Desventajas del OTC:&lt;/b&gt; opacidad (no hay &lt;i&gt;price discovery&lt;/i&gt;: ¿pagaste el mejor precio? no lo sabés con certeza) y &lt;b&gt;riesgo de contraparte&lt;/b&gt; si no está garantizado por el mercado — vital en Argentina.&lt;/p&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Para pensar (cátedra)&lt;/b&gt;¿Cómo se opera un título sin cotización, ej. un bono provincial entregado a proveedores? → Por OTC, bilateral, negociando precio y condiciones de palabra.&lt;/div&gt;
+    &lt;p class=&quot;note&quot;&gt;Mercados locales: BYMA, MAE, MAV, Rofex. Exterior: NYSE, NASDAQ, CBOE, CBOT, MarketAxess, Euroclear.&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Clase 1&lt;/span&gt;Liquidez y «¿qué hace a un buen mercado?»&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;&lt;b&gt;Liquidez:&lt;/b&gt; disponibilidad para operar grandes volúmenes de la misma especie, sin demoras y con bajo costo transaccional. Cuatro pilares:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;Mercado atomizado&lt;/b&gt; con diversidad de grados de información.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Tight market:&lt;/b&gt; bajo spread entre &lt;i&gt;bid&lt;/i&gt; y &lt;i&gt;offer&lt;/i&gt;.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Profundidad:&lt;/b&gt; se opera mucho sin mover el precio.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Resiliencia:&lt;/b&gt; cualquier desvío precio-valor intrínseco es pequeño y se corrige rápido.&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p&gt;Un &lt;b&gt;buen mercado&lt;/b&gt; agrega además &lt;b&gt;transparencia&lt;/b&gt; (info de volúmenes y precios operados) y &lt;b&gt;certeza en la concreción&lt;/b&gt; (&lt;i&gt;trade settlement&lt;/i&gt;: garantía entre el pago y la transferencia del activo — el OTC no suele estar garantizado).&lt;/p&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 230&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;text x=&quot;250&quot; y=&quot;14&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;← profundidad (volumen)   |   precio →&lt;/text&gt;&lt;rect x=&quot;190&quot; y=&quot;28&quot; width=&quot;60&quot; height=&quot;13&quot; fill=&quot;#f87171&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;38&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot;&gt;176,62&lt;/text&gt;&lt;rect x=&quot;155&quot; y=&quot;45&quot; width=&quot;95&quot; height=&quot;13&quot; fill=&quot;#f87171&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;55&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot;&gt;176,50&lt;/text&gt;&lt;rect x=&quot;180&quot; y=&quot;62&quot; width=&quot;70&quot; height=&quot;13&quot; fill=&quot;#f87171&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;72&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot;&gt;176,42&lt;/text&gt;&lt;rect x=&quot;120&quot; y=&quot;79&quot; width=&quot;130&quot; height=&quot;13&quot; fill=&quot;#f87171&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;89&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot;&gt;176,40&lt;/text&gt;&lt;rect x=&quot;195&quot; y=&quot;96&quot; width=&quot;55&quot; height=&quot;13&quot; fill=&quot;#f87171&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;106&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot;&gt;176,37&lt;/text&gt;&lt;rect x=&quot;40&quot; y=&quot;113&quot; width=&quot;380&quot; height=&quot;14&quot; fill=&quot;#fbbf24&quot; opacity=&quot;0.12&quot;/&gt;&lt;text x=&quot;44&quot; y=&quot;123&quot; fill=&quot;#fbbf24&quot; font-size=&quot;9&quot;&gt;spread = 0,01 (bid 176,36 / ask 176,37)&lt;/text&gt;&lt;rect x=&quot;190&quot; y=&quot;131&quot; width=&quot;60&quot; height=&quot;13&quot; fill=&quot;#4fc3f7&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;141&quot; fill=&quot;#4fc3f7&quot; font-size=&quot;9&quot;&gt;176,36&lt;/text&gt;&lt;rect x=&quot;135&quot; y=&quot;148&quot; width=&quot;115&quot; height=&quot;13&quot; fill=&quot;#4fc3f7&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;158&quot; fill=&quot;#4fc3f7&quot; font-size=&quot;9&quot;&gt;176,34&lt;/text&gt;&lt;rect x=&quot;170&quot; y=&quot;165&quot; width=&quot;80&quot; height=&quot;13&quot; fill=&quot;#4fc3f7&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;175&quot; fill=&quot;#4fc3f7&quot; font-size=&quot;9&quot;&gt;176,30&lt;/text&gt;&lt;rect x=&quot;110&quot; y=&quot;182&quot; width=&quot;140&quot; height=&quot;13&quot; fill=&quot;#4fc3f7&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;192&quot; fill=&quot;#4fc3f7&quot; font-size=&quot;9&quot;&gt;176,25&lt;/text&gt;&lt;rect x=&quot;200&quot; y=&quot;199&quot; width=&quot;50&quot; height=&quot;13&quot; fill=&quot;#4fc3f7&quot; opacity=&quot;0.55&quot;/&gt;&lt;text x=&quot;255&quot; y=&quot;209&quot; fill=&quot;#4fc3f7&quot; font-size=&quot;9&quot;&gt;176,22&lt;/text&gt;&lt;line x1=&quot;250&quot; y1=&quot;22&quot; x2=&quot;250&quot; y2=&quot;220&quot; stroke=&quot;#2c3444&quot;/&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;Libro de órdenes (AMZN, ejemplo de la cátedra).&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; arriba las ofertas de venta (&lt;b&gt;ask&lt;/b&gt;, rojo), abajo las de compra (&lt;b&gt;bid&lt;/b&gt;, azul); la longitud de cada barra es la profundidad de ese nivel. El &lt;b&gt;spread&lt;/b&gt; es la franja amarilla (acá 1 centavo). Una &lt;b&gt;orden a mercado&lt;/b&gt; de compra «barre» los ask de abajo hacia arriba (toma 176,37, luego 176,40…) → certeza de ejecución pero peor precio. Una &lt;b&gt;límite&lt;/b&gt; debajo del ask puede no tocarse nunca. (Profundidad ilustrativa.)&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Clase 1&lt;/span&gt;Tipos de órdenes: el trade-off velocidad vs. precio&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;Toda orden enfrenta el mismo dilema: &lt;b&gt;velocidad de ejecución vs. precio de ejecución&lt;/b&gt;.&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Orden&lt;/th&gt;&lt;th&gt;Qué instruye&lt;/th&gt;&lt;th&gt;Pro&lt;/th&gt;&lt;th&gt;Contra&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;A mercado&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ejecutar ya, al precio disponible (le «pegás al offer»)&lt;/td&gt;&lt;td class=&quot;pos&quot;&gt;Certeza de ejecución&lt;/td&gt;&lt;td class=&quot;neg&quot;&gt;Incertidumbre del precio&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;A precio límite&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ejecutar sólo a un precio determinado o mejor&lt;/td&gt;&lt;td class=&quot;pos&quot;&gt;Certeza del precio&lt;/td&gt;&lt;td class=&quot;neg&quot;&gt;Incertidumbre de la ejecución&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p&gt;Una orden a mercado por 100.000 AMZN «barre» el libro: arranca por el mejor &lt;i&gt;ask&lt;/i&gt; y sigue subiendo de nivel hasta completar la cantidad. Una límite por debajo del &lt;i&gt;ask&lt;/i&gt; puede no ejecutarse nunca.&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Clase 1&lt;/span&gt;El costo invisible: Implementation Shortfall (IS)&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;En el Excel comprás al precio de cierre; en la vida real «le pegás al offer». El &lt;b&gt;IS&lt;/b&gt; compara el retorno efectivo del portafolio contra un &lt;b&gt;portafolio teórico (paper)&lt;/b&gt; armado al precio vigente al momento de la decisión.&lt;/p&gt;
+    &lt;p&gt;Definiciones clave: &lt;b&gt;Target price&lt;/b&gt; (el que observo y me lleva a decidir), &lt;b&gt;Arrival price&lt;/b&gt; (precio cuando mi orden llega al mercado), &lt;b&gt;Closing price&lt;/b&gt;, y &lt;b&gt;VWAP&lt;/b&gt; (precio promedio ponderado por volumen del día).&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;VWAP = ( Σ P&lt;sub&gt;t&lt;/sub&gt;·Q&lt;sub&gt;t&lt;/sub&gt; ) / ( Σ Q&lt;sub&gt;t&lt;/sub&gt; )&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;IS = [ Σ s&lt;sub&gt;j&lt;/sub&gt;p&lt;sub&gt;j&lt;/sub&gt; − Σ s&lt;sub&gt;j&lt;/sub&gt;p&lt;sub&gt;d&lt;/sub&gt; ] + [ S − Σ s&lt;sub&gt;j&lt;/sub&gt; ]·(p&lt;sub&gt;n&lt;/sub&gt; − p&lt;sub&gt;d&lt;/sub&gt;) + &lt;span class=&quot;w&quot;&gt;Fees&lt;/span&gt;&lt;/div&gt;
+    &lt;p style=&quot;font-size:.82rem; color:var(--txt2);&quot;&gt;Primer corchete = &lt;b&gt;costo de ejecución&lt;/b&gt;; segundo = &lt;b&gt;costo de oportunidad&lt;/b&gt; (lo no ejecutado, valuado contra el precio de decisión p&lt;sub&gt;d&lt;/sub&gt;); más comisiones.&lt;/p&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Ejemplo (cátedra) — YPF&lt;/b&gt;
+      Antes de la apertura, el PM decide comprar YPF (cerró ayer en &lt;b&gt;USD 17,65&lt;/b&gt; = precio de decisión p&lt;sub&gt;d&lt;/sub&gt;) y manda orden por &lt;b&gt;10.000&lt;/b&gt; acciones a &lt;b&gt;17,77 o menor&lt;/b&gt;. En ese momento el precio es &lt;b&gt;17,76&lt;/b&gt; (arrival). Se ejecutan &lt;b&gt;7.000&lt;/b&gt;; comisiones &lt;b&gt;USD 18&lt;/b&gt;; YPF cierra en &lt;b&gt;18,00&lt;/b&gt; y no se reintenta por las 3.000 restantes.
+      &lt;ul&gt;
+        &lt;li&gt;Costo de ejecución = 7.000 × (17,77 − 17,65) = &lt;b&gt;USD 840&lt;/b&gt;&lt;/li&gt;
+        &lt;li&gt;Costo de oportunidad = 3.000 × (18,00 − 17,65) = &lt;b&gt;USD 1.050&lt;/b&gt;&lt;/li&gt;
+        &lt;li&gt;Fees = &lt;b&gt;USD 18&lt;/b&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;b&gt;IS = 840 + 1.050 + 18 = USD 1.908&lt;/b&gt; (≈ 1,081% del paper portfolio de 10.000 × 17,65 = USD 176.500)&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;ej&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Descomposición extendida&lt;/b&gt;
+      IS = Trading + Delay + Transaction + Opportunity. El costo de ejecución (840) se abre en:
+      &lt;ul&gt;
+        &lt;li&gt;&lt;b&gt;Trading cost&lt;/b&gt; (realizado, ejecución vs. arrival) = 7.000 × (17,77 − 17,76) = &lt;b&gt;USD 70&lt;/b&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;b&gt;Delay cost&lt;/b&gt; (arrival vs. decisión) = 7.000 × (17,76 − 17,65) = &lt;b&gt;USD 770&lt;/b&gt;&lt;/li&gt;
+        &lt;li&gt;70 + 770 = 840 ✔&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;ojo&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Ojo&lt;/b&gt;La versión «simple» de la cátedra valúa la parte ejecutada al precio límite (17,77) como si las 7.000 se hubieran llenado exactamente ahí. En la práctica los fills pueden darse a varios precios ≤ 17,77; ahí conviene usar el precio promedio real de ejecución. El número del ejemplo está verificado con los datos de la PPT.&lt;/div&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 195&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;line x1=&quot;55&quot; y1=&quot;154.4&quot; x2=&quot;410&quot; y2=&quot;154.4&quot; stroke=&quot;#2c3444&quot; stroke-dasharray=&quot;3 3&quot;/&gt;&lt;line x1=&quot;55&quot; y1=&quot;120.2&quot; x2=&quot;410&quot; y2=&quot;120.2&quot; stroke=&quot;#2c3444&quot; stroke-dasharray=&quot;3 3&quot;/&gt;&lt;line x1=&quot;55&quot; y1=&quot;117.1&quot; x2=&quot;410&quot; y2=&quot;117.1&quot; stroke=&quot;#2c3444&quot; stroke-dasharray=&quot;3 3&quot;/&gt;&lt;line x1=&quot;55&quot; y1=&quot;45.6&quot; x2=&quot;410&quot; y2=&quot;45.6&quot; stroke=&quot;#2c3444&quot; stroke-dasharray=&quot;3 3&quot;/&gt;&lt;path d=&quot;M90,154.4 L190,120.2 L290,117.1 L390,45.6&quot; fill=&quot;none&quot; stroke=&quot;#4fc3f7&quot; stroke-width=&quot;2.4&quot;/&gt;&lt;circle cx=&quot;90&quot; cy=&quot;154.4&quot; r=&quot;3.4&quot; fill=&quot;#fbbf24&quot;/&gt;&lt;text x=&quot;90&quot; y=&quot;147.4&quot; fill=&quot;#e8eaf0&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;17,65&lt;/text&gt;&lt;circle cx=&quot;190&quot; cy=&quot;120.2&quot; r=&quot;3.4&quot; fill=&quot;#fbbf24&quot;/&gt;&lt;text x=&quot;190&quot; y=&quot;113.2&quot; fill=&quot;#e8eaf0&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;17,76&lt;/text&gt;&lt;circle cx=&quot;290&quot; cy=&quot;117.1&quot; r=&quot;3.4&quot; fill=&quot;#fbbf24&quot;/&gt;&lt;text x=&quot;290&quot; y=&quot;110.1&quot; fill=&quot;#e8eaf0&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;17,77&lt;/text&gt;&lt;circle cx=&quot;390&quot; cy=&quot;45.6&quot; r=&quot;3.4&quot; fill=&quot;#fbbf24&quot;/&gt;&lt;text x=&quot;390&quot; y=&quot;38.6&quot; fill=&quot;#e8eaf0&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;18,00&lt;/text&gt;&lt;text x=&quot;135&quot; y=&quot;158&quot; fill=&quot;#a78bfa&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;Delay $770&lt;/text&gt;&lt;text x=&quot;240&quot; y=&quot;104&quot; fill=&quot;#34d399&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;Trading $70&lt;/text&gt;&lt;line x1=&quot;390&quot; y1=&quot;154.4&quot; x2=&quot;390&quot; y2=&quot;45.6&quot; stroke=&quot;#f87171&quot; stroke-width=&quot;1.5&quot; stroke-dasharray=&quot;2 2&quot;/&gt;&lt;text x=&quot;386&quot; y=&quot;98.4&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot; text-anchor=&quot;end&quot;&gt;Oportunidad&lt;/text&gt;&lt;text x=&quot;386&quot; y=&quot;110.9&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot; text-anchor=&quot;end&quot;&gt;$1.050 (3.000)&lt;/text&gt;&lt;text x=&quot;232&quot; y=&quot;190&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;tiempo →&lt;/text&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;Implementation Shortfall — YPF.&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; el precio sube desde la decisión (17,65) al arrival (17,76 → &lt;b&gt;delay cost&lt;/b&gt; sobre las 7.000 ejecutadas = $770), y de ahí al precio de ejecución (17,77 → &lt;b&gt;trading cost&lt;/b&gt; = $70). Las 3.000 no ejecutadas se «escapan» hasta el cierre (18,00 → &lt;b&gt;costo de oportunidad&lt;/b&gt; = 3.000 × 0,35 = $1.050). IS total = 770 + 70 + 1.050 + 18 fees = &lt;b&gt;$1.908&lt;/b&gt;.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Clase 1&lt;/span&gt;El enemigo en el espejo: sesgos en la ejecución&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;¿Por qué ejecutamos mal? No por falta de Excel, sino por &lt;b&gt;exceso de emoción&lt;/b&gt;. Los modelos asumen racionalidad; el humano no lo es. El &lt;b&gt;gap de ejecución&lt;/b&gt; es la diferencia entre lo que debíamos hacer y lo que hicimos (el estrés activa la amígdala).&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Sesgo&lt;/th&gt;&lt;th&gt;Mecanismo&lt;/th&gt;&lt;th&gt;Daño al portafolio&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Aversión a la pérdida&lt;/b&gt;&lt;/td&gt;&lt;td&gt;«El dolor de perder es 2× el placer de ganar»&lt;/td&gt;&lt;td&gt;Vendo ganadoras (alivio) y mantengo perdedoras (espero el rebote) → cartera llena de «basura» y sin liquidez&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Exceso de confianza&lt;/b&gt;&lt;/td&gt;&lt;td&gt;«Sé más que el mercado»; límites demasiado agresivos&lt;/td&gt;&lt;td&gt;El precio no se toca por centavos, el activo sube 20% sin mí → la ganancia que nunca tuve&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Anclaje (anchoring)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pegado a un precio viejo; parálisis por análisis&lt;/td&gt;&lt;td&gt;El fundamental da señal pero no actúo (ej. «subió mucho, vendo» y luego siguió subiendo)&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Ejemplo (cátedra) — anclaje&lt;/b&gt;Galicia: 8/10 cerró USD 28,36; 9/10 operó en USD 34 («subió mucho, vendo»); 28/10 valía USD 55. El ancla al precio viejo costó la suba.&lt;/div&gt;
+    &lt;p&gt;&lt;b&gt;Mitigación (checklist del PM):&lt;/b&gt; disciplina (órdenes algorítmicas tipo VWAP para no decidir con la emoción), &lt;i&gt;stop loss&lt;/i&gt; definidos &lt;b&gt;antes&lt;/b&gt; de entrar (no durante), y medir siempre el IS. &lt;b&gt;«Lo que no se mide, no se gestiona.»&lt;/b&gt;&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Clase 2&lt;/span&gt;Regulación: ¿para qué? y facultades del regulador&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;La regulación define tu estrategia &lt;b&gt;antes&lt;/b&gt; que el mercado. Marco local: &lt;b&gt;Ley de Mercado de Capitales 26.831&lt;/b&gt;, Normas CNV (texto ordenado), Ley de Sociedades 19.550, Ley de Financiamiento Productivo 27.740.&lt;/p&gt;
+    &lt;p&gt;Objetivos del regulador:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;Transparencia y protección:&lt;/b&gt; el mercado tiene &lt;i&gt;asimetrías de información&lt;/i&gt;; se protege al inversor con comunicación fluida y estandarizada.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Inclusión financiera:&lt;/b&gt; ámbitos de negociación con alto estándar, proceso simple y competitivo.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Reducción de riesgo sistémico:&lt;/b&gt; velar por la salud del conjunto, minimizando el «efecto dominó».&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p&gt;&lt;b&gt;Facultades ante riesgo sistémico:&lt;/b&gt;&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Medida&lt;/th&gt;&lt;th&gt;Cuándo&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Suspensión preventiva&lt;/b&gt; de la oferta pública / negociación&lt;/td&gt;&lt;td&gt;Hasta que sea aconsejable revisar la medida&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Interrupción transitoria&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pendiente difusión de información relevante; o circunstancias extraordinarias, hasta que desaparezcan las causas&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Para pensar (cátedra)&lt;/b&gt;Un bono sube 80% sin ninguna noticia. ¿Qué hace el regulador? → Puede interrumpir/suspender preventivamente hasta que se difunda información o desaparezcan las causas extraordinarias.&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Clase 2&lt;/span&gt;Oferta pública, valores negociables y funciones del mercado&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;&lt;b&gt;Oferta pública:&lt;/b&gt; invitación a personas en general o a sectores determinados para realizar cualquier acto jurídico con valores negociables. La realizan emisores, tenedores o sociedades dedicadas a la negociación. &lt;b&gt;Responsables de que la información sea correcta: las empresas emisoras.&lt;/b&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Valores negociables&lt;/b&gt; (emitidos de forma cartular): valores de deuda, acciones, cuotapartes de FCI, certificados de participación en fideicomisos financieros, futuros/opciones y derivados (según CNV), cheques de pago diferido, certificados de depósito a plazo, facturas de crédito electrónicas, pagarés y demás activos con negociación secundaria.&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Funciones relevantes de los mercados:&lt;/b&gt; habilitar agentes (acceso abierto y equitativo, sin exigir ser accionista); autorizar/suspender/cancelar listado y negociación; asegurar veracidad de precios y realidad de las operaciones; administrar sistemas de negociación y de liquidación/compensación; registrar derivados OTC; y supervisar, inspeccionar y fiscalizar a los agentes.&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Clase 2&lt;/span&gt;FCI: estructura y tipos (Inciso A, B.1, B.2)&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;Un FCI está &lt;b&gt;compuesto por activos&lt;/b&gt;, &lt;b&gt;administrado por la Sociedad Gerente&lt;/b&gt; (SG) y &lt;b&gt;custodiado por la Sociedad Depositaria&lt;/b&gt; (una entidad financiera). Clave fiduciaria: &lt;b&gt;la SG no tiene los activos de los clientes&lt;/b&gt; — esa separación es la que protege al inversor. Normativa: Texto Ordenado CNV, Título V, Caps. I–III.&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Tipo&lt;/th&gt;&lt;th&gt;Apodo de la cátedra&lt;/th&gt;&lt;th&gt;Valuación&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Inciso A&lt;/b&gt; (a mercado)&lt;/td&gt;&lt;td&gt;Mark-to-market / «la proteína»&lt;/td&gt;&lt;td&gt;Mín. 80% a mercado (máx. 20% a devengamiento). Incluye todos los FCI de Renta Fija y Variable&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Inciso B.1&lt;/b&gt; (Money Market clásico)&lt;/td&gt;&lt;td&gt;«La caja de ahorro»&lt;/td&gt;&lt;td&gt;A devengamiento; tope máx. 20% en títulos valuados a mercado&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Inciso B.2&lt;/b&gt; (Money Market dinámico)&lt;/td&gt;&lt;td&gt;«El camino del medio»&lt;/td&gt;&lt;td&gt;A devengamiento; puede tener hasta 100% de títulos valuados a mercado sin ser Inciso A&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p&gt;&lt;b&gt;Límites normativos más importantes (anexo de la PPT):&lt;/b&gt;&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Regla&lt;/th&gt;&lt;th&gt;Inciso A&lt;/th&gt;&lt;th&gt;B.1 (MM clásico)&lt;/th&gt;&lt;th&gt;B.2 (MM dinámico)&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Por emisora privada / PN&lt;/td&gt;&lt;td&gt;≤ 20%&lt;/td&gt;&lt;td&gt;≤ 20%&lt;/td&gt;&lt;td&gt;≤ 20%&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Iguales condiciones de emisión (TP) / PN&lt;/td&gt;&lt;td&gt;≤ 30%&lt;/td&gt;&lt;td&gt;≤ 30%&lt;/td&gt;&lt;td&gt;≤ 30%&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Moneda extranjera / PN&lt;/td&gt;&lt;td&gt;≤ 25%&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Inversiones en el exterior / PN&lt;/td&gt;&lt;td&gt;≤ 25% (mín. 75% local)&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Activos a mercado / PN&lt;/td&gt;&lt;td&gt;≥ 80%&lt;/td&gt;&lt;td&gt;títulos ≤ 20%&lt;/td&gt;&lt;td&gt;títulos ≤ 100%&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Vida promedio ponderada&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;≤ 35 días&lt;/td&gt;&lt;td&gt;≤ 35 días&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Margen de liquidez&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;≥ 80%&lt;/td&gt;&lt;td&gt;≥ 80%&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Vida remanente máx. de cada título&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;≤ 1 año&lt;/td&gt;&lt;td&gt;≤ 1 año&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p class=&quot;note&quot;&gt;Regla mnemotécnica Inciso A: «devengamiento ≤ 20% ⇔ mercado ≥ 80%». La &lt;b&gt;vida promedio ponderada&lt;/b&gt; (≤ 35 días en MM) se calcula ponderando los días al vencimiento de cada inversión por su monto.&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Clase 2&lt;/span&gt;Caso reperfilamiento 2019: cuando baja la marea&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;El caso que muestra para qué sirve toda la normativa de liquidez de los MM.&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;28/08/2019:&lt;/b&gt; el ministro Lacunza anuncia que no hay caja para pagar LETES/LECAPS. Decreto 596/2019: se paga 15% al vencimiento, 25% a 3 meses, saldo a 6 meses.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;El problema:&lt;/b&gt; los FCI Money Market y T+1 tenían esas letras como «cash equivalent» (liquidez inmediata). De repente pasaron a ser bonos a 6 meses, sin mercado secundario y valiendo la mitad.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;El cisne negro — «distinción de personas»:&lt;/b&gt; personas humanas cobran todo (si compraron antes del 31/07); personas jurídicas (incluidos los FCI) quedan atrapadas.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;La corrida y el colapso:&lt;/b&gt; todos quisieron rescatar; los fondos no tenían liquidez para devolver y se rompió la promesa básica del FCI (pagar rescates en tiempo y forma).&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p&gt;&lt;b&gt;Lección:&lt;/b&gt; los MM se mantuvieron sin pérdidas; los fondos «a mercado» se destruyeron. Mucha tenencia estaba en fondos de renta fija/variable con perfil inadecuado, vendidos como «más rendimiento sin riesgo». La industria se concentró en MM y nació el &lt;b&gt;vector de precios de CAFCI&lt;/b&gt; para unificar valuaciones «polémicas» (valuar a devengamiento LECAPS que valían 30% menos).&lt;/p&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Aplicación profesional (cátedra)&lt;/b&gt;Entender necesidad y perfil del cliente: plata transaccional (sueldos) → Money Market, aunque un T+1 pague más fee o el cliente &lt;i&gt;crea&lt;/i&gt; tener tolerancia al riesgo (spoiler: no la tiene). Mirar con lupa los fondos: un fondo «con títulos» que nunca baja está valuando a devengamiento lo que debería ir a mercado y esconde un problema.&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+&lt;/section&gt;
+
+&lt;!-- ============================ UNIDAD II ============================ --&gt;
+&lt;section class=&quot;unit&quot; id=&quot;u2&quot;&gt;
+  &lt;div class=&quot;uhead b2&quot;&gt;&lt;h2&gt;Unidad II — Medición de Performance y Riesgo (Portfolio Analytics)&lt;/h2&gt;
+  &lt;p&gt;Clases 3 y 4 · «La matemática de la verdad»: cómo se mide bien el retorno (y cómo no hacer trampa), y cómo se mide el riesgo cuando la campana de Gauss no alcanza.&lt;/p&gt;&lt;/div&gt;
+
+  &lt;details open&gt;&lt;summary&gt;&lt;span class=&quot;chip c2&quot;&gt;Clase 3&lt;/span&gt;Tres preguntas y las fuentes del retorno&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;Medir performance responde tres preguntas: &lt;b&gt;(I) ¿cuál fue la performance?&lt;/b&gt; (medición), &lt;b&gt;(II) ¿de dónde vino?&lt;/b&gt; (&lt;i&gt;attribution&lt;/i&gt;) y &lt;b&gt;(III) ¿fue habilidad o suerte?&lt;/b&gt; (valoración).&lt;/p&gt;
+    &lt;p&gt;El retorno tiene &lt;b&gt;dos fuentes&lt;/b&gt;: dividendos/intereses y ganancias de capital por variación de precio. El &lt;b&gt;Holding Period Return&lt;/b&gt; las separa:&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;R = (P&lt;sub&gt;t&lt;/sub&gt; − P&lt;sub&gt;t−1&lt;/sub&gt; + D&lt;sub&gt;t&lt;/sub&gt;) / P&lt;sub&gt;t−1&lt;/sub&gt; = (P&lt;sub&gt;t&lt;/sub&gt; − P&lt;sub&gt;t−1&lt;/sub&gt;)/P&lt;sub&gt;t−1&lt;/sub&gt; + D&lt;sub&gt;t&lt;/sub&gt;/P&lt;sub&gt;t−1&lt;/sub&gt;&lt;/div&gt;
+    &lt;p style=&quot;font-size:.82rem; color:var(--txt2);&quot;&gt;Primer término = &lt;b&gt;ganancia de capital&lt;/b&gt;; segundo = &lt;b&gt;dividend yield&lt;/b&gt;. Total return ≠ price return: &lt;b&gt;no ignorar los flujos intermedios&lt;/b&gt; (reinversión compuesta).&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c2&quot;&gt;Clase 3&lt;/span&gt;TWR vs. MWR: el ego vs. el bolsillo&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;El concepto central del parcial. Dos formas de medir un retorno multiperíodo con flujos intermedios:&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;TWR (Time-Weighted)&lt;/th&gt;&lt;th&gt;MWR (Money-Weighted)&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Qué mide&lt;/td&gt;&lt;td&gt;El retorno del &lt;b&gt;manager&lt;/b&gt;&lt;/td&gt;&lt;td&gt;El retorno del &lt;b&gt;cliente&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Flujos&lt;/td&gt;&lt;td&gt;&lt;b&gt;Elimina&lt;/b&gt; el efecto de los cashflows&lt;/td&gt;&lt;td&gt;&lt;b&gt;Incorpora&lt;/b&gt; entradas y salidas&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Uso&lt;/td&gt;&lt;td&gt;Estándar para comparar fondos entre sí (ego)&lt;/td&gt;&lt;td&gt;Salud financiera real del cliente (bolsillo)&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Cómo se calcula&lt;/td&gt;&lt;td&gt;Encadena retornos de subperíodos: (1+r₁)(1+r₂)…&lt;/td&gt;&lt;td&gt;TIR que iguala los flujos a cero&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p&gt;HPR por subperíodo (flujo al inicio o al final):&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;R = (MV&lt;sub&gt;t&lt;/sub&gt; − MV&lt;sub&gt;t−1&lt;/sub&gt; + CF) / (MV&lt;sub&gt;t−1&lt;/sub&gt; + CF)   ·   R = (MV&lt;sub&gt;t&lt;/sub&gt; − CF − MV&lt;sub&gt;t−1&lt;/sub&gt;) / MV&lt;sub&gt;t−1&lt;/sub&gt;&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;MWR:   Σ&lt;sub&gt;t=0&lt;/sub&gt;&lt;sup&gt;T&lt;/sup&gt;  CF&lt;sub&gt;t&lt;/sub&gt; / (1 + TIR)&lt;sup&gt;t&lt;/sup&gt;  = 0&lt;/div&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Ejemplo (cátedra)&lt;/b&gt;Pongo 100 al inicio del año 1, agrego 950 al inicio del año 2 y retiro 350 al final del año 2. Retornos anuales: 10%, 35%, 27%. Flujos: CF₀=−100, CF₁=−950, CF₂=+350, CF₃=+1.372,87 (valor final verificado: 100·1,10 → +950 → ·1,35 → −350 → ·1,27 = 1.372,87). El &lt;b&gt;MWR (TIR) ≈ 30,1%&lt;/b&gt;.&lt;/div&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Ejemplo (cátedra) — «El cliente enojado»&lt;/b&gt;
+      Fondo «Súper Rendimiento Sin Riesgo», AUM USD 1.000. &lt;b&gt;Enero:&lt;/b&gt; +50% (apuesta soberana). &lt;b&gt;Febrero:&lt;/b&gt; entra un institucional grande con USD 100.000 atraído por la euforia. &lt;b&gt;Febrero cierre:&lt;/b&gt; el mercado corrige −10%.
+      &lt;ul&gt;
+        &lt;li&gt;&lt;b&gt;TWR&lt;/b&gt; = (1+50%)·(1−10%) − 1 = &lt;b&gt;+35%&lt;/b&gt; → «¡éxito absoluto!» (el factsheet)&lt;/li&gt;
+        &lt;li&gt;&lt;b&gt;MWR&lt;/b&gt; ≈ &lt;b&gt;−9,5%&lt;/b&gt; (mensual, TIR de −1.000, −100.000, +91.350) → el cliente puso 100k y tiene 90k&lt;/li&gt;
+      &lt;/ul&gt;
+      Ambos tienen razón a la vez. La diferencia es el &lt;b&gt;behavioral gap&lt;/b&gt;: el costo de comprar caro por FOMO.&lt;/div&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Ejemplo (cátedra) — el gap en números&lt;/b&gt;Con subperíodos +50% / +1% / −25%: &lt;b&gt;TWR&lt;/b&gt; = (1,5·1,01·0,75)&lt;sup&gt;1/3&lt;/sup&gt; − 1 = &lt;b&gt;+4,35%&lt;/b&gt; anualizado, pero el &lt;b&gt;MWR = −24,24%&lt;/b&gt;. El factsheet dice «ganó plata»; la realidad es que los clientes perdieron mucho.&lt;/div&gt;
+    &lt;p&gt;&lt;b&gt;Lección desde la trinchera:&lt;/b&gt; usá &lt;b&gt;TWR&lt;/b&gt; para compararte con competidores, &lt;b&gt;MWR&lt;/b&gt; para entender la salud del cliente. Responsabilidad fiduciaria: evitar que el cliente entre masivamente en el pico (eso protege su MWR).&lt;/p&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 205&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;line x1=&quot;40&quot; y1=&quot;120&quot; x2=&quot;410&quot; y2=&quot;120&quot; stroke=&quot;#445&quot;/&gt;&lt;rect x=&quot;90&quot; y=&quot;60.5&quot; width=&quot;60&quot; height=&quot;59.5&quot; fill=&quot;#4ade80&quot; rx=&quot;3&quot;/&gt;&lt;text x=&quot;120&quot; y=&quot;54.5&quot; fill=&quot;#4ade80&quot; font-size=&quot;11&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;+35%&lt;/text&gt;&lt;text x=&quot;120&quot; y=&quot;195&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9.5&quot; text-anchor=&quot;middle&quot;&gt;TWR (ego)&lt;/text&gt;&lt;rect x=&quot;190&quot; y=&quot;120&quot; width=&quot;60&quot; height=&quot;16.15&quot; fill=&quot;#f87171&quot; rx=&quot;3&quot;/&gt;&lt;text x=&quot;220&quot; y=&quot;150.15&quot; fill=&quot;#f87171&quot; font-size=&quot;11&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;−9,5%&lt;/text&gt;&lt;text x=&quot;220&quot; y=&quot;195&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9.5&quot; text-anchor=&quot;middle&quot;&gt;MWR (bolsillo)&lt;/text&gt;&lt;rect x=&quot;300&quot; y=&quot;120&quot; width=&quot;60&quot; height=&quot;41.208&quot; fill=&quot;#fb923c&quot; rx=&quot;3&quot;/&gt;&lt;text x=&quot;330&quot; y=&quot;175.208&quot; fill=&quot;#fb923c&quot; font-size=&quot;11&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;−24,24%&lt;/text&gt;&lt;text x=&quot;330&quot; y=&quot;195&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9.5&quot; text-anchor=&quot;middle&quot;&gt;MWR (caso 2)&lt;/text&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;El behavioral gap: TWR vs. MWR.&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; el mismo fondo puede mostrar un &lt;b&gt;TWR positivo&lt;/b&gt; (el factsheet, +35%) y a la vez un &lt;b&gt;MWR negativo&lt;/b&gt; (lo que realmente vivió el cliente, −9,5%) porque la plata grande entró justo en el pico. En el segundo caso de la cátedra el gap es brutal: TWR +4,35% anualizado pero MWR −24,24%. La distancia entre las barras es el costo del FOMO.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c2&quot;&gt;Clase 3&lt;/span&gt;Retorno de un portafolio y «morir de nominalidad»&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;El retorno del portafolio es el promedio ponderado de sus activos:&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;R&lt;sub&gt;p&lt;/sub&gt; = Σ w&lt;sub&gt;i&lt;/sub&gt; R&lt;sub&gt;i&lt;/sub&gt;   ,   Σ w&lt;sub&gt;i&lt;/sub&gt; = 1&lt;/div&gt;
+    &lt;p&gt;Las dos preguntas que todo PM teme: «¿por qué mi cuenta dice que perdí si tu factsheet subió?» (TWR vs. MWR) y «¿por qué festejás +50% en pesos si el dólar subió 60%?» (nominalidad).&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Nominal vs. real (Fisher):&lt;/b&gt;&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;(1 + r&lt;sub&gt;&lt;span class=&quot;w&quot;&gt;nominal&lt;/span&gt;&lt;/sub&gt;) = (1 + r&lt;sub&gt;&lt;span class=&quot;w&quot;&gt;real&lt;/span&gt;&lt;/sub&gt;) · (1 + π)&lt;/div&gt;
+    &lt;p style=&quot;font-size:.82rem;&quot;&gt;Útil para (1) poner en contexto retornos en alta inflación y (2) «nominalizar» la TIR de un bono CER al armar la TIR de un fondo de renta fija.&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Pesos vs. dólares&lt;/b&gt; (sirve para evaluar el «carry» argentino):&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;(1 + r&lt;sub&gt;USD&lt;/sub&gt;) = (1 + r&lt;sub&gt;ARS&lt;/sub&gt;) / (1 + &lt;span class=&quot;w&quot;&gt;dev. esperada&lt;/span&gt;)&lt;/div&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Ejemplo (cátedra)&lt;/b&gt;Festejar +50% en pesos con un dólar que subió 60% es, en realidad, perder en moneda dura: (1,50)/(1,60) − 1 ≈ −6,3%.&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c2&quot;&gt;Clase 3&lt;/span&gt;Benchmark, principio SAMURAI y attribution&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;Un &lt;b&gt;benchmark&lt;/b&gt; es un portafolio de activos/factores representativo de los riesgos del portafolio; sirve de base de comparación (ej. S&amp;P 500, Merval; BBG Global Aggregate, ICE BofA US HY). Un buen benchmark cumple el &lt;b&gt;principio SAMURAI&lt;/b&gt;:&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Letra&lt;/th&gt;&lt;th&gt;Criterio&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;S&lt;/b&gt;pecified&lt;/td&gt;&lt;td&gt;Especificado &lt;i&gt;ex ante&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;A&lt;/b&gt;ppropriate&lt;/td&gt;&lt;td&gt;Apropiado; baja rotación de componentes&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;M&lt;/b&gt;easurable&lt;/td&gt;&lt;td&gt;Medible; retornos calculados con frecuencia&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;U&lt;/b&gt;nambiguous&lt;/td&gt;&lt;td&gt;Sin ambigüedad, transparente, claramente definido&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;R&lt;/b&gt;eflective&lt;/td&gt;&lt;td&gt;Refleja características de riesgo claras&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;A&lt;/b&gt;ccountable&lt;/td&gt;&lt;td&gt;Rendible / responsable&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;I&lt;/b&gt;nvestable&lt;/td&gt;&lt;td&gt;Se puede invertir en él&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p&gt;&lt;b&gt;Performance attribution:&lt;/b&gt; mide la performance frente al benchmark.&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;Excess / Active Return = Σ w&lt;sub&gt;i&lt;/sub&gt;R&lt;sub&gt;i&lt;/sub&gt; − Σ W&lt;sub&gt;i&lt;/sub&gt;B&lt;sub&gt;i&lt;/sub&gt;&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;Valor agregado:  R&lt;sub&gt;A&lt;/sub&gt; = Σ Δw&lt;sub&gt;i&lt;/sub&gt; R&lt;sub&gt;i&lt;/sub&gt;   ·   Tracking Error = σ(R&lt;sub&gt;p&lt;/sub&gt; − R&lt;sub&gt;B&lt;/sub&gt;)&lt;/div&gt;
+    &lt;p style=&quot;font-size:.82rem; color:var(--txt2);&quot;&gt;Para lograr ese retorno activo, el portafolio incurre en &lt;b&gt;riesgo activo&lt;/b&gt; (tracking error).&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c2&quot;&gt;Clase 4&lt;/span&gt;¿Qué es el riesgo? Volatilidad, asimetría y clustering&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;Riesgo = incertidumbre sobre resultados esperados. Se mide &lt;b&gt;ex ante&lt;/b&gt; (planificación) y &lt;b&gt;ex post&lt;/b&gt; (evaluación). Pero hay dos definiciones que conviven:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;Academia:&lt;/b&gt; Riesgo = volatilidad (desvío estándar).&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Vida real:&lt;/b&gt; Riesgo = probabilidad de &lt;b&gt;pérdida permanente de capital&lt;/b&gt;.&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p&gt;El &lt;b&gt;desvío estándar traiciona&lt;/b&gt; porque no asume asimetría: trata igual a los desvíos positivos y negativos. Además, la volatilidad &lt;b&gt;no viene sola&lt;/b&gt; (&lt;i&gt;volatility clustering&lt;/i&gt;): se agrupa en torno a eventos (elecciones 2019/2023/2025, COVID, cambios de gestión).&lt;/p&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 200&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;line x1=&quot;40&quot; y1=&quot;110&quot; x2=&quot;410&quot; y2=&quot;110&quot; stroke=&quot;#445&quot; stroke-dasharray=&quot;4 4&quot;/&gt;&lt;text x=&quot;44&quot; y=&quot;104&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot;&gt;retorno 0&lt;/text&gt;&lt;rect x=&quot;155&quot; y=&quot;20&quot; width=&quot;70&quot; height=&quot;180&quot; fill=&quot;#f87171&quot; opacity=&quot;0.07&quot;/&gt;&lt;rect x=&quot;307&quot; y=&quot;20&quot; width=&quot;56&quot; height=&quot;180&quot; fill=&quot;#f87171&quot; opacity=&quot;0.07&quot;/&gt;&lt;polyline points=&quot;40,107 45,110 49,109 54,111 58,111 63,106 68,105 72,113 77,108 81,107 86,115 91,110 95,113 100,110 104,111 109,107 114,111 118,114 123,110 127,112 132,112 137,106 141,113 146,111 150,108 155,89 160,126 164,109 169,120 173,127 178,119 183,129 187,105 192,123 196,108 201,129 206,127 210,92 215,94 219,98 224,115 229,109 233,111 238,108 242,110 247,109 252,109 256,111 261,111 265,114 270,112 275,114 279,114 284,115 288,112 293,107 298,114 302,115 307,128 311,113 316,119 321,97 325,125 330,113 334,101 339,91 344,126 348,132 353,92 357,123 362,109 367,107 371,108 376,113 380,114 385,105 390,111 394,105 399,112 403,108&quot; fill=&quot;none&quot; stroke=&quot;#a78bfa&quot; stroke-width=&quot;1.6&quot;/&gt;&lt;text x=&quot;190&quot; y=&quot;32&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;crisis&lt;/text&gt;&lt;text x=&quot;335&quot; y=&quot;32&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;crisis&lt;/text&gt;&lt;text x=&quot;232&quot; y=&quot;196&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;tiempo →&lt;/text&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;Volatility clustering.&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; la volatilidad no se reparte pareja: hay tramos calmos y &lt;b&gt;racimos&lt;/b&gt; de turbulencia (zonas rojas — elecciones, COVID, cambios de gestión) donde los retornos saltan fuerte hacia ambos lados. Por eso un único σ «promedio» subestima el riesgo de los días malos, que además vienen juntos.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c2&quot;&gt;Clase 4&lt;/span&gt;Downside risk, VaR y CVaR&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;Como nos importa más el dolor que la euforia, medimos el &lt;b&gt;downside risk&lt;/b&gt; (semivarianza): sólo los desvíos por debajo del retorno promedio. Reconoce que el inversor es tolerante al &lt;i&gt;upside&lt;/i&gt; y se basa en &lt;b&gt;loss aversion&lt;/b&gt;.&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;σ&lt;sub&gt;&lt;span class=&quot;w&quot;&gt;downside&lt;/span&gt;&lt;/sub&gt; = √[ Σ min(r&lt;sub&gt;i&lt;/sub&gt; − r̄ ; 0)&lt;sup&gt;2&lt;/sup&gt; / n ]&lt;/div&gt;
+    &lt;p&gt;&lt;b&gt;Value at Risk (VaR)&lt;/b&gt; — el airbag: estima la &lt;b&gt;pérdida mínima&lt;/b&gt; de una cartera con cierta probabilidad en un horizonte dado.&lt;/p&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Interpretación (cátedra)&lt;/b&gt;«El VaR es USD 1,5M para un día al 5%» significa: hay 5% de probabilidad de perder &lt;b&gt;como mínimo&lt;/b&gt; USD 1,5M (equivalente: 95% de probabilidad de que la pérdida máxima diaria sea 1,5M). &lt;b&gt;Lo que pasa dentro de ese 5%, el VaR no lo dice.&lt;/b&gt;&lt;/div&gt;
+    &lt;p&gt;&lt;b&gt;Conditional VaR (CVaR / Expected Shortfall):&lt;/b&gt; «si todo sale mal, ¿en promedio cuánto pierdo?». Se enfoca en el área bajo la curva &lt;b&gt;posterior&lt;/b&gt; al VaR. Z de la Normal: &lt;b&gt;95% → 1,65&lt;/b&gt; · &lt;b&gt;99% → 2,33&lt;/b&gt;.&lt;/p&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 200&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;line x1=&quot;40&quot; y1=&quot;165.0&quot; x2=&quot;415&quot; y2=&quot;165.0&quot; stroke=&quot;#445&quot;/&gt;&lt;polygon points=&quot;45,165.0 45,163.4 48,163.2 51,163.0 54,162.7 57,162.4 60,162.1 63,161.8 66,161.4 69,160.9 72,160.5 75,159.9 78,159.4 81,158.8 84,158.1 87,157.4 90,156.6 93,155.7 96,154.8 99,153.8 102,152.7 105,151.5 108,150.3 111,149.0 114,147.6 117,146.1 120,144.5 123,142.8 126,141.1 129,139.2 132,137.2 134,165.0&quot; fill=&quot;#f87171&quot; opacity=&quot;0.35&quot;/&gt;&lt;polyline points=&quot;45,163.4 50,163.1 55,162.6 60,162.1 65,161.5 70,160.8 75,159.9 80,159.0 85,157.9 90,156.6 95,155.1 100,153.4 105,151.5 110,149.4 115,147.1 120,144.5 125,141.7 130,138.5 135,135.2 140,131.5 145,127.7 150,123.5 155,119.2 160,114.7 165,110.0 170,105.1 175,100.2 180,95.2 185,90.3 190,85.4 195,80.5 200,75.9 205,71.5 210,67.3 215,63.5 220,60.1 225,57.1 230,54.6 235,52.6 240,51.2 245,50.3 250,50.0 255,50.3 260,51.2 265,52.6 270,54.6 275,57.1 280,60.1 285,63.5 290,67.3 295,71.5 300,75.9 305,80.5 310,85.4 315,90.3 320,95.2 325,100.2 330,105.1 335,110.0 340,114.7 345,119.2 350,123.5 355,127.7 360,131.5 365,135.2 370,138.5 375,141.7 380,144.5 385,147.1 390,149.4 395,151.5 400,153.4 405,155.1 410,156.6 415,157.9 420,159.0 425,159.9 430,160.8 435,161.5 440,162.1 445,162.6 450,163.1 455,163.4&quot; fill=&quot;none&quot; stroke=&quot;#4fc3f7&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;134&quot; y1=&quot;40&quot; x2=&quot;134&quot; y2=&quot;165.0&quot; stroke=&quot;#fbbf24&quot; stroke-width=&quot;1.6&quot; stroke-dasharray=&quot;4 3&quot;/&gt;&lt;text x=&quot;134&quot; y=&quot;34&quot; fill=&quot;#fbbf24&quot; font-size=&quot;9.5&quot; text-anchor=&quot;middle&quot;&gt;VaR 5% (z=−1,65)&lt;/text&gt;&lt;line x1=&quot;250&quot; y1=&quot;50&quot; x2=&quot;250&quot; y2=&quot;165.0&quot; stroke=&quot;#2c3444&quot; stroke-dasharray=&quot;3 3&quot;/&gt;&lt;text x=&quot;250&quot; y=&quot;178.0&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;μ=0&lt;/text&gt;&lt;text x=&quot;92&quot; y=&quot;120&quot; fill=&quot;#f87171&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;CVaR&lt;/text&gt;&lt;text x=&quot;92&quot; y=&quot;131&quot; fill=&quot;#f87171&quot; font-size=&quot;8&quot; text-anchor=&quot;middle&quot;&gt;(cola)&lt;/text&gt;&lt;text x=&quot;232&quot; y=&quot;195&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;retorno del portafolio →&lt;/text&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;VaR y CVaR sobre la distribución de retornos.&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; la línea amarilla es el &lt;b&gt;VaR al 5%&lt;/b&gt; (z=−1,65): hay 5% de probabilidad de perder &lt;b&gt;como mínimo&lt;/b&gt; ese valor. El VaR sólo marca el umbral; lo que ocurre &lt;b&gt;dentro&lt;/b&gt; de la cola roja lo responde el &lt;b&gt;CVaR / Expected Shortfall&lt;/b&gt; = pérdida promedio si caemos en ese 5%. Al 99% el umbral se corre a z=−2,33.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+    &lt;p&gt;&lt;b&gt;Stress testing:&lt;/b&gt; el VaR mide el día normal; el stress test mide el día del juicio final. Escenarios &lt;b&gt;históricos&lt;/b&gt; (Lehman 2008, COVID-19), &lt;b&gt;hipotéticos&lt;/b&gt; (Fed +200 bps) y «Argentina» (S&amp;P −5% / EM −15% / ARS −30%), contra un &lt;i&gt;hard stop loss&lt;/i&gt; del mandato.&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c2&quot;&gt;Clase 4&lt;/span&gt;Ratios de performance ajustada por riesgo&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;Evalúan al PM teniendo en cuenta retorno &lt;b&gt;y&lt;/b&gt; riesgo: ¿fuimos eficientes con el riesgo asumido?&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Ratio&lt;/th&gt;&lt;th&gt;Fórmula&lt;/th&gt;&lt;th&gt;Riesgo en el denominador&lt;/th&gt;&lt;th&gt;Cuándo&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Sharpe&lt;/b&gt;&lt;/td&gt;&lt;td&gt;(r&lt;sub&gt;p&lt;/sub&gt; − r&lt;sub&gt;f&lt;/sub&gt;) / σ&lt;sub&gt;p&lt;/sub&gt;&lt;/td&gt;&lt;td&gt;Volatilidad total&lt;/td&gt;&lt;td&gt;Fondos pasivos; castiga la vol. al alza&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Sortino&lt;/b&gt;&lt;/td&gt;&lt;td&gt;(r&lt;sub&gt;p&lt;/sub&gt; − MAR) / σ&lt;sub&gt;downside&lt;/sub&gt;&lt;/td&gt;&lt;td&gt;Sólo downside&lt;/td&gt;&lt;td&gt;Cuando importa el dolor, no la euforia&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Calmar&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rent. anualizada / Max Drawdown&lt;/td&gt;&lt;td&gt;Máxima caída&lt;/td&gt;&lt;td&gt;«Resistencia al dolor» (gold standard)&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Information Ratio&lt;/b&gt;&lt;/td&gt;&lt;td&gt;(r&lt;sub&gt;p&lt;/sub&gt; − r&lt;sub&gt;b&lt;/sub&gt;) / σ&lt;sub&gt;p−b&lt;/sub&gt;&lt;/td&gt;&lt;td&gt;Riesgo activo (TE)&lt;/td&gt;&lt;td&gt;Gestión activa: incorpora benchmark&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p&gt;El &lt;b&gt;Sharpe&lt;/b&gt; castiga la volatilidad al alza (si hay desvíos sistemáticos positivos, el σ sube igual). El &lt;b&gt;Information Ratio&lt;/b&gt; es el único que &lt;b&gt;incorpora el benchmark&lt;/b&gt;: retorno activo / riesgo activo. Relación entre ambos:&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;SR&lt;sub&gt;p&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; = SR&lt;sub&gt;b&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; + IR&lt;sup&gt;2&lt;/sup&gt;&lt;/div&gt;
+    &lt;p style=&quot;font-size:.82rem; color:var(--txt2);&quot;&gt;Conclusión: contra el mismo benchmark, el portafolio con mayor IR es también el de mayor Sharpe.&lt;/p&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 195&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;line x1=&quot;40&quot; y1=&quot;150&quot; x2=&quot;410&quot; y2=&quot;150&quot; stroke=&quot;#445&quot;/&gt;&lt;rect x=&quot;110&quot; y=&quot;86.0&quot; width=&quot;60&quot; height=&quot;64.0&quot; fill=&quot;#4fc3f7&quot; rx=&quot;3&quot;/&gt;&lt;text x=&quot;140&quot; y=&quot;80.0&quot; fill=&quot;#4fc3f7&quot; font-size=&quot;11&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;0,80&lt;/text&gt;&lt;text x=&quot;140&quot; y=&quot;195&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9.5&quot; text-anchor=&quot;middle&quot;&gt;Sharpe (σ total)&lt;/text&gt;&lt;rect x=&quot;250&quot; y=&quot;46.0&quot; width=&quot;60&quot; height=&quot;104.0&quot; fill=&quot;#4ade80&quot; rx=&quot;3&quot;/&gt;&lt;text x=&quot;280&quot; y=&quot;40.0&quot; fill=&quot;#4ade80&quot; font-size=&quot;11&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;1,30&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;195&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9.5&quot; text-anchor=&quot;middle&quot;&gt;Sortino (σ downside)&lt;/text&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;Sharpe vs. Sortino (fondo con buenos saltos al alza).&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; el &lt;b&gt;Sharpe&lt;/b&gt; mete toda la volatilidad en el denominador, así que &lt;b&gt;castiga también los desvíos positivos&lt;/b&gt;; el &lt;b&gt;Sortino&lt;/b&gt; sólo cuenta el downside, por eso premia al fondo cuyo riesgo es mayormente al alza. Con el mismo retorno, Sortino &amp;gt; Sharpe. (Valores ilustrativos.)&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+&lt;/section&gt;
+&lt;!-- ============================ UNIDAD III ============================ --&gt;
+&lt;section class=&quot;unit&quot; id=&quot;u3&quot;&gt;
+  &lt;div class=&quot;uhead b3&quot;&gt;&lt;h2&gt;Unidad III — El Proceso de Inversión (IPS y Behavioral Finance)&lt;/h2&gt;
+  &lt;p&gt;Clases 5 y 6 · Del asset allocation teórico a construir patrimonios reales: el IPS, el capital humano, los sesgos, y cómo cambia todo cuando el inversor es individual vs. una «ballena» institucional.&lt;/p&gt;&lt;/div&gt;
+
+  &lt;details open&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 5&lt;/span&gt;El advisor moderno: Vanguard Advisor&#x27;s Alpha (gamma)&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;¿Por qué existen los asesores? El estudio de &lt;b&gt;Vanguard (Advisor&#x27;s Alpha)&lt;/b&gt; descompone el valor agregado: rebalanceo, cost-effective implementation, behavioral coaching, asset location, spending strategy, etc.&lt;/p&gt;
+    &lt;p&gt;La idea fuerte: el mayor valor no es el &lt;i&gt;stock picking&lt;/i&gt; (alpha) sino &lt;b&gt;gestionar la ansiedad y el comportamiento del cliente&lt;/b&gt; (a veces llamado &lt;b&gt;gamma&lt;/b&gt;): evitar que compre en la euforia y venda en el pánico.&lt;/p&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 168&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;line x1=&quot;170&quot; y1=&quot;22&quot; x2=&quot;170&quot; y2=&quot;160&quot; stroke=&quot;#2c3444&quot;/&gt;&lt;rect x=&quot;170&quot; y=&quot;30&quot; width=&quot;250&quot; height=&quot;16&quot; fill=&quot;#4ade80&quot; rx=&quot;3&quot; opacity=&quot;0.8&quot;/&gt;&lt;text x=&quot;165&quot; y=&quot;42&quot; fill=&quot;#d4d9e3&quot; font-size=&quot;9.5&quot; text-anchor=&quot;end&quot;&gt;Behavioral coaching&lt;/text&gt;&lt;rect x=&quot;170&quot; y=&quot;56&quot; width=&quot;120&quot; height=&quot;16&quot; fill=&quot;#4fc3f7&quot; rx=&quot;3&quot; opacity=&quot;0.8&quot;/&gt;&lt;text x=&quot;165&quot; y=&quot;68&quot; fill=&quot;#d4d9e3&quot; font-size=&quot;9.5&quot; text-anchor=&quot;end&quot;&gt;Asset location&lt;/text&gt;&lt;rect x=&quot;170&quot; y=&quot;82&quot; width=&quot;95&quot; height=&quot;16&quot; fill=&quot;#a78bfa&quot; rx=&quot;3&quot; opacity=&quot;0.8&quot;/&gt;&lt;text x=&quot;165&quot; y=&quot;94&quot; fill=&quot;#d4d9e3&quot; font-size=&quot;9.5&quot; text-anchor=&quot;end&quot;&gt;Rebalanceo&lt;/text&gt;&lt;rect x=&quot;170&quot; y=&quot;108&quot; width=&quot;110&quot; height=&quot;16&quot; fill=&quot;#fb923c&quot; rx=&quot;3&quot; opacity=&quot;0.8&quot;/&gt;&lt;text x=&quot;165&quot; y=&quot;120&quot; fill=&quot;#d4d9e3&quot; font-size=&quot;9.5&quot; text-anchor=&quot;end&quot;&gt;Cost-effective impl.&lt;/text&gt;&lt;rect x=&quot;170&quot; y=&quot;134&quot; width=&quot;80&quot; height=&quot;16&quot; fill=&quot;#22d3ee&quot; rx=&quot;3&quot; opacity=&quot;0.8&quot;/&gt;&lt;text x=&quot;165&quot; y=&quot;146&quot; fill=&quot;#d4d9e3&quot; font-size=&quot;9.5&quot; text-anchor=&quot;end&quot;&gt;Spending strategy&lt;/text&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;Vanguard Advisor&#x27;s Alpha — de dónde sale el valor.&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; el componente más grande no es elegir activos sino el &lt;b&gt;behavioral coaching&lt;/b&gt; (evitar que el cliente compre caro y venda barato). Le siguen asset location, rebalanceo, implementación de bajo costo y estrategia de gasto. La conclusión de la cátedra: el asesor agrega «gamma» (conducta), no «alpha» (stock picking). (Magnitudes relativas, ordenadas según Vanguard; no son bps exactos.)&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 5&lt;/span&gt;El IPS y «capacidad vs. voluntad» de riesgo&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;El &lt;b&gt;Investment Policy Statement&lt;/b&gt; es la «constitución» de la cartera. Define objetivos y restricciones en seis dimensiones (las restricciones se suelen recordar como &lt;b&gt;T-T-L-L-U&lt;/b&gt;: Tiempo, Tax, Liquidez, Legal, Únicas):&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Objetivos&lt;/th&gt;&lt;th&gt;Restricciones&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Riesgo:&lt;/b&gt; tolerancia (subjetiva, cuánto está dispuesto) vs. capacidad (objetiva: patrimonio, ingreso, horizonte, liquidez)&lt;/td&gt;&lt;td&gt;&lt;b&gt;Tiempo:&lt;/b&gt; horizonte para lograr los objetivos&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;b&gt;Retorno:&lt;/b&gt; objetivos de rentabilidad del cliente&lt;/td&gt;&lt;td&gt;&lt;b&gt;Impuestos / Legales:&lt;/b&gt; jurisdicciones, herencia (mala planificación impositiva tira a la basura el mejor trabajo de PM)&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Liquidez:&lt;/b&gt; cuándo y cómo necesita hacer retiros&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Circunstancias únicas:&lt;/b&gt; cada cliente tiene particularidades no previstas en un análisis estándar&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class=&quot;ojo&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Ojo — distinción clave de examen&lt;/b&gt;&lt;b&gt;Tolerancia (voluntad)&lt;/b&gt; es psicológica/subjetiva: cuánto riesgo &lt;i&gt;quiere&lt;/i&gt;. &lt;b&gt;Capacidad&lt;/b&gt; es objetiva: cuánto riesgo &lt;i&gt;puede&lt;/i&gt; soportar dado su balance, ingresos y horizonte. Cuando chocan, manda la &lt;b&gt;menor&lt;/b&gt; de las dos (regla prudencial): no se le da más riesgo a quien lo «tolera» pero no lo «puede».&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 5&lt;/span&gt;Sesgos cognitivos del inversor individual&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;No optimizamos riesgo/retorno de forma racional; ni siquiera percibimos bien el riesgo que deseamos. Sesgos principales:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;Loss aversion:&lt;/b&gt; el dolor de perder 100 es 2× el placer de ganar 100.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Recency bias:&lt;/b&gt; «el S&amp;P subió 20% el año pasado, seguro sube 20% este».&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Mental accounting:&lt;/b&gt; tratar la plata del aguinaldo distinto a la del sueldo (lo usamos a favor en GBI).&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p&gt;El risk profiling tradicional muchas veces &lt;b&gt;no captura&lt;/b&gt; este comportamiento real → de ahí el «Risk Profiling 2.0».&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 5&lt;/span&gt;Capital humano y el balance económico total&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;El patrimonio del cliente no es sólo su cuenta de inversión:&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;&lt;span class=&quot;w&quot;&gt;Patrimonio Total&lt;/span&gt; = &lt;span class=&quot;w&quot;&gt;Capital Financiero&lt;/span&gt; + &lt;span class=&quot;w&quot;&gt;Capital Humano&lt;/span&gt;&lt;/div&gt;
+    &lt;p&gt;La pregunta clave: &lt;b&gt;¿tu trabajo es un bono (risk-free) o una acción (high beta)?&lt;/b&gt;&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Capital humano «bond-like»&lt;/th&gt;&lt;th&gt;Capital humano «equity-like»&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Juez, abogado, médico: ingreso estable y predecible, casi sin correlación con el mercado, bajo riesgo de despido&lt;/td&gt;&lt;td&gt;Banker, inmobiliario: ingresos volátiles, alta correlación con el mercado, alto riesgo de despido&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td class=&quot;pos&quot;&gt;→ Más tolerancia a beta en el portafolio financiero&lt;/td&gt;&lt;td class=&quot;neg&quot;&gt;→ Ya tiene beta en su capital humano; el portafolio debe compensar con menos riesgo&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Moraleja (cátedra)&lt;/b&gt;No mirar sólo la comitente (capital financiero) del cliente. El capital humano dicta el perfil de riesgo tanto como la aversión psicológica.&lt;/div&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 200&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;line x1=&quot;50&quot; y1=&quot;165&quot; x2=&quot;415&quot; y2=&quot;165&quot; stroke=&quot;#445&quot;/&gt;&lt;path d=&quot;M50,48 C150,70 250,120 415,160&quot; fill=&quot;none&quot; stroke=&quot;#fb923c&quot; stroke-width=&quot;2.4&quot;/&gt;&lt;path d=&quot;M50,160 C170,150 280,90 415,52&quot; fill=&quot;none&quot; stroke=&quot;#4fc3f7&quot; stroke-width=&quot;2.4&quot;/&gt;&lt;text x=&quot;70&quot; y=&quot;42&quot; fill=&quot;#fb923c&quot; font-size=&quot;9.5&quot;&gt;Capital humano&lt;/text&gt;&lt;text x=&quot;300&quot; y=&quot;46&quot; fill=&quot;#4fc3f7&quot; font-size=&quot;9.5&quot;&gt;Capital financiero&lt;/text&gt;&lt;text x=&quot;58&quot; y=&quot;178&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot;&gt;25 años&lt;/text&gt;&lt;text x=&quot;370&quot; y=&quot;178&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot;&gt;retiro&lt;/text&gt;&lt;text x=&quot;232&quot; y=&quot;194&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;edad →&lt;/text&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;Ciclo de vida: capital humano vs. financiero.&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; el joven es casi todo &lt;b&gt;capital humano&lt;/b&gt; (VP de ingresos futuros) y poco capital financiero; con la edad el humano se «consume» y el financiero crece. Por eso un joven con empleo estable (humano bond-like) puede asumir más equity, y conviene des-arriesgar a medida que el capital humano se agota.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 5&lt;/span&gt;Capital Sufficiency y Sequence of Returns Risk&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;&lt;b&gt;Capital Sufficiency Analysis (Monte Carlo):&lt;/b&gt; simula miles de trayectorias para estimar la &lt;b&gt;probabilidad de éxito&lt;/b&gt; (no quedarse sin dinero) dada una estrategia de retorno y gasto.&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Sequence of returns risk:&lt;/b&gt; «el orden de los factores SÍ altera el producto» cuando se está &lt;b&gt;retirando&lt;/b&gt; capital. Dos secuencias con el mismo retorno promedio dan resultados muy distintos si las caídas llegan temprano y coinciden con retiros.&lt;/p&gt;
+    &lt;p&gt;Soluciones:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;Cash buffer:&lt;/b&gt; colchón de liquidez para imprevistos; evita vender en malos momentos. Es dinámico (más cerca del retiro, más buffer).&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Bond tent:&lt;/b&gt; aumentar gradualmente la renta fija a medida que se acerca el retiro, reduciendo riesgo y construyendo un cashflow estable.&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 200&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;line x1=&quot;50&quot; y1=&quot;165&quot; x2=&quot;415&quot; y2=&quot;165&quot; stroke=&quot;#445&quot;/&gt;&lt;path d=&quot;M50,45 C150,55 250,120 320,150 L320,165 L50,165 Z&quot; fill=&quot;#4ade80&quot; opacity=&quot;0.25&quot;/&gt;&lt;path d=&quot;M50,45 C150,55 250,120 320,150&quot; fill=&quot;none&quot; stroke=&quot;#4ade80&quot; stroke-width=&quot;2.2&quot;/&gt;&lt;path d=&quot;M50,150 C170,140 250,70 320,72 C360,73 390,95 415,110&quot; fill=&quot;none&quot; stroke=&quot;#fb923c&quot; stroke-width=&quot;2.2&quot;/&gt;&lt;line x1=&quot;320&quot; y1=&quot;40&quot; x2=&quot;320&quot; y2=&quot;165&quot; stroke=&quot;#fbbf24&quot; stroke-dasharray=&quot;4 3&quot;/&gt;&lt;text x=&quot;320&quot; y=&quot;34&quot; fill=&quot;#fbbf24&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;retiro&lt;/text&gt;&lt;text x=&quot;95&quot; y=&quot;80&quot; fill=&quot;#4ade80&quot; font-size=&quot;9.5&quot;&gt;% Equity&lt;/text&gt;&lt;text x=&quot;300&quot; y=&quot;56&quot; fill=&quot;#fb923c&quot; font-size=&quot;9.5&quot; text-anchor=&quot;end&quot;&gt;% Renta fija (bond tent)&lt;/text&gt;&lt;text x=&quot;232&quot; y=&quot;194&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;9&quot; text-anchor=&quot;middle&quot;&gt;tiempo hacia el retiro →&lt;/text&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;Bond tent y riesgo de secuencia.&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; al acercarse el retiro se &lt;b&gt;baja el equity&lt;/b&gt; (área verde) y se sube la &lt;b&gt;renta fija&lt;/b&gt; (naranja), que forma una «carpa» alrededor de la fecha de retiro. Eso, más un &lt;b&gt;cash buffer&lt;/b&gt;, evita tener que vender en una caída justo cuando empiezan los retiros — el &lt;i&gt;sequence of returns risk&lt;/i&gt;, el asesino silencioso del retiro.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 5&lt;/span&gt;Goals Based Investing, buckets y eficiencia fiscal&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;&lt;b&gt;GBI vs. MVO:&lt;/b&gt; en lugar de una única frontera media-varianza, se «hackea» el &lt;i&gt;mental accounting&lt;/i&gt; asignando activos a &lt;b&gt;objetivos&lt;/b&gt; (buckets):&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;Bucket&lt;/th&gt;&lt;th&gt;Activos&lt;/th&gt;&lt;th&gt;Objetivo&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Liquidez / Seguridad&lt;/td&gt;&lt;td&gt;Money Market, letras cortas, cauciones, bonos cortos IG&lt;/td&gt;&lt;td&gt;No perder nominalmente&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Crecimiento (1–3 años)&lt;/td&gt;&lt;td&gt;Global equities (ACWI), real estate, bonos HY&lt;/td&gt;&lt;td&gt;Retorno real (sobre inflación)&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Moonshots&lt;/td&gt;&lt;td&gt;Crypto, private equity, small caps&lt;/td&gt;&lt;td&gt;Alto riesgo; «si sale mal, no me duele»&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p&gt;&lt;b&gt;Tax efficiency &amp; asset location&lt;/b&gt; — el socio forzado e indeseable (el fisco). Regla de oro: activos &lt;b&gt;ineficientes&lt;/b&gt; fiscalmente (bonos HY, REITs que pagan dividendos ordinarios) → cuentas diferidas/exentas; activos &lt;b&gt;eficientes&lt;/b&gt; (ETFs de acumulación, acciones growth) → cuentas taxables.&lt;/p&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Ejemplo (cátedra) — Tax-Loss Harvesting&lt;/b&gt;Inversión A: −$35.000; Inversión B: +$30.000. Si vendo B, pago 30.000 × 15% = &lt;b&gt;$4.500&lt;/b&gt; de impuesto. Si además vendo A, uso $35.000 de pérdida para compensar los $30.000 de ganancia → &lt;b&gt;impuesto = 0&lt;/b&gt;. El cliente «ganó» $4.500 sólo eligiendo qué vender (y si quiero seguir expuesto a A, compro un papel similar). Trabajo tedioso → ideal para un algoritmo.&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 5&lt;/span&gt;Robo-advisors y el modelo híbrido (el «cyborg»)&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;&lt;b&gt;Robo-advisors:&lt;/b&gt; onboarding digital, asset allocation automático con ETFs, rebalanceo por umbrales, fees mucho menores. Desventaja: les falta la flexibilidad humana; a medida que el patrimonio crece, las necesidades se complejizan.&lt;/p&gt;
+    &lt;p&gt;El ideal es el &lt;b&gt;modelo híbrido&lt;/b&gt;:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;Máquina:&lt;/b&gt; allocation, rebalancing, tax harvesting, trading.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Humano:&lt;/b&gt; planificación patrimonial compleja, fideicomisos, impuestos cross-border, «psicoterapia financiera» (evitar el pánico).&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p class=&quot;note&quot;&gt;Takeaways: el advisor agrega valor en el comportamiento (gamma), no en el stock picking; el capital humano dicta el perfil; el riesgo de secuencia es el asesino silencioso del retiro; la tecnología comoditizó la inversión y el premium pasó a ser la personalización fiscal y conductual.&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 6&lt;/span&gt;Inversores institucionales: las «ballenas» y su IPS&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;Entidades que administran grandes patrimonios de terceros bajo marco regulatorio: &lt;b&gt;Pension Funds&lt;/b&gt;, &lt;b&gt;Sovereign Wealth Funds&lt;/b&gt; (NBIM, ADIA), &lt;b&gt;Endowments&lt;/b&gt; (Yale, Harvard), &lt;b&gt;aseguradoras y bancos&lt;/b&gt;. El IPS funciona igual que para un individuo, pero el mandato define todo:&lt;/p&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Liability Driven (pasivos mandan)&lt;/th&gt;&lt;th&gt;Asset Driven (retorno manda)&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Quiénes&lt;/td&gt;&lt;td&gt;Bancos y seguros&lt;/td&gt;&lt;td&gt;Endowments y fondos soberanos&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Objetivo&lt;/td&gt;&lt;td&gt;Calzar flujos y asegurar solvencia&lt;/td&gt;&lt;td&gt;Maximizar riqueza intergeneracional&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Métrica de riesgo&lt;/td&gt;&lt;td&gt;Surplus volatility&lt;/td&gt;&lt;td&gt;Drawdown y prob. de pérdida permanente&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p class=&quot;note&quot;&gt;Una aseguradora de Vida tiene horizonte más largo y pasivos más predecibles que una de seguros generales (autos/casas), por eso invierten distinto.&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 6&lt;/span&gt;Noruega vs. Yale: la guerra de modelos&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Modelo Noruego (NBIM)&lt;/th&gt;&lt;th&gt;Modelo Yale (Swensen)&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Filosofía&lt;/td&gt;&lt;td&gt;Diversificación global, bajos costos, indexación, transparencia&lt;/td&gt;&lt;td&gt;Aceptar iliquidez a cambio de mayor retorno (&lt;i&gt;illiquidity premium&lt;/i&gt;)&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Mix típico&lt;/td&gt;&lt;td&gt;≈ 70% Equity / 30% Renta Fija&lt;/td&gt;&lt;td&gt;&amp;lt;10% acciones domésticas; fuerte PE, VC, real estate, hedge funds&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Pros&lt;/td&gt;&lt;td&gt;Escalable, barato, fácil de explicar&lt;/td&gt;&lt;td&gt;Retornos superiores, baja correlación con mercados públicos&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Contras&lt;/td&gt;&lt;td&gt;Poco alpha; expuesto a la vol. del mercado público&lt;/td&gt;&lt;td&gt;Caro, difícil de valuar (mark-to-market complejo), requiere equipos de elite&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p&gt;NBIM ya no es 100% pasivo: hace &lt;b&gt;active ownership&lt;/b&gt; (vota en asambleas) y excluye empresas por ESG. &lt;b&gt;Para un individuo la iliquidez es un riesgo; para un institucional, una oportunidad.&lt;/b&gt;&lt;/p&gt;
+    &lt;div class=&quot;chartgrid&quot;&gt;&lt;figure class=&quot;chart&quot;&gt;&lt;svg viewBox=&quot;0 0 430 200&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;line x1=&quot;40&quot; y1=&quot;170&quot; x2=&quot;410&quot; y2=&quot;170&quot; stroke=&quot;#445&quot;/&gt;&lt;rect x=&quot;110&quot; y=&quot;79.0&quot; width=&quot;70&quot; height=&quot;91.0&quot; fill=&quot;#4fc3f7&quot; opacity=&quot;0.85&quot;/&gt;&lt;text x=&quot;145&quot; y=&quot;127.5&quot; fill=&quot;#0f1115&quot; font-size=&quot;8.5&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;Equity 70%&lt;/text&gt;&lt;rect x=&quot;110&quot; y=&quot;40.0&quot; width=&quot;70&quot; height=&quot;39.0&quot; fill=&quot;#4ade80&quot; opacity=&quot;0.85&quot;/&gt;&lt;text x=&quot;145&quot; y=&quot;62.5&quot; fill=&quot;#0f1115&quot; font-size=&quot;8.5&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;RF 30%&lt;/text&gt;&lt;rect x=&quot;280&quot; y=&quot;157.0&quot; width=&quot;70&quot; height=&quot;13.0&quot; fill=&quot;#4fc3f7&quot; opacity=&quot;0.85&quot;/&gt;&lt;rect x=&quot;280&quot; y=&quot;111.5&quot; width=&quot;70&quot; height=&quot;45.5&quot; fill=&quot;#a78bfa&quot; opacity=&quot;0.85&quot;/&gt;&lt;text x=&quot;315&quot; y=&quot;137.2&quot; fill=&quot;#0f1115&quot; font-size=&quot;8.5&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;PE/VC 35%&lt;/text&gt;&lt;rect x=&quot;280&quot; y=&quot;85.5&quot; width=&quot;70&quot; height=&quot;26.0&quot; fill=&quot;#fb923c&quot; opacity=&quot;0.85&quot;/&gt;&lt;text x=&quot;315&quot; y=&quot;101.5&quot; fill=&quot;#0f1115&quot; font-size=&quot;8.5&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;RE 20%&lt;/text&gt;&lt;rect x=&quot;280&quot; y=&quot;59.5&quot; width=&quot;70&quot; height=&quot;26.0&quot; fill=&quot;#22d3ee&quot; opacity=&quot;0.85&quot;/&gt;&lt;text x=&quot;315&quot; y=&quot;75.5&quot; fill=&quot;#0f1115&quot; font-size=&quot;8.5&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;HF 20%&lt;/text&gt;&lt;rect x=&quot;280&quot; y=&quot;40.0&quot; width=&quot;70&quot; height=&quot;19.5&quot; fill=&quot;#4ade80&quot; opacity=&quot;0.85&quot;/&gt;&lt;text x=&quot;315&quot; y=&quot;52.8&quot; fill=&quot;#0f1115&quot; font-size=&quot;8.5&quot; text-anchor=&quot;middle&quot; font-weight=&quot;bold&quot;&gt;RF 15%&lt;/text&gt;&lt;text x=&quot;145&quot; y=&quot;184&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;10&quot; text-anchor=&quot;middle&quot;&gt;Noruega (NBIM)&lt;/text&gt;&lt;text x=&quot;315&quot; y=&quot;184&quot; fill=&quot;#9aa3b5&quot; font-size=&quot;10&quot; text-anchor=&quot;middle&quot;&gt;Yale (Swensen)&lt;/text&gt;&lt;/svg&gt;&lt;figcaption&gt;&lt;b&gt;Asset allocation: Noruega vs. Yale.&lt;/b&gt; &lt;b&gt;Lectura:&lt;/b&gt; el &lt;b&gt;modelo Noruego&lt;/b&gt; es simple, barato y líquido (≈70% equity público / 30% RF). El &lt;b&gt;modelo Yale&lt;/b&gt; apuesta a la &lt;b&gt;prima de iliquidez&lt;/b&gt;: poco equity doméstico y mucho private equity, venture, real estate y hedge funds. Para un individuo la iliquidez es riesgo; para el endowment, oportunidad. (Mix típico/aproximado.)&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 6&lt;/span&gt;ALM, bancos, aseguradoras y regulación local&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;&lt;b&gt;Pension funds &amp; ALM (Asset-Liability Management):&lt;/b&gt; el riesgo no es perder dinero, es &lt;b&gt;no poder pagar a los jubilados futuros&lt;/b&gt;. La ecuación de cobertura es el &lt;b&gt;duration gap&lt;/b&gt;:&lt;/p&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Duration gap (cátedra)&lt;/b&gt;Si la duración de los pasivos &amp;gt; la de los activos, una &lt;b&gt;caída de tasas&lt;/b&gt; aumenta los pasivos más que los activos y destruye el equity del fondo.&lt;/div&gt;
+    &lt;table&gt;
+      &lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Bancos&lt;/th&gt;&lt;th&gt;Aseguradoras&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Negocio&lt;/td&gt;&lt;td&gt;Tomar depósitos, dar crédito; el trading es secundario&lt;/td&gt;&lt;td&gt;Vida (largo plazo) y Generales (mediano, más incierto)&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Objetivo de cartera&lt;/td&gt;&lt;td&gt;Generar &lt;b&gt;liquidez&lt;/b&gt; para el estrés&lt;/td&gt;&lt;td&gt;Reservas técnicas conservadoras; resto más agresivo&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Tolerancia al riesgo&lt;/td&gt;&lt;td&gt;Baja&lt;/td&gt;&lt;td&gt;Media; pueden valuar a costo amortizado (flexibilidad en bajistas)&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Regulación&lt;/td&gt;&lt;td&gt;Basilea III&lt;/td&gt;&lt;td&gt;Solvencia II&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;p&gt;&lt;b&gt;Contexto Argentina (CNV/SSN):&lt;/b&gt; el &lt;b&gt;Inciso K&lt;/b&gt; obliga a invertir un % en «economía real» (PyMEs, infraestructura, ONs productivas), lo que distorsiona la frontera eficiente teórica pero es la realidad del PM local.&lt;/p&gt;
+  &lt;/div&gt;&lt;/details&gt;
+
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Clase 6&lt;/span&gt;Endowments (spending rule) y ESG&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;p&gt;&lt;b&gt;Endowments:&lt;/b&gt; fondean becas, gastos corrientes e infraestructura; horizonte &lt;b&gt;perpetuo&lt;/b&gt;. La política de gasto combina crecimiento constante y un % del AUM:&lt;/p&gt;
+    &lt;div class=&quot;frm&quot;&gt;Gasto&lt;sub&gt;t+1&lt;/sub&gt; = w · Gasto&lt;sub&gt;t&lt;/sub&gt; · (1 + π) + (1 − w) · &lt;span class=&quot;w&quot;&gt;Ratio de Gasto&lt;/span&gt; · &lt;span class=&quot;w&quot;&gt;AUM promedio&lt;/span&gt;&lt;/div&gt;
+    &lt;p style=&quot;font-size:.82rem; color:var(--txt2);&quot;&gt;w = 1 → crecimiento constante (el gasto crece sólo por inflación, suaviza el presupuesto ante crisis). w = 0 → gasto = % fijo del promedio móvil del AUM (más volátil, sigue al mercado). En la práctica, un híbrido.&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;ESG (Environmental, Social, Governance):&lt;/b&gt; integrar factores no financieros al análisis de riesgo. No es filantropía, es gestión de riesgos: una empresa con mal gobierno corporativo vale menos (mayor WACC). Herramienta: &lt;b&gt;MSCI ESG Ratings (AAA a CCC)&lt;/b&gt;. Formas: positive/negative screening y engagement (tomar posición y participar activamente).&lt;/p&gt;
+    &lt;div class=&quot;ej cat&quot;&gt;&lt;b class=&quot;tag&quot;&gt;Aplicación (cátedra)&lt;/b&gt;Shock de endowment: con −20% de retorno, comparar el presupuesto operativo usando w=0,8 (estilo Yale, suaviza) vs. w=0 (gasto fijo sobre AUM, recorta fuerte). El w alto protege el presupuesto en la crisis.&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+&lt;/section&gt;
+&lt;!-- ============================ FÓRMULAS ============================ --&gt;
+&lt;section class=&quot;unit&quot; id=&quot;for&quot;&gt;
+  &lt;div class=&quot;uhead&quot; style=&quot;border-left:4px solid #f472b6;&quot;&gt;&lt;h2&gt;Σ Todas las fórmulas&lt;/h2&gt;&lt;p&gt;Resumen rápido por unidad para repasar&lt;/p&gt;&lt;/div&gt;
+  &lt;details open&gt;&lt;summary&gt;&lt;span class=&quot;chip c1&quot;&gt;Unidad I&lt;/span&gt;Microestructura y Regulación&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;div class=&quot;frm&quot;&gt;VWAP = ( Σ P&lt;sub&gt;t&lt;/sub&gt;·Q&lt;sub&gt;t&lt;/sub&gt; ) / ( Σ Q&lt;sub&gt;t&lt;/sub&gt; )&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;IS = [ Σ s&lt;sub&gt;j&lt;/sub&gt;p&lt;sub&gt;j&lt;/sub&gt; − Σ s&lt;sub&gt;j&lt;/sub&gt;p&lt;sub&gt;d&lt;/sub&gt; ] + (S − Σ s&lt;sub&gt;j&lt;/sub&gt;)·(p&lt;sub&gt;n&lt;/sub&gt; − p&lt;sub&gt;d&lt;/sub&gt;) + &lt;span class=&quot;w&quot;&gt;Fees&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;&lt;span class=&quot;w&quot;&gt;Costo ejecución&lt;/span&gt; = &lt;span class=&quot;w&quot;&gt;Trading&lt;/span&gt; + &lt;span class=&quot;w&quot;&gt;Delay&lt;/span&gt; = Σs&lt;sub&gt;j&lt;/sub&gt;(p&lt;sub&gt;j&lt;/sub&gt;−p&lt;sub&gt;0&lt;/sub&gt;) + Σs&lt;sub&gt;j&lt;/sub&gt;(p&lt;sub&gt;0&lt;/sub&gt;−p&lt;sub&gt;d&lt;/sub&gt;)&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;&lt;span class=&quot;w&quot;&gt;Devengamiento&lt;/span&gt; = (PF + Cauciones + Pases) / &lt;span class=&quot;w&quot;&gt;PN&lt;/span&gt; ≤ 20% (Inciso A)&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;&lt;span class=&quot;w&quot;&gt;Vida promedio&lt;/span&gt; = Σ ( días al vto&lt;sub&gt;i&lt;/sub&gt; · monto&lt;sub&gt;i&lt;/sub&gt; ) / Σ monto&lt;sub&gt;i&lt;/sub&gt; ≤ 35 d (MM)&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c2&quot;&gt;Unidad II&lt;/span&gt;Performance y Riesgo&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;div class=&quot;frm&quot;&gt;R = (P&lt;sub&gt;t&lt;/sub&gt; − P&lt;sub&gt;t−1&lt;/sub&gt; + D&lt;sub&gt;t&lt;/sub&gt;) / P&lt;sub&gt;t−1&lt;/sub&gt;   (&lt;span class=&quot;w&quot;&gt;HPR&lt;/span&gt;)&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;TWR = [ (1+r&lt;sub&gt;1&lt;/sub&gt;)(1+r&lt;sub&gt;2&lt;/sub&gt;)…(1+r&lt;sub&gt;n&lt;/sub&gt;) ]&lt;sup&gt;1/n&lt;/sup&gt; − 1&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;MWR:  Σ&lt;sub&gt;t=0&lt;/sub&gt;&lt;sup&gt;T&lt;/sup&gt; CF&lt;sub&gt;t&lt;/sub&gt; / (1 + TIR)&lt;sup&gt;t&lt;/sup&gt; = 0&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;R&lt;sub&gt;p&lt;/sub&gt; = Σ w&lt;sub&gt;i&lt;/sub&gt; R&lt;sub&gt;i&lt;/sub&gt;  ,  Σ w&lt;sub&gt;i&lt;/sub&gt; = 1&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;(1 + r&lt;sub&gt;&lt;span class=&quot;w&quot;&gt;nom&lt;/span&gt;&lt;/sub&gt;) = (1 + r&lt;sub&gt;&lt;span class=&quot;w&quot;&gt;real&lt;/span&gt;&lt;/sub&gt;)(1 + π)   (&lt;span class=&quot;w&quot;&gt;Fisher&lt;/span&gt;)&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;(1 + r&lt;sub&gt;USD&lt;/sub&gt;) = (1 + r&lt;sub&gt;ARS&lt;/sub&gt;) / (1 + &lt;span class=&quot;w&quot;&gt;dev.&lt;/span&gt;)&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;&lt;span class=&quot;w&quot;&gt;Active Return&lt;/span&gt; = Σw&lt;sub&gt;i&lt;/sub&gt;R&lt;sub&gt;i&lt;/sub&gt; − ΣW&lt;sub&gt;i&lt;/sub&gt;B&lt;sub&gt;i&lt;/sub&gt;   ·   TE = σ(R&lt;sub&gt;p&lt;/sub&gt; − R&lt;sub&gt;B&lt;/sub&gt;)&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;σ&lt;sub&gt;&lt;span class=&quot;w&quot;&gt;downside&lt;/span&gt;&lt;/sub&gt; = √[ Σ min(r&lt;sub&gt;i&lt;/sub&gt; − r̄ ; 0)&lt;sup&gt;2&lt;/sup&gt; / n ]&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;Sharpe = (r&lt;sub&gt;p&lt;/sub&gt; − r&lt;sub&gt;f&lt;/sub&gt;) / σ&lt;sub&gt;p&lt;/sub&gt;&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;Sortino = (r&lt;sub&gt;p&lt;/sub&gt; − MAR) / σ&lt;sub&gt;&lt;span class=&quot;w&quot;&gt;downside&lt;/span&gt;&lt;/sub&gt;&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;Calmar = &lt;span class=&quot;w&quot;&gt;Rent. anualizada&lt;/span&gt; / &lt;span class=&quot;w&quot;&gt;Max Drawdown&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;IR = (r&lt;sub&gt;p&lt;/sub&gt; − r&lt;sub&gt;b&lt;/sub&gt;) / σ&lt;sub&gt;p−b&lt;/sub&gt;  ·  SR&lt;sub&gt;p&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; = SR&lt;sub&gt;b&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; + IR&lt;sup&gt;2&lt;/sup&gt;&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;Z&lt;sub&gt;&lt;span class=&quot;w&quot;&gt;Normal&lt;/span&gt;&lt;/sub&gt;:  95% = 1,65  ·  99% = 2,33&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+  &lt;details&gt;&lt;summary&gt;&lt;span class=&quot;chip c3&quot;&gt;Unidad III&lt;/span&gt;Proceso de Inversión&lt;/summary&gt;&lt;div class=&quot;body&quot;&gt;
+    &lt;div class=&quot;frm&quot;&gt;&lt;span class=&quot;w&quot;&gt;Patrimonio Total&lt;/span&gt; = &lt;span class=&quot;w&quot;&gt;Capital Financiero&lt;/span&gt; + &lt;span class=&quot;w&quot;&gt;Capital Humano&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;&lt;span class=&quot;w&quot;&gt;Riesgo IPS&lt;/span&gt; = min( &lt;span class=&quot;w&quot;&gt;tolerancia&lt;/span&gt; , &lt;span class=&quot;w&quot;&gt;capacidad&lt;/span&gt; )&lt;/div&gt;
+    &lt;div class=&quot;frm&quot;&gt;Gasto&lt;sub&gt;t+1&lt;/sub&gt; = w·Gasto&lt;sub&gt;t&lt;/sub&gt;·(1+π) + (1−w)·&lt;span class=&quot;w&quot;&gt;Ratio&lt;/span&gt;·&lt;span class=&quot;w&quot;&gt;AUM prom.&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/details&gt;
+&lt;/section&gt;
+
+&lt;!-- ============================ GLOSARIO ============================ --&gt;
+&lt;section class=&quot;unit&quot; id=&quot;glo&quot;&gt;
+  &lt;div class=&quot;uhead&quot; style=&quot;border-left:4px solid #22d3ee;&quot;&gt;&lt;h2&gt;Glosario español / inglés&lt;/h2&gt;&lt;p&gt;Términos clave del 1º parcial&lt;/p&gt;&lt;/div&gt;
+  &lt;div class=&quot;body&quot; style=&quot;padding:0;&quot;&gt;
+  &lt;table class=&quot;glos&quot;&gt;
+    &lt;tr&gt;&lt;th&gt;Español&lt;/th&gt;&lt;th&gt;English&lt;/th&gt;&lt;th&gt;Definición&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Microestructura&lt;/td&gt;&lt;td&gt;Market microstructure&lt;/td&gt;&lt;td&gt;Cómo se forman precios y se ejecutan órdenes.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Prioridad precio-tiempo&lt;/td&gt;&lt;td&gt;Price-time priority (CLOB)&lt;/td&gt;&lt;td&gt;Gana mejor precio; a igual precio, el primero en tiempo.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Extrabursátil&lt;/td&gt;&lt;td&gt;OTC / SENEBI&lt;/td&gt;&lt;td&gt;Negociación bilateral sin un tercero centralizador.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Diferencial&lt;/td&gt;&lt;td&gt;Bid-ask spread&lt;/td&gt;&lt;td&gt;Distancia entre mejor compra y mejor venta.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Profundidad&lt;/td&gt;&lt;td&gt;Depth&lt;/td&gt;&lt;td&gt;Volumen disponible sin mover el precio.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Resiliencia&lt;/td&gt;&lt;td&gt;Resiliency&lt;/td&gt;&lt;td&gt;Rapidez con que el precio vuelve al valor intrínseco.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Impacto de mercado&lt;/td&gt;&lt;td&gt;Market impact&lt;/td&gt;&lt;td&gt;Movimiento de precio causado por la propia orden.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Adelantamiento&lt;/td&gt;&lt;td&gt;Front running&lt;/td&gt;&lt;td&gt;Operar delante de una orden conocida.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Costo de implementación&lt;/td&gt;&lt;td&gt;Implementation Shortfall&lt;/td&gt;&lt;td&gt;Real vs. portafolio teórico al precio de decisión.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Precio promedio por volumen&lt;/td&gt;&lt;td&gt;VWAP&lt;/td&gt;&lt;td&gt;Σ P·Q / Σ Q del día.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Aversión a la pérdida&lt;/td&gt;&lt;td&gt;Loss aversion&lt;/td&gt;&lt;td&gt;El dolor de perder ≈ 2× el placer de ganar.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Anclaje&lt;/td&gt;&lt;td&gt;Anchoring&lt;/td&gt;&lt;td&gt;Quedarse pegado a un precio o dato viejo.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Liquidación&lt;/td&gt;&lt;td&gt;Settlement&lt;/td&gt;&lt;td&gt;Cierre efectivo: pago contra entrega del activo.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Sociedad gerente / depositaria&lt;/td&gt;&lt;td&gt;Management / custodian co.&lt;/td&gt;&lt;td&gt;Administra / custodia los activos del FCI (separados).&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Devengamiento&lt;/td&gt;&lt;td&gt;Accrual valuation&lt;/td&gt;&lt;td&gt;Valuar por interés corrido, no a mercado.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Vida promedio ponderada&lt;/td&gt;&lt;td&gt;Weighted avg. life&lt;/td&gt;&lt;td&gt;Días al vto. ponderados por monto (≤35d en MM).&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Reperfilamiento&lt;/td&gt;&lt;td&gt;Reprofiling / maturity ext.&lt;/td&gt;&lt;td&gt;Reprogramación forzosa de vencimientos (2019).&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Retorno por tiempo&lt;/td&gt;&lt;td&gt;Time-Weighted Return&lt;/td&gt;&lt;td&gt;Retorno del manager; ignora los flujos.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Retorno por dinero&lt;/td&gt;&lt;td&gt;Money-Weighted Return (TIR)&lt;/td&gt;&lt;td&gt;Retorno del cliente; incorpora los flujos.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Brecha conductual&lt;/td&gt;&lt;td&gt;Behavioral gap&lt;/td&gt;&lt;td&gt;TWR − MWR: costo de comprar caro / vender barato.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Error de seguimiento&lt;/td&gt;&lt;td&gt;Tracking error&lt;/td&gt;&lt;td&gt;σ(R&lt;sub&gt;p&lt;/sub&gt; − R&lt;sub&gt;benchmark&lt;/sub&gt;) = riesgo activo.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Riesgo a la baja&lt;/td&gt;&lt;td&gt;Downside risk / semivariance&lt;/td&gt;&lt;td&gt;Sólo los desvíos por debajo del promedio.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Valor a riesgo&lt;/td&gt;&lt;td&gt;Value at Risk (VaR)&lt;/td&gt;&lt;td&gt;Pérdida mínima a cierta probabilidad y horizonte.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Pérdida esperada&lt;/td&gt;&lt;td&gt;CVaR / Expected Shortfall&lt;/td&gt;&lt;td&gt;Pérdida promedio dentro de la cola del VaR.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Prueba de estrés&lt;/td&gt;&lt;td&gt;Stress test&lt;/td&gt;&lt;td&gt;Mide el «día del juicio final», no el normal.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Colas gordas&lt;/td&gt;&lt;td&gt;Fat tails&lt;/td&gt;&lt;td&gt;Eventos extremos más probables que en la Normal (Taleb).&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Máxima caída&lt;/td&gt;&lt;td&gt;Maximum drawdown&lt;/td&gt;&lt;td&gt;Mayor pérdida pico-a-valle del portafolio.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Declaración de política&lt;/td&gt;&lt;td&gt;Investment Policy Statement&lt;/td&gt;&lt;td&gt;«Constitución» de la cartera: objetivos y restricciones.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Capital humano&lt;/td&gt;&lt;td&gt;Human capital&lt;/td&gt;&lt;td&gt;VP de ingresos futuros; bond-like o equity-like.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Riesgo de secuencia&lt;/td&gt;&lt;td&gt;Sequence of returns risk&lt;/td&gt;&lt;td&gt;El orden de los retornos importa al retirar capital.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Inversión por objetivos&lt;/td&gt;&lt;td&gt;Goals Based Investing (GBI)&lt;/td&gt;&lt;td&gt;Asignar activos a metas (buckets); usa mental accounting.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Cosecha de pérdidas&lt;/td&gt;&lt;td&gt;Tax-loss harvesting&lt;/td&gt;&lt;td&gt;Realizar pérdidas para compensar ganancias.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Calce activo-pasivo&lt;/td&gt;&lt;td&gt;ALM / duration gap&lt;/td&gt;&lt;td&gt;Igualar duración de activos y pasivos.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Prima de iliquidez&lt;/td&gt;&lt;td&gt;Illiquidity premium&lt;/td&gt;&lt;td&gt;Retorno extra por bloquear capital (modelo Yale).&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+  &lt;p class=&quot;note&quot; style=&quot;padding:0 16px 16px;&quot;&gt;Fuente principal: PPTs de la cátedra (Clases 1–6). Los números de los ejemplos están verificados recalculando con los datos de las PPTs. Los libros de la bibliografía (Bodie-Kane-Marcus, Harris, Kahneman, CFA/Maginn, etc.) no se usaron como archivo; cualquier complemento conceptual conviene confirmarlo con la cátedra.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+
+&lt;/main&gt;
+
+&lt;script&gt;
+  const tabs = document.querySelectorAll(&#x27;.tab&#x27;);
+  const units = document.querySelectorAll(&#x27;section.unit&#x27;);
+  tabs.forEach(t =&gt; t.addEventListener(&#x27;click&#x27;, () =&gt; {
+    tabs.forEach(x =&gt; x.classList.remove(&#x27;active&#x27;));
+    t.classList.add(&#x27;active&#x27;);
+    units.forEach(u =&gt; u.classList.toggle(&#x27;show&#x27;, u.id === t.dataset.t));
+    const q = document.getElementById(&#x27;q&#x27;); q.value=&#x27;&#x27;; filter(&#x27;&#x27;);
+    window.scrollTo({top:0, behavior:&#x27;smooth&#x27;});
+  }));
+  document.getElementById(&#x27;openAll&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+    document.querySelectorAll(&#x27;section.unit.show details&#x27;).forEach(d =&gt; d.open = true);
+  });
+  document.getElementById(&#x27;closeAll&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+    document.querySelectorAll(&#x27;section.unit.show details&#x27;).forEach(d =&gt; d.open = false);
+  });
+  const input = document.getElementById(&#x27;q&#x27;);
+  input.addEventListener(&#x27;input&#x27;, () =&gt; filter(input.value.trim().toLowerCase()));
+  function filter(q){
+    document.querySelectorAll(&#x27;section.unit.show details&#x27;).forEach(d =&gt; {
+      if(!q){ d.classList.remove(&#x27;hide&#x27;); return; }
+      const hit = d.textContent.toLowerCase().includes(q);
+      d.classList.toggle(&#x27;hide&#x27;, !hit);
+      if(hit &amp;&amp; q.length &gt; 2) d.open = true;
+    });
+  }
+
+  // Ocultar la barra de pestañas al deslizar hacia abajo; mostrarla al subir
+  const nav = document.querySelector(&#x27;.tabs&#x27;);
+  let lastY = window.scrollY;
+  window.addEventListener(&#x27;scroll&#x27;, () =&gt; {
+    const y = window.scrollY;
+    if (y &gt; lastY &amp;&amp; y &gt; 80) nav.classList.add(&#x27;nav-hidden&#x27;);      // bajando
+    else nav.classList.remove(&#x27;nav-hidden&#x27;);                        // subiendo
+    lastY = y;
+  }, { passive: true });
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" loading="lazy"></iframe>
+<iframe class="panel" data-i="1" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;es&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -499,7 +1082,7 @@ header{padding:16px 20px 0}
 &lt;/body&gt;
 &lt;/html&gt;
 " loading="lazy"></iframe>
-<iframe class="panel" data-i="1" srcdoc="&lt;!DOCTYPE html&gt;
+<iframe class="panel" data-i="2" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;es&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -839,7 +1422,7 @@ header{padding:16px 20px 0}
 &lt;/body&gt;
 &lt;/html&gt;
 " loading="lazy"></iframe>
-<iframe class="panel" data-i="2" srcdoc="&lt;!DOCTYPE html&gt;
+<iframe class="panel" data-i="3" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;es&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -1217,7 +1800,7 @@ header{padding:16px 20px 0}
 &lt;/body&gt;
 &lt;/html&gt;
 " loading="lazy"></iframe>
-<iframe class="panel" data-i="3" srcdoc="&lt;!DOCTYPE html&gt;
+<iframe class="panel" data-i="4" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;es&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -1487,7 +2070,7 @@ render();
 &lt;/body&gt;
 &lt;/html&gt;
 " loading="lazy"></iframe>
-<iframe class="panel" data-i="4" srcdoc="&lt;!DOCTYPE html&gt;
+<iframe class="panel" data-i="5" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;es&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
