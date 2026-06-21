@@ -191,12 +191,12 @@ PORTAL_TEMPLATE = """<!DOCTYPE html>
 html,body{{height:100%}}
 body{{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;flex-direction:column;height:100vh}}
 #topbar{{flex-shrink:0;transition:margin-top .28s ease;will-change:margin-top}}
-header{{padding:16px 20px 0}}
-.title{{font-size:1.35rem;font-weight:700;display:flex;align-items:center;gap:10px}}
+header{{padding:8px 20px 0}}
+.title{{font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:10px}}
 .title .badge{{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--bg3);color:var(--text2);padding:4px 9px;border-radius:6px;border:1px solid var(--border2)}}
-.subtitle{{color:var(--text2);font-size:.88rem;margin:5px 0 12px}}
-.subjects{{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 12px}}
-.subj{{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border2);color:var(--text2);padding:7px 14px;border-radius:20px;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .15s}}
+.subtitle{{color:var(--text2);font-size:.74rem;margin:2px 0 8px}}
+.subjects{{display:flex;gap:7px;flex-wrap:wrap;padding:0 20px 7px}}
+.subj{{display:flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--border2);color:var(--text2);padding:5px 12px;border-radius:20px;cursor:pointer;font-size:.8rem;font-weight:600;transition:all .15s}}
 .subj:hover{{background:var(--bg3);color:var(--text)}}
 .subj .sdot{{width:9px;height:9px;border-radius:50%;background:var(--c);flex-shrink:0}}
 .subj .scount{{font-size:.7rem;background:var(--bg4,#2e2e2e);color:var(--text3);padding:1px 7px;border-radius:10px}}
