@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte Final — Finanzas Corporativas II · U1 a U5 + Project Finance</title>
+<style>
+:root{
+  --bg:#0f0f0f; --bg2:#1a1a1a; --bg3:#242424; --bg4:#2e2e2e;
+  --text:#e8e8e8; --text2:#a0a0a0; --text3:#666;
+  --border:#2e2e2e; --border2:#3a3a3a;
+  --u1:#5b9ef0; --u2:#3dbf8a; --u3:#e8a83d; --u4:#e06b8a; --u5:#d9794f; --pf:#8b7cf0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;padding:24px 16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto}
+.top{margin-bottom:12px}
+.top h1{font-size:17px;font-weight:700;letter-spacing:-.3px}
+.top .sub{color:var(--text2);font-size:12px;margin-top:3px}
+.exam{display:inline-block;margin-top:12px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:8px 13px;font-size:12.5px;color:var(--text2)}
+.exam b{color:var(--text)}
+/* nav */
+.nav{display:flex;gap:8px;margin:20px 0 18px;flex-wrap:wrap}
+.nav-btn{flex:1;min-width:200px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;text-align:left;transition:.18s;color:var(--text)}
+.nav-btn .nb-tag{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.nav-btn .nb-title{font-size:13.5px;color:var(--text2);margin-top:3px}
+.nav-btn:hover{background:var(--bg3)}
+.nav-btn.active{background:var(--bg3)}
+#nb1.active{border-color:var(--u1);box-shadow:inset 0 0 0 1px var(--u1)}
+#nb2.active{border-color:var(--u2);box-shadow:inset 0 0 0 1px var(--u2)}
+#nb3.active{border-color:var(--u3);box-shadow:inset 0 0 0 1px var(--u3)}
+#nb4.active{border-color:var(--u4);box-shadow:inset 0 0 0 1px var(--u4)}
+#nb5.active{border-color:var(--u5);box-shadow:inset 0 0 0 1px var(--u5)}
+#nb1 .nb-tag{color:var(--u1)} #nb2 .nb-tag{color:var(--u2)} #nb3 .nb-tag{color:var(--u3)} #nb4 .nb-tag{color:var(--u4)} #nb5 .nb-tag{color:var(--u5)} #nbpf .nb-tag{color:var(--pf)}
+#nbpf.active{border-color:var(--pf);box-shadow:inset 0 0 0 1px var(--pf)}
+/* unit */
+.unit{display:none}
+.unit.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.uhead{padding:16px 18px;border-radius:12px;margin-bottom:14px;border:1px solid var(--border)}
+.u1 .uhead{background:linear-gradient(180deg,rgba(91,158,240,.10),rgba(91,158,240,.02))}
+.u2 .uhead{background:linear-gradient(180deg,rgba(61,191,138,.10),rgba(61,191,138,.02))}
+.u5 .uhead{background:linear-gradient(180deg,rgba(217,121,79,.10),rgba(217,121,79,.02))}
+.u3 .uhead{background:linear-gradient(180deg,rgba(232,168,61,.10),rgba(232,168,61,.02))}
+.u4 .uhead{background:linear-gradient(180deg,rgba(224,107,138,.10),rgba(224,107,138,.02))}
+.upf .uhead{background:linear-gradient(180deg,rgba(139,124,240,.10),rgba(139,124,240,.02))}
+.uhead h2{font-size:18px;font-weight:700}
+.uhead p{color:var(--text2);font-size:13px;margin-top:5px}
+.u1 .uhead h2{color:var(--u1)} .u2 .uhead h2{color:var(--u2)} .u3 .uhead h2{color:var(--u3)} .u4 .uhead h2{color:var(--u4)} .u5 .uhead h2{color:var(--u5)} .upf .uhead h2{color:var(--pf)}
+/* accordion */
+.sec{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.sec-head{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none;transition:.15s}
+.sec-head:hover{background:var(--bg3)}
+.sec-num{font-size:12px;font-weight:700;color:var(--text3);min-width:30px}
+.u1 .sec-num{color:var(--u1)} .u2 .sec-num{color:var(--u2)} .u3 .sec-num{color:var(--u3)} .u4 .sec-num{color:var(--u4)} .u5 .sec-num{color:var(--u5)} .upf .sec-num{color:var(--pf)}
+.sec-title{flex:1;font-size:14.5px;font-weight:600}
+.chip{font-size:10.5px;font-weight:600;letter-spacing:.3px;padding:3px 9px;border-radius:20px;background:var(--bg4);color:var(--text2);white-space:nowrap}
+.arrow{color:var(--text3);font-size:11px;transition:transform .2s}
+.sec-head.open .arrow{transform:rotate(180deg)}
+.sec-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.sec-body.open{max-height:5000px}
+.sec-inner{padding:4px 16px 18px;font-size:13.5px;color:var(--text)}
+.sec-inner p{margin:9px 0;color:#dcdcdc}
+.sec-inner ul{margin:9px 0 9px 4px;list-style:none}
+.sec-inner li{position:relative;padding-left:18px;margin:6px 0;color:#dcdcdc}
+.sec-inner li:before{content:"▸";position:absolute;left:0;color:var(--text3)}
+.sec-inner strong{color:#fff;font-weight:600}
+.lead{color:var(--text2);font-size:13px;border-left:2px solid var(--border2);padding-left:12px;margin:4px 0 12px}
+/* concept card */
+.concept{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:11px 13px;margin:10px 0}
+.concept-title{font-weight:700;font-size:13px;color:#fff;margin-bottom:3px}
+.u1 .concept-title{color:var(--u1)} .u2 .concept-title{color:var(--u2)} .u3 .concept-title{color:var(--u3)} .u4 .concept-title{color:var(--u4)} .u5 .concept-title{color:var(--u5)}
+/* comparative grid */
+.vs-grid{display:grid;gap:1px;background:var(--border2);border:1px solid var(--border2);border-radius:8px;overflow:hidden;margin:12px 0;font-size:12.5px}
+.vs-2{grid-template-columns:1fr 1fr}
+.vs-3{grid-template-columns:1fr 1fr 1fr}
+.vs-cell{background:var(--bg3);padding:9px 11px;color:#d8d8d8}
+.vs-header{background:var(--bg4);font-weight:700;color:#fff;text-align:center}
+/* formula note */
+.fx{display:inline-block;background:var(--bg);border:1px solid var(--border2);border-radius:5px;padding:1px 7px;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;color:#cfe;margin:2px 0}
+.note{background:rgba(232,168,61,.07);border:1px solid rgba(232,168,61,.25);border-radius:8px;padding:10px 13px;margin:11px 0;font-size:12.5px;color:#e8d9b8}
+.note b{color:var(--u3)}
+.key{background:rgba(61,191,138,.07);border:1px solid rgba(61,191,138,.28);border-radius:8px;padding:10px 13px;margin:11px 0;font-size:12.5px;color:#bfe8d4}
+.key b{color:var(--u2)}
+/* charts */
+.chartgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:12px 0}
+.chartgrid.wide{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+figure.chart{background:#10141c;border:1px solid var(--border2);border-radius:10px;padding:10px 10px 8px;margin:10px 0}
+figure.chart svg{width:100%;height:auto;display:block}
+figure.chart figcaption{color:var(--text2);font-size:11.5px;margin-top:6px;line-height:1.45}
+figure.chart figcaption b{color:#fff}
+.sec-inner table{width:100%;border-collapse:collapse;margin:11px 0;font-size:12.5px}
+.sec-inner th{background:var(--bg);color:var(--text2);text-align:left;padding:7px 9px;border:1px solid var(--border2);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+.sec-inner td{padding:7px 9px;border:1px solid var(--border2);color:#d8d8d8}
+.sec-inner td.pos{color:#4ade80;font-weight:700} .sec-inner td.neg{color:#f87171;font-weight:700}
+.foot{margin-top:26px;color:var(--text3);font-size:11.5px;text-align:center;border-top:1px solid var(--border);padding-top:14px}
+.expand-all{font-size:11.5px;color:var(--text2);cursor:pointer;border:1px solid var(--border);background:var(--bg2);border-radius:6px;padding:5px 10px;margin-bottom:12px;display:inline-block}
+.expand-all:hover{background:var(--bg3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>Apunte Final — Finanzas Corporativas II</h1>
+    <div class="sub">Final integrador · Unidades 1, 2, 3, 4 y 5 + Project Finance · Prof. E. Marino / N. Mesa</div>
+    <div class="exam">📌 Parcial <b>teórico</b> (sin práctica): el foco está en conceptos, definiciones, comparaciones y el <b>"por qué"</b>, no en resolver números.</div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" id="nb1" onclick="show(1,this)">
+      <div class="nb-tag">Unidad 1</div>
+      <div class="nb-title">Análisis financiero y creación de valor</div>
+    </button>
+    <button class="nav-btn" id="nb2" onclick="show(2,this)">
+      <div class="nb-tag">Unidad 2</div>
+      <div class="nb-title">Evaluación de proyectos en países emergentes</div>
+    </button>
+    <button class="nav-btn" id="nb3" onclick="show(3,this)">
+      <div class="nb-tag">Unidad 3</div>
+      <div class="nb-title">Tópicos avanzados — Incertidumbre</div>
+    </button>
+    <button class="nav-btn" id="nb4" onclick="show(4,this)">
+      <div class="nb-tag">Unidad 4</div>
+      <div class="nb-title">Estructura de capital</div>
+    </button>
+    <button class="nav-btn" id="nb5" onclick="show(5,this)">
+      <div class="nb-tag">Unidad 5</div>
+      <div class="nb-title">Política de dividendos</div>
+    </button>
+    <button class="nav-btn" id="nbpf" onclick="show('pf',this)">
+      <div class="nb-tag">Project Finance</div>
+      <div class="nb-title">Financiación estructurada de proyectos</div>
+    </button>
+  </div>
+
+  <!-- ===================== UNIDAD 1 ===================== -->
+  <div class="unit u1 show" id="u1">
+    <div class="uhead">
+      <h2>Unidad 1 · Análisis financiero y creación de valor</h2>
+      <p>El rol del CFO, los estados financieros, la earning call, los KPIs, el Free Cash Flow y el EVA. La idea-fuerza: asignar capital para crear valor (retorno &gt; WACC).</p>
+    </div>
+    <span class="expand-all" onclick="toggleAll('u1')">Expandir / colapsar todo</span>
+
+    <!-- 1.1 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">1.1</span>
+        <span class="sec-title">El rol del CFO</span>
+        <span class="chip">Concepto</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">El CFO es el ejecutor de la estrategia financiera y, además, un "business partner" del negocio. No sólo controla números: asigna el capital de la empresa para crear valor.</p>
+        <p><strong>Cuatro frentes de responsabilidad:</strong></p>
+        <ul>
+          <li><strong>Budget / Forecast / análisis de desvíos:</strong> planificar los números del año y comparar lo real contra lo presupuestado (variance analysis).</li>
+          <li><strong>Control de gestión / Controlling:</strong> monitoreo permanente del desempeño.</li>
+          <li><strong>Tesorería:</strong> cuentas por pagar y por cobrar (la caja del día a día).</li>
+          <li><strong>Decisiones de inversión y financiamiento:</strong> en qué proyectos invertir y con qué fondos pagarlos (deuda o capital propio).</li>
+        </ul>
+        <div class="key"><b>Idea clave:</b> el trabajo del CFO no es "llevar la contabilidad" sino asignar capital para crear valor — hacia donde apunta toda la U1, que termina en el EVA.</div>
+      </div></div>
+    </div>
+
+    <!-- 1.2 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">1.2</span>
+        <span class="sec-title">Las tres fuentes de información (foto vs película)</span>
+        <span class="chip">Comparativa</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Para analizar una empresa se miran tres estados financieros. La metáfora central: el Balance es una foto; el P&amp;L y el Cash Flow son películas.</p>
+        <div class="vs-grid vs-3">
+          <div class="vs-cell vs-header">P&amp;L (Estado de Resultados)</div>
+          <div class="vs-cell vs-header">Cash Flow</div>
+          <div class="vs-cell vs-header">Balance Sheet</div>
+          <div class="vs-cell">Película (durante el período)</div>
+          <div class="vs-cell">Película (durante el período)</div>
+          <div class="vs-cell">Foto (un instante)</div>
+          <div class="vs-cell"><strong>Devengado</strong> (accrual): la venta se registra cuando ocurre</div>
+          <div class="vs-cell"><strong>Caja real</strong>: lo que entró y salió de verdad</div>
+          <div class="vs-cell">Posición al inicio y al cierre</div>
+          <div class="vs-cell">¿Es rentable?</div>
+          <div class="vs-cell">¿Es líquida/solvente?</div>
+          <div class="vs-cell">¿Cómo está parada patrimonialmente?</div>
+        </div>
+        <div class="concept">
+          <div class="concept-title">P&amp;L — la cascada</div>
+          Revenue − COGS = <strong>Gross Profit</strong> → menos gastos operativos = EBIT → menos intereses e impuestos = <strong>Net Income</strong>. De ahí salen los márgenes y el <strong>EPS diluted</strong> (neto sobre todas las acciones, incluyendo las potenciales por opciones/convertibles).
+        </div>
+        <div class="concept">
+          <div class="concept-title">Cash Flow — Free Cash Flow</div>
+          <span class="fx">Free Cash Flow = Operating Cash Flow − CAPEX</span> Es la caja que queda realmente libre tras mantener el negocio funcionando. "Use of cash" = en qué se usó (deuda, dividendos, recompras).
+        </div>
+        <div class="key"><b>Por qué se miran las tres juntas:</b> una empresa puede tener ganancia en el P&amp;L y quedarse sin caja (vendió a crédito y no cobró). El P&amp;L dice si es rentable; el Cash Flow, si es líquida; el Balance, cómo está parada.</div>
+      </div></div>
+    </div>
+
+    <!-- 1.3 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">1.3</span>
+        <span class="sec-title">La Earning Call (GAAP vs Non-GAAP, guidance vs consensus, SEC)</span>
+        <span class="chip">Reporte</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">La presentación trimestral de resultados al mercado ("show preview"). Componentes: press release, infographics, financial statements, transcript y formularios SEC (10-Q/10-K).</p>
+        <div class="concept">
+          <div class="concept-title">Moneda — Local vs Constant Currency</div>
+          <strong>Constant currency</strong> saca el efecto del tipo de cambio → muestra el crecimiento <strong>real</strong> del negocio. Si una empresa creció 2% reportado pero 9% en constant currency, una moneda que se devaluó se comió la diferencia.
+        </div>
+        <div class="concept">
+          <div class="concept-title">GAAP vs Non-GAAP</div>
+          <strong>GAAP</strong> = oficial, auditado, comparable, según normas. <strong>Non-GAAP</strong> = versión ajustada por la propia empresa, saca partidas que dice que son no recurrentes/no operativas (reestructuraciones, stock-based comp, amortización de intangibles, impairments). Por Reg G de la SEC, debe mostrar la <strong>reconciliación</strong>. <strong>Casi siempre da mejor</strong> → auditar cada add-back.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Guidance vs Consensus</div>
+          <strong>Guidance</strong> = proyección de la propia empresa. <strong>Consensus</strong> = promedio de los analistas externos. El precio se mueve por <strong>beat/miss vs consensus</strong>, no por el número absoluto: una empresa puede tener ganancias récord y caer si el guidance decepcionó.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Formularios SEC</div>
+          La <strong>SEC</strong> es el regulador de EE.UU. <strong>10-Q</strong> = reporte trimestral; <strong>10-K</strong> = anual (auditado, más completo). Se consultan gratis en EDGAR.
+        </div>
+        <div class="note"><b>Distinción fina (caso CGI):</b> "no-operativo" ≠ "no-recurrente". Los intereses son no-operativos pero <strong>recurrentes</strong> → no se ajustan en el Non-GAAP operativo. El ajuste Non-GAAP saca lo <strong>no-recurrente del resultado operativo</strong>, no "todo lo no-operativo".</div>
+      </div></div>
+    </div>
+
+    <!-- 1.4 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">1.4</span>
+        <span class="sec-title">KPIs clave (ROIC, ROE, ROTA, Working Capital, D/A, TSR, P/E)</span>
+        <span class="chip">Indicadores</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Las lentes con las que el CFO y los inversores leen los estados. Idea repetida: la evolución en el tiempo importa más que el número aislado — cuenta la "historia".</p>
+        <div class="concept">
+          <div class="concept-title">ROIC / ROCE — el más importante para los accionistas</div>
+          <span class="fx">ROIC = EBT / Capital Employed</span> Mide cuánto rinde cada peso de capital invertido. Crear valor = <strong>ROIC &gt; WACC</strong>. (La cátedra usa EBT; el estándar de libro usa NOPAT/Invested Capital — usar la de cátedra en el parcial.)
+        </div>
+        <div class="concept">
+          <div class="concept-title">ROE — Return on Equity</div>
+          <span class="fx">ROE = Net Income / PN</span> Retorno del accionista. <strong>No comparable entre países</strong> (afectado por impuestos y estructura local).
+        </div>
+        <div class="concept">
+          <div class="concept-title">ROTA — donde más influye el CFO</div>
+          <span class="fx">ROTA = EBIT / Total Assets = margen EBIT × rotación de activos</span> Saludable entre 5% y 20%, estable entre industrias. El CFO lo mejora subiendo margen o rotando más rápido los activos.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Working Capital + ciclo</div>
+          <span class="fx">WC = Activo Cte − Pasivo Cte</span> · <span class="fx">Ciclo = DIO + DSO − DPO</span> Inventario (DIO) y cobranzas (DSO) inmovilizan caja; pagar tarde a proveedores (DPO) la libera. <strong>Ciclo más corto = mejor.</strong> El WC contable incluye la caja; el WC <strong>operativo</strong> la excluye (no rota con las ventas).
+        </div>
+        <div class="concept">
+          <div class="concept-title">D/A, TSR y P/E</div>
+          <strong>D/A</strong> = Total Debt / Total Assets (fortaleza financiera; hasta 50–60% saludable). <strong>TSR</strong> = dividendos + cambio de precio (retorno total del accionista). <strong>P/E</strong> = precio / EPS (TTM); "Premium to S&amp;P500" = P/E relativo al índice.
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 1.5 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">1.5</span>
+        <span class="sec-title">Del ROE a la creación de valor (Free Cash Flow)</span>
+        <span class="chip">Concepto central</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">La idea central de toda la unidad, la frase que hay que poder recitar.</p>
+        <div class="key"><b>Regla de creación de valor:</b> las empresas crean valor invirtiendo capital para generar flujos de caja cuya tasa de retorno <strong>excede su costo de financiamiento (WACC)</strong>.</div>
+        <ul>
+          <li>Retorno (ROIC/ROE) <strong>&gt; WACC</strong> → <strong>crea valor</strong>.</li>
+          <li>Retorno <strong>= WACC</strong> → neutro (apenas cubre el costo del capital).</li>
+          <li>Retorno <strong>&lt; WACC</strong> → <strong>destruye valor</strong>, aunque haya ganancia contable positiva.</li>
+        </ul>
+        <p>Lo contraintuitivo: una empresa puede dar ganancia en el P&amp;L y estar <strong>destruyendo valor</strong>, porque no cubre lo que exigen quienes la financian. El <strong>Free Cash Flow</strong> (Operating Cash Flow − CAPEX) es la caja realmente libre para repartir — el combustible de la creación de valor.</p>
+        <figure class="chart"><svg viewBox="0 0 290 170" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="140" x2="280" y2="140" stroke="#2c3444"/><rect x="60" y="30" width="170" height="40" fill="#4ade80" opacity="0.08"/><rect x="70" y="30" width="60" height="110" fill="#4ade80" opacity="0.85"/><text x="100" y="24" fill="#4ade80" font-size="10" text-anchor="middle" font-weight="700">ROIC</text><rect x="170" y="70" width="60" height="70" fill="#9aa3b5" opacity="0.7"/><text x="200" y="64" fill="#9aa3b5" font-size="10" text-anchor="middle" font-weight="700">WACC</text><line x1="244" y1="30" x2="244" y2="70" stroke="#fbbf24" stroke-width="1.2"/><text x="250" y="54" fill="#fbbf24" font-size="9">spread</text></svg><figcaption><b>Lectura:</b> hay creación de valor cuando el <b>ROIC supera al WACC</b>. La diferencia (el <i>spread</i>, zona amarilla) es lo que se traduce en EVA positivo. Si el ROIC cayera por debajo del WACC, la empresa <b>destruiría valor</b> aunque tenga ganancia contable.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 1.6 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">1.6</span>
+        <span class="sec-title">EVA — Economic Value Added</span>
+        <span class="chip">Fórmula clave</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">El indicador estrella: captura el verdadero beneficio económico — cuánta riqueza crea o destruye la empresa. Traduce a pesos la regla "retorno &gt; WACC".</p>
+        <div class="concept">
+          <div class="concept-title">La fórmula</div>
+          <span class="fx">EVA = Net Income − (Invested Capital × WACC)</span> A la ganancia contable le restás el "alquiler" del capital (lo que tendrías que generar sólo para cubrir el costo de financiarte). <strong>EVA &gt; 0</strong> → crea valor; <strong>EVA &lt; 0</strong> → destruye (aunque el Net Income sea positivo).
+        </div>
+        <div class="concept">
+          <div class="concept-title">Invested Capital</div>
+          <span class="fx">IC = Equity + Long Term Liabilities = Total Assets − Current Liabilities</span> El capital "permanente" puesto a trabajar.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Ejemplos</div>
+          <strong>Apple:</strong> 80.000 − (300.000 × 0,07) = <strong>59.000 M USD</strong>.<br>
+          <strong>Accenture FY23:</strong> 6.872 − (33.236 × 0,0892) = <strong>3.907 M USD</strong>. El WACC sale con CAPM: Ke = Rf + β·ERP = 3,91% + 1,23×4,09% = 8,94%.
+        </div>
+        <div class="note"><b>Punto clave:</b> la contabilidad "olvida" cobrar el costo del capital propio (los accionistas); el EVA lo hace explícito. Por eso un Net Income positivo puede ser EVA negativo.</div>
+        <figure class="chart"><svg viewBox="0 0 290 180" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="150" x2="280" y2="150" stroke="#2c3444"/><rect x="35" y="20" width="55" height="130" fill="#4fc3f7" opacity="0.85"/><text x="62" y="14" fill="#4fc3f7" font-size="9" text-anchor="middle" font-weight="700">80.000</text><text x="62" y="164" fill="#9aa3b5" font-size="8.5" text-anchor="middle">Net Income</text><rect x="118" y="20" width="55" height="34" fill="#f87171" opacity="0.85"/><text x="145" y="14" fill="#f87171" font-size="9" text-anchor="middle" font-weight="700">−21.000</text><text x="145" y="164" fill="#9aa3b5" font-size="8.5" text-anchor="middle">IC × WACC</text><rect x="201" y="54" width="55" height="96" fill="#4ade80" opacity="0.9"/><text x="228" y="48" fill="#4ade80" font-size="9" text-anchor="middle" font-weight="700">59.000</text><text x="228" y="164" fill="#9aa3b5" font-size="8.5" text-anchor="middle">EVA</text><line x1="90" y1="20" x2="118" y2="20" stroke="#566075" stroke-width="1" stroke-dasharray="3 2"/><line x1="173" y1="54" x2="201" y2="54" stroke="#566075" stroke-width="1" stroke-dasharray="3 2"/></svg><figcaption><b>Lectura (Apple):</b> al Net Income (80.000) se le resta el "alquiler" del capital — <b>Invested Capital × WACC</b> = 300.000 × 7% = 21.000 — y queda el <b>EVA = 59.000</b>. Mientras la barra verde sea positiva, la empresa <b>crea valor</b>: ganó por encima del costo de su capital.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 1.7 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">1.7</span>
+        <span class="sec-title">Estrategias del EVA + 6 factores del valor</span>
+        <span class="chip">Integrador</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Cuatro palancas para subir el EVA — cada una ataca una parte de la fórmula. Es el hilo que conecta toda la materia.</p>
+        <div class="vs-grid vs-2">
+          <div class="vs-cell vs-header">Palanca</div>
+          <div class="vs-cell vs-header">Qué ataca de la fórmula</div>
+          <div class="vs-cell"><strong>Operación</strong> — mejorar el retorno del negocio corriente</div>
+          <div class="vs-cell">↑ Net Income</div>
+          <div class="vs-cell"><strong>Inversión</strong> — reinvertir en proyectos con retorno &gt; WACC</div>
+          <div class="vs-cell">Net Income futuro (bien invertido)</div>
+          <div class="vs-cell"><strong>Racionalizar</strong> — reasignar capital; devolver lo improductivo (→ dividendos, U5)</div>
+          <div class="vs-cell">↓ Invested Capital</div>
+          <div class="vs-cell"><strong>Financiamiento</strong> — optimizar deuda vs capital (→ estructura, U4)</div>
+          <div class="vs-cell">↓ WACC</div>
+        </div>
+        <div class="concept">
+          <div class="concept-title">6 factores que determinan el valor (HBR, 25/10/22)</div>
+          (1) crecimiento de ventas · (2) crecimiento del margen · (3) patrones de dividendos · (4) cambio en el D/A · (5) condiciones de la industria · (6) volatilidad del país. Los dos primeros son operativos; el 3 y 4, decisiones financieras; el 5 y 6, contexto/riesgo.
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ===================== UNIDAD 2 ===================== -->
+  <div class="unit u2" id="u2">
+    <div class="uhead">
+      <h2>Unidad 2 · Evaluación de proyectos en países emergentes</h2>
+      <p>Criterios de selección, el rol de la inflación, el proceso de evaluación y el tipo de cambio en monedas inestables.</p>
+    </div>
+    <span class="expand-all" onclick="toggleAll('u2')">Expandir / colapsar todo</span>
+
+    <!-- 2.1 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">2.1</span>
+        <span class="sec-title">Criterios de selección: NPV, Payback, IRR, MIRR</span>
+        <span class="chip">Comparativa</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Las tres familias de criterios para decidir si un proyecto se acepta. El NPV es el rey; los demás se usan como complemento o por costumbre de la industria.</p>
+        <div class="concept">
+          <div class="concept-title">NPV — Valor Actual Neto (Irving Fisher, 1930)</div>
+          Suma de los flujos descontados a la tasa de oportunidad. <span class="fx">NPV = C₀ + Σ Cₜ/(1+r)ᵗ</span> Se acepta si <strong>NPV &gt; 0</strong>. Es el <strong>mejor criterio</strong>: incorpora el valor tiempo del dinero, usa <strong>todos</strong> los flujos y al estar en plata es sumable entre proyectos. <strong>Cuando los criterios se contradicen, manda el NPV.</strong>
+        </div>
+        <div class="concept">
+          <div class="concept-title">Payback — Período de repago</div>
+          Tiempo que tarda el proyecto en devolver la inversión inicial. Defectos: <strong>ignora el valor tiempo del dinero</strong>, da ponderación nula a los períodos posteriores al corte y tiene sesgo hacia proyectos de corto plazo.
+        </div>
+        <div class="concept">
+          <div class="concept-title">IRR — Tasa Interna de Retorno</div>
+          Tasa que hace <span class="fx">NPV = 0</span>. Se acepta si <strong>IRR &gt; WACC</strong>. Conviene usarla <strong>junto al NPV</strong>, nunca sola. Supuesto oculto: reinversión de los flujos a la propia IRR (sobreestima si la IRR es alta). Otras limitaciones: puede haber IRR múltiples (varios cambios de signo), puede no existir, y entra en conflicto con el NPV en proyectos mutuamente excluyentes (por escala y por timing).
+        </div>
+        <div class="concept">
+          <div class="concept-title">MIRR — TIR Modificada</div>
+          Corrige el supuesto de reinversión de la IRR. Maneja <strong>tres tasas con tres roles distintos</strong>: reinvierte los flujos positivos a la <strong>tasa de reinversión</strong> (≈ WACC), trae los flujos negativos a VP a la <strong>tasa de financiamiento</strong> (costo de deuda), y la MIRR resultante se compara contra el <strong>WACC</strong> (hurdle rate) para decidir.
+        </div>
+        <div class="note"><b>Por qué la IRR se usa tanto en la realidad</b> (pese a ser inferior al NPV): es intuitiva y se comunica en un % único; no exige fijar la tasa de descuento de antemano; es el estándar de la industria (PE, VC y real estate reportan en IRR). Regla profesional: <b>decidir con NPV, comunicar con IRR.</b></div>
+        <figure class="chart"><svg viewBox="0 0 290 180" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="12" x2="14" y2="154" stroke="#2c3444"/><line x1="14" y1="154" x2="280" y2="154" stroke="#2c3444"/><line x1="243.8" y1="12" x2="243.8" y2="154" stroke="#222a38" stroke-dasharray="2 3"/><text x="243.8" y="166" fill="#9aa3b5" font-size="9" text-anchor="middle">IRR</text><polyline points="14.0,15.9 21.6,19.9 29.2,23.9 36.8,27.7 44.4,31.4 52.0,35.0 59.6,38.4 67.2,41.8 74.8,45.0 82.4,48.2 90.0,51.2 97.6,54.2 105.2,57.0 112.8,59.8 120.4,62.5 128.0,65.1 135.6,67.6 143.2,70.0 150.8,72.4 158.4,74.7 166.0,76.9 173.6,79.0 181.2,81.1 188.8,83.1 196.4,85.1 204.0,87.0 211.6,88.8 219.2,90.6 226.8,92.3 234.4,93.9 242.0,95.5 249.6,97.1 257.2,98.6 264.8,100.1 272.4,101.5 280.0,102.8" fill="none" stroke="#4fc3f7" stroke-width="2.4" stroke-linejoin="round"/><circle cx="243.8" cy="95.9" r="3.5" fill="#fbbf24"/><text x="243.8" y="88.9" fill="#fbbf24" font-size="10" font-weight="700" text-anchor="middle">NPV=0</text><text x="280" y="166" fill="#9aa3b5" font-size="9" text-anchor="end">tasa r</text></svg><figcaption><b>Lectura:</b> el NPV cae a medida que sube la tasa. Donde cruza cero está la <b>IRR</b>. A la izquierda (r &lt; IRR, ej. el WACC) el NPV es positivo → se acepta; a la derecha es negativo → se rechaza. Por eso la regla IRR coincide con NPV&gt;0… salvo en proyectos mutuamente excluyentes, donde manda el NPV.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 2.2 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">2.2</span>
+        <span class="sec-title">Principios clave del NPV</span>
+        <span class="chip">Concepto base</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <ul>
+          <li><strong>El forecast del cash flow es CLAVE:</strong> la calidad del NPV depende de la calidad de la proyección de flujos.</li>
+          <li><strong>Base incremental + lógica:</strong> se computan solo los flujos que el proyecto agrega respecto de no hacerlo; nada de costos hundidos.</li>
+          <li><strong>Consistencia con la inflación:</strong> tratar la inflación igual arriba (flujos) y abajo (tasa) de la fracción. Es el principio que articula toda la unidad.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 2.3 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">2.3</span>
+        <span class="sec-title">Inflación: nominal vs. real (corazón de la unidad)</span>
+        <span class="chip">Mecanismo</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <div class="key"><b>Regla de oro:</b> flujos <b>nominales → tasa nominal</b>; flujos <b>reales → tasa real</b>. <b>Nunca mezclar.</b> Las dos vías dan exactamente el <b>mismo NPV</b> porque la inflación se cancela en el numerador y el denominador de la fracción.</div>
+        <p>La <strong>tasa real</strong> se calcula con la fórmula exacta de Fisher, no con la resta:</p>
+        <p><span class="fx">r_real = (1 + r_nom) / (1 + inflación) − 1</span></p>
+        <div class="note">⚠️ <b>En países emergentes no usar la aproximación por resta</b> (r_nom − inflación). Con inflación alta el error es grande; siempre la fórmula exacta.</div>
+      </div></div>
+    </div>
+
+    <!-- 2.4 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">2.4</span>
+        <span class="sec-title">Proceso de evaluación en 3 pasos + checklist corporativo</span>
+        <span class="chip">Operatoria</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <div class="concept">
+          <div class="concept-title">Paso 1 · Del P&amp;L al Free Cash Flow</div>
+          Sumar de vuelta la <strong>depreciación</strong> (no es salida de caja), restar <strong>CAPEX</strong>, ajustar el <strong>capital de trabajo</strong>, en base <strong>incremental</strong> y <strong>antes del financiamiento</strong>.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Paso 2 · Elegir la tasa de descuento</div>
+          Descontar al <strong>WACC</strong>: costo promedio ponderado de deuda y equity = rentabilidad mínima exigida por la empresa al proyecto.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Paso 3 · Calcular NPV y MIRR + criterio de aceptación</div>
+          Aceptar si <strong>NPV &gt; 0</strong> y <strong>MIRR &gt; WACC</strong>. Se justifica tanto por el valor presente positivo como por una rentabilidad anual superior a la tasa requerida.
+        </div>
+        <p><strong>Investment Proposal Check List</strong> (de SI / Siemens Corporate Controlling): es un <strong>proceso formal de aprobación de inversiones</strong>, no un método de cálculo. Documenta supuestos de inflación, análisis de sensibilidad, riesgos, contratos y SLAs. Punto conceptual: la decisión real combina el <strong>criterio cuantitativo</strong> (NPV/MIRR) con el <strong>análisis cualitativo</strong> de riesgos.</p>
+      </div></div>
+    </div>
+
+    <!-- 2.5 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">2.5</span>
+        <span class="sec-title">Moneda y tipo de cambio: IFE vs. PPP</span>
+        <span class="chip">Comparativa</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Las evaluaciones se hacen mayormente en <strong>moneda fuerte (USD/EUR)</strong>. Si hay que estimar el tipo de cambio futuro (p. ej. para evaluar en pesos), se usa uno de estos dos métodos.</p>
+        <div class="vs-grid vs-2">
+          <div class="vs-cell vs-header">Efecto Internacional de Fisher (IFE)</div>
+          <div class="vs-cell vs-header">Purchasing Power Parity (PPP)</div>
+          <div class="vs-cell">Parte de la diferencia de <strong>tasas de interés</strong></div>
+          <div class="vs-cell">Parte de la diferencia de <strong>inflaciones</strong></div>
+          <div class="vs-cell">Tasa nominal alta → inflación alta → la moneda se deprecia. <span class="fx">E ≈ i₁ − i₂</span></div>
+          <div class="vs-cell"><span class="fx">Sₜ = S₀·[(1+inflₐ)/(1+infl_b)]ᵗ</span> — la moneda de más inflación se deprecia</div>
+        </div>
+        <div class="key"><b>Ambas predicen lo mismo:</b> la moneda con mayor inflación se devalúa. Difieren solo en la <b>variable de partida</b> (tasas de interés vs. inflaciones).</div>
+        <figure class="chart"><svg viewBox="0 0 290 180" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="12" x2="14" y2="154" stroke="#2c3444"/><line x1="14" y1="154" x2="280" y2="154" stroke="#2c3444"/><polyline points="14.0,136.2 67.2,118.5 120.4,99.0 173.6,77.5 226.8,53.9 280.0,27.9" fill="none" stroke="#f87171" stroke-width="2.4" stroke-linejoin="round"/><polyline points="14.0,136.2 67.2,136.2 120.4,136.2 173.6,136.2 226.8,136.2 280.0,136.2" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/><circle cx="280.0" cy="27.9" r="3.5" fill="#f87171"/><text x="280.0" y="20.9" fill="#f87171" font-size="10" font-weight="700" text-anchor="middle">TC↑</text><text x="280" y="166" fill="#9aa3b5" font-size="9" text-anchor="end">años</text></svg><figcaption><b>Lectura:</b> la curva roja es el tipo de cambio de la moneda de alta inflación: sube cada período → la moneda <b>se deprecia</b> (la verde punteada sería una moneda estable). <b>PPP</b> proyecta con diferencia de <i>inflaciones</i>; <b>IFE</b>, con diferencia de <i>tasas de interés</i>. Ambas predicen lo mismo: la de mayor inflación/tasa se devalúa. Por eso se proyecta en moneda fuerte (USD/EUR).</figcaption></figure>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ===================== UNIDAD 3 ===================== -->
+  <div class="unit u3" id="u3">
+    <div class="uhead">
+      <h2>Unidad 3 · Tópicos avanzados — Evaluación bajo incertidumbre</h2>
+      <p>Herramientas que van más allá del NPV de un único escenario, hasta llegar a las opciones reales y la valuación de la flexibilidad.</p>
+    </div>
+    <span class="expand-all" onclick="toggleAll('u3')">Expandir / colapsar todo</span>
+
+    <!-- 3.1 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">3.1</span>
+        <span class="sec-title">El problema: el NPV tradicional y la gestión estática</span>
+        <span class="chip">Fundamentos</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>El hilo conductor de la unidad: el NPV tradicional asume un <strong>único escenario esperado</strong> de flujos y una <strong>gestión estática</strong>, apegada a una sola estrategia operativa. No captura la flexibilidad de <strong>revisar decisiones</strong> a medida que se resuelve la incertidumbre del mercado. Cada herramienta de la unidad incorpora esa incertidumbre de una forma distinta.</p>
+      </div></div>
+    </div>
+
+    <!-- 3.2 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">3.2</span>
+        <span class="sec-title">Análisis de sensibilidad</span>
+        <span class="chip">Mecanismo</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>Antes de decidir, se identifican las <strong>variables clave</strong> que determinan el éxito o fracaso. Se hace una estimación <strong>optimista y pesimista</strong> de cada una y se calcula el NPV <strong>variando una variable a la vez</strong>. El cuadro de NPVs en distintos escenarios revela las variables más "peligrosas".</p>
+        <p><strong>Limitaciones:</strong></p>
+        <ul>
+          <li>Hay que identificar bien cuáles son las variables clave.</li>
+          <li>Resultado ambiguo: depende de qué se defina como optimista o pesimista.</li>
+          <li>Ignora que las variables pueden estar <strong>correlacionadas</strong> entre sí.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 3.3 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">3.3</span>
+        <span class="sec-title">Simulación de Montecarlo</span>
+        <span class="chip">Mecanismo</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>Método matemático para proyectos con incertidumbre. A diferencia de la sensibilidad básica, considera <strong>todas las variables a la vez</strong>. Estima no solo el <strong>valor esperado</strong> del proyecto sino también su <strong>riesgo</strong>. Pasos:</p>
+        <ul>
+          <li>Modelizar el proyecto definiendo las variables clave.</li>
+          <li>Asignar una <strong>distribución de probabilidad</strong> a cada variable (en base a una muestra).</li>
+          <li>Simular escenarios (<strong>mínimo 10.000</strong>) según esas distribuciones.</li>
+          <li>Calcular el NPV medio de las simulaciones y la <strong>probabilidad de que el NPV sea &gt; 0</strong>.</li>
+        </ul>
+        <div class="note"><b>Limitación práctica:</b> reduce la incertidumbre, pero el <b>costo y la complejidad</b> de implementarla hacen que se use poco en la práctica.</div>
+        <figure class="chart"><svg viewBox="0 0 290 160" xmlns="http://www.w3.org/2000/svg"><line x1="12" y1="136" x2="280" y2="136" stroke="#2c3444"/><line x1="146.0" y1="12" x2="146.0" y2="136" stroke="#222a38" stroke-dasharray="2 3"/><text x="146.0" y="152" fill="#9aa3b5" font-size="9" text-anchor="middle">NPV esperado</text><polyline points="12.0,134.6 16.5,134.1 20.9,133.5 25.4,132.8 29.9,131.8 34.3,130.6 38.8,129.0 43.3,127.2 47.7,125.0 52.2,122.3 56.7,119.2 61.1,115.6 65.6,111.5 70.1,106.8 74.5,101.5 79.0,95.7 83.5,89.5 87.9,82.7 92.4,75.6 96.9,68.3 101.3,60.8 105.8,53.3 110.3,46.0 114.7,38.9 119.2,32.4 123.7,26.6 128.1,21.5 132.6,17.5 137.1,14.5 141.5,12.6 146.0,12.0 150.5,12.6 154.9,14.5 159.4,17.5 163.9,21.5 168.3,26.6 172.8,32.4 177.3,38.9 181.7,46.0 186.2,53.3 190.7,60.8 195.1,68.3 199.6,75.6 204.1,82.7 208.5,89.5 213.0,95.7 217.5,101.5 221.9,106.8 226.4,111.5 230.9,115.6 235.3,119.2 239.8,122.3 244.3,125.0 248.7,127.2 253.2,129.0 257.7,130.6 262.1,131.8 266.6,132.8 271.1,133.5 275.5,134.1 280.0,134.6" fill="none" stroke="#4fc3f7" stroke-width="2.2"/></svg><figcaption><b>Lectura:</b> Montecarlo mueve <b>todas</b> las variables a la vez (≥10.000 corridas) y devuelve la <b>distribución del NPV</b>, no un único número. De ahí salen el NPV esperado y la <b>probabilidad de NPV&gt;0</b> (área a la derecha de cero). Diferencia con la sensibilidad, que mueve <i>una</i> variable por vez.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 3.4 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">3.4</span>
+        <span class="sec-title">Árboles de decisión</span>
+        <span class="chip">Mecanismo</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>Se usan para proyectos con <strong>decisiones secuenciales</strong>. Parten de un <strong>nodo raíz</strong> y se ramifican en opciones; cada opción puede llevar a distintos resultados, cada uno con su probabilidad y valor, hasta los resultados finales.</p>
+        <div class="vs-grid vs-2">
+          <div class="vs-cell vs-header">Nodo de decisión (cuadrado)</div>
+          <div class="vs-cell vs-header">Nodo de azar (círculo)</div>
+          <div class="vs-cell">Elegís vos: representás una decisión gerencial</div>
+          <div class="vs-cell">Lo decide la incertidumbre: se le asignan probabilidades</div>
+        </div>
+        <p>Se resuelve <strong>hacia atrás</strong> (roll back): se evalúa desde los resultados finales hacia la decisión inicial. Captura el <strong>valor de la flexibilidad</strong> de decidir con más información en el futuro.</p>
+        <figure class="chart"><svg viewBox="0 0 470 230" xmlns="http://www.w3.org/2000/svg" role="img"><rect x="14" y="100" width="26" height="26" rx="3" fill="#10141c" stroke="#fbbf24" stroke-width="1.6"/><text x="27" y="118" fill="#fbbf24" font-size="11" text-anchor="middle">D</text><text x="27" y="142" fill="#9aa3b5" font-size="8.5" text-anchor="middle">decido</text><line x1="40" y1="108" x2="150" y2="58" stroke="#4ade80" stroke-width="1.8"/><text x="88" y="49" fill="#4ade80" font-size="9" text-anchor="middle">pistón (barato)</text><circle cx="165" cy="55" r="13" fill="#10141c" stroke="#4ade80" stroke-width="1.6"/><text x="165" y="59" fill="#4ade80" font-size="10" text-anchor="middle">○</text><line x1="40" y1="118" x2="150" y2="172" stroke="#a78bfa" stroke-width="1.8"/><text x="88" y="174" fill="#a78bfa" font-size="9" text-anchor="middle">turbo (caro)</text><circle cx="165" cy="172" r="13" fill="#10141c" stroke="#a78bfa" stroke-width="1.6"/><text x="165" y="176" fill="#a78bfa" font-size="10" text-anchor="middle">○</text><line x1="178" y1="49" x2="250" y2="28" stroke="#566075" stroke-width="1.2"/><line x1="178" y1="62" x2="250" y2="84" stroke="#566075" stroke-width="1.2"/><text x="256" y="31" fill="#4ade80" font-size="9">demanda alta → opción: comprar 2º avión</text><text x="256" y="87" fill="#9aa3b5" font-size="9">demanda baja → me quedo con 1</text><line x1="178" y1="166" x2="250" y2="150" stroke="#566075" stroke-width="1.2"/><line x1="178" y1="179" x2="250" y2="200" stroke="#566075" stroke-width="1.2"/><text x="256" y="153" fill="#a78bfa" font-size="9">demanda alta (sin opción de crecer)</text><text x="256" y="203" fill="#9aa3b5" font-size="9">demanda baja</text><text x="14" y="220" fill="#9aa3b5" font-size="8.5">□ decisión (elegís vos) · ○ azar (probabilidades) · roll back</text></svg><figcaption><b>Lectura:</b> el cuadrado es la <b>decisión</b> (vos elegís); los círculos son <b>azar</b> (demanda alta/baja con sus probabilidades). Se resuelve <b>hacia atrás</b>: primero se valúa el azar, después se elige la rama de mayor valor. (Estructura del caso Magno Charter — sección 3.7.)</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 3.5 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">3.5</span>
+        <span class="sec-title">Opciones reales y el VAN Expandido</span>
+        <span class="chip">Concepto base</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>Las opciones reales (Myers, 1977) valúan la <strong>flexibilidad administrativa</strong>: aplican técnicas de opciones financieras a activos reales. Una opción real existe cuando hay una <strong>posibilidad futura de actuar</strong> al resolverse una incertidumbre actual.</p>
+        <div class="key"><b>VAN Expandido = VAN tradicional (sin flexibilidad) + Valor de la(s) opción(es).</b> Como una opción nunca vale negativo, <b>la flexibilidad siempre suma valor.</b></div>
+        <p><strong>Tipos de opciones reales</strong> (Trigeorgis):</p>
+        <ul>
+          <li><strong>Esperar / diferir:</strong> retrasar el momento de la inversión inicial.</li>
+          <li><strong>Expandir:</strong> ampliar la escala con una inversión adicional si el escenario es bueno.</li>
+          <li><strong>Contraer:</strong> reducir un monto de inversión previsto.</li>
+          <li><strong>Abandonar:</strong> frenar permanentemente el programa de inversiones.</li>
+          <li><strong>Cambio a mejor uso alternativo:</strong> reconvertir el proyecto, con un valor de salvamento específico.</li>
+        </ul>
+        <div class="note">Contraintuitivo: <b>a más volatilidad, más vale la opción</b> — al revés que en las finanzas tradicionales, donde más riesgo penaliza el valor. En BSM aplicado a proyectos: <b>S</b> = VP de los flujos, <b>E</b> = costo de invertir, <b>σ</b> = volatilidad del proyecto.</div>
+        <figure class="chart"><svg viewBox="0 0 270 170" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="12" x2="14" y2="144" stroke="#2c3444"/><line x1="14" y1="144" x2="260" y2="144" stroke="#2c3444"/><polyline points="14.0,126.4 18.1,124.0 22.2,121.7 26.3,119.5 30.4,117.3 34.5,115.1 38.6,113.1 42.7,111.0 46.8,109.0 50.9,107.1 55.0,105.2 59.1,103.4 63.2,101.6 67.3,99.9 71.4,98.2 75.5,96.6 79.6,95.0 83.7,93.4 87.8,91.9 91.9,90.4 96.0,88.9 100.1,87.5 104.2,86.2 108.3,84.8 112.4,83.5 116.5,82.2 120.6,81.0 124.7,79.8 128.8,78.6 132.9,77.5 137.0,76.4 141.1,75.3 145.2,74.2 149.3,73.2 153.4,72.2 157.5,71.2 161.6,70.2 165.7,69.3 169.8,68.4 173.9,67.5 178.0,66.7 182.1,65.8 186.2,65.0 190.3,64.2 194.4,63.4 198.5,62.7 202.6,61.9 206.7,61.2 210.8,60.5 214.9,59.8 219.0,59.2 223.1,58.5 227.2,57.9 231.3,57.3 235.4,56.7 239.5,56.1 243.6,55.5 247.7,55.0 251.8,54.5 255.9,53.9 260.0,53.4" fill="none" stroke="#a78bfa" stroke-width="2.4" stroke-linejoin="round"/><text x="260" y="156" fill="#9aa3b5" font-size="9" text-anchor="end">σ (volatilidad)</text><text x="6" y="20" fill="#9aa3b5" font-size="9">valor opción</text></svg><figcaption><b>Lectura:</b> a más <b>volatilidad del proyecto</b>, más vale la opción real (contraintuitivo: en finanzas tradicionales más riesgo = menos valor). La opción acota la pérdida y deja abierto el upside, así que la incertidumbre la beneficia. <b>VAN expandido = VAN tradicional + valor de la opción</b>, y la opción <b>nunca vale negativo</b>.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 3.6 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">3.6</span>
+        <span class="sec-title">Métodos de valuación: Binomial vs. Black-Scholes</span>
+        <span class="chip">Comparativa</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <div class="vs-grid vs-2">
+          <div class="vs-cell vs-header">Método Binomial (Cox-Ross-Rubinstein, 1979)</div>
+          <div class="vs-cell vs-header">Black-Scholes (1973)</div>
+          <div class="vs-cell">Construye un <strong>árbol</strong> con las posibilidades de crecimiento del valor del subyacente; calcula el valor de la opción en cada nodo, año por año.</div>
+          <div class="vs-cell">Una <strong>fórmula cerrada</strong> en función del precio del subyacente, el precio de ejercicio, la volatilidad, el tiempo a expiración, la tasa libre de riesgo y los dividendos.</div>
+        </div>
+        <p><span class="fx">C = S·N(d₁) − E·e^(−rT)·N(d₂)</span></p>
+        <ul>
+          <li><strong>S</strong> = VP de los flujos de fondos (sin la inversión inicial) · <strong>E</strong> = precio de ejercicio (costo de expandir/abandonar).</li>
+          <li><strong>r</strong> = tasa libre de riesgo · <strong>T</strong> = tiempo a la expiración · <strong>σ</strong> = volatilidad del proyecto.</li>
+          <li><strong>N(d)</strong> = función de distribución normal estándar acumulada.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 3.7 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">3.7</span>
+        <span class="sec-title">Caso Magno Charter (árbol + opción de expandir)</span>
+        <span class="chip">Caso</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>Compañía de vuelos para ejecutivos en el sudeste de EE.UU. La demanda es incierta: 40% de que sea baja el primer año; si es baja, 60% de que siga baja; si arranca alta, 80% de que siga alta.</p>
+        <p>La decisión clave es <strong>qué avión comprar</strong>:</p>
+        <div class="vs-grid vs-2">
+          <div class="vs-cell vs-header">Turbopropulsor nuevo — $550.000</div>
+          <div class="vs-cell vs-header">Avión de combustión usado — $250.000</div>
+          <div class="vs-cell">Más caro y <strong>rígido</strong>: sin flexibilidad ante la demanda.</div>
+          <div class="vs-cell">Barato e incorpora la <strong>opción de expandir</strong>: si la demanda es alta, se compra un 2.º avión un año después por solo $150.000.</div>
+        </div>
+        <div class="key">Es la integración de la unidad: <b>árbol de decisión + opción real de expandir.</b> El avión barato vale más de lo que parece porque incorpora la <b>flexibilidad</b> de crecer solo si conviene — flexibilidad que el turbopropulsor rígido no tiene.</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ===================== UNIDAD 4 ===================== -->
+  <div class="unit u4" id="u4">
+    <div class="uhead">
+      <h2>Unidad 4 · Estructura de capital</h2>
+      <p>Deuda vs. capital, los vehículos de financiación, el tradeoff de la deuda y los tres enfoques para hallar la estructura óptima.</p>
+    </div>
+    <span class="expand-all" onclick="toggleAll('u4')">Expandir / colapsar todo</span>
+
+    <!-- 4.1 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.1</span>
+        <span class="sec-title">Decisión de financiación: Deuda vs. Capital</span>
+        <span class="chip">Comparativa</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <div class="vs-grid vs-2">
+          <div class="vs-cell vs-header">Deuda</div>
+          <div class="vs-cell vs-header">Capital (Equity)</div>
+          <div class="vs-cell">Derecho <strong>fijo</strong> (fixed claim)</div>
+          <div class="vs-cell">Derecho <strong>residual</strong></div>
+          <div class="vs-cell"><strong>Alta prioridad</strong> sobre los flujos</div>
+          <div class="vs-cell"><strong>Menor prioridad</strong> sobre los flujos</div>
+          <div class="vs-cell"><strong>Deducible</strong> de impuestos</div>
+          <div class="vs-cell"><strong>No deducible</strong> de impuestos</div>
+          <div class="vs-cell">Vencimiento <strong>fijo</strong> (fixed maturity)</div>
+          <div class="vs-cell"><strong>Sin vencimiento</strong></div>
+          <div class="vs-cell"><strong>No</strong> da control de gestión</div>
+          <div class="vs-cell"><strong>Sí</strong> da control de gestión</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 4.2 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.2</span>
+        <span class="sec-title">Vehículos de financiación: opciones de capital</span>
+        <span class="chip">Clasificación</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p><strong>Empresas privadas:</strong></p>
+        <ul>
+          <li><strong>Patrimonio neto de los accionistas.</strong></li>
+          <li><strong>Venture capital / private equity:</strong> opción para evitar salir a la bolsa; entran al PN de un negocio pequeño y usualmente riesgoso.</li>
+        </ul>
+        <p><strong>Empresas con cotización pública:</strong></p>
+        <ul>
+          <li><strong>Acciones.</strong></li>
+          <li><strong>Warrants:</strong> opción de comprar equity en el futuro a precio fijo. Pueden tener mejor precio que las acciones, no obligan al momento de la emisión y no generan el efecto <strong>dilución</strong> de emitir acciones.</li>
+          <li><strong>Contingent Value Rights (CVR):</strong> opción de vender acciones a precio fijo. Similar a una <strong>put</strong>, pero a más largo plazo y con los fondos yendo directo a la firma (no a los vendedores de la put).</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 4.3 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.3</span>
+        <span class="sec-title">Vehículos de financiación: opciones de deuda</span>
+        <span class="chip">Clasificación</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <ul>
+          <li><strong>Deuda bancaria / línea de crédito.</strong></li>
+          <li><strong>Bonos:</strong> para empresas más grandes y públicas, con términos más favorables. Se caracterizan por:</li>
+        </ul>
+        <div class="concept">
+          <div class="concept-title">Anatomía de un bono</div>
+          <strong>Maturity:</strong> commercial papers (&lt; 6 meses); usualmente 5–15 años. ·
+          <strong>Opcionalidad:</strong> callable (recomprables por la empresa), puttable (devolubles a la empresa). ·
+          <strong>Cupón:</strong> fixed rate o floating (con caps y floors). ·
+          <strong>Garantía:</strong> unsecured (notes &lt;15 años, debentures &gt;15) o secured (respaldados por un activo). ·
+          <strong>Moneda:</strong> usualmente local, salvo proyectos internacionales (Eurobonds, Eurodollar). ·
+          <strong>Repago:</strong> balloon (todo al maturity) o serial (% por año).
+        </div>
+        <ul>
+          <li><strong>Leases:</strong> operating (corto plazo, flexibles) y capital/financial (largo plazo, no cancelables).</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 4.4 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.4</span>
+        <span class="sec-title">Híbridos: convertibles y acciones preferentes</span>
+        <span class="chip">Concepto base</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <div class="concept">
+          <div class="concept-title">Deuda / bono convertible</div>
+          Bono convertible en acciones <strong>a decisión del tenedor</strong>. Las firmas agregan la "conversion option" para <strong>reducir la tasa de interés</strong> del bono.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Acciones preferentes</div>
+          Como la deuda, requieren un <strong>pago fijo de dividendo</strong>; si no hay fondos, se acumulan. <strong>No otorgan control</strong> de la firma. Se usan en lugar de deuda cuando la empresa no quiere <strong>empeorar sus ratios de endeudamiento</strong> (leverage).
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 4.5 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.5</span>
+        <span class="sec-title">Tradeoff deuda vs. capital: ventajas y desventajas</span>
+        <span class="chip">Comparativa</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <div class="vs-grid vs-2">
+          <div class="vs-cell vs-header">Ventajas de la deuda</div>
+          <div class="vs-cell vs-header">Desventajas de la deuda</div>
+          <div class="vs-cell"><strong>Beneficio impositivo</strong> (los intereses son deducibles)</div>
+          <div class="vs-cell"><strong>Costo de quiebra</strong> (insolvencia financiera)</div>
+          <div class="vs-cell"><strong>Disciplina financiera:</strong> separa a los managers de los accionistas y obliga a generar caja</div>
+          <div class="vs-cell"><strong>Costo de agencia:</strong> conflicto entre accionistas y tenedores de bonos/prestamistas</div>
+          <div class="vs-cell"></div>
+          <div class="vs-cell"><strong>Pérdida de flexibilidad</strong> financiera futura</div>
+        </div>
+        <p>La pregunta que abre el resto de la unidad: <strong>¿existe una estructura de capital óptima?</strong></p>
+      </div></div>
+    </div>
+
+    <!-- 4.6 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.6</span>
+        <span class="sec-title">Modigliani-Miller</span>
+        <span class="chip">Fundamentos</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <ul>
+          <li><strong>Mundo sin impuestos</strong>, sin costos de transacción y sin posibilidad de default/quiebra.</li>
+          <li>En ese mundo, las ventajas y desventajas de la deuda <strong>desaparecen</strong>.</li>
+          <li>Conclusión: la decisión sobre la estructura de capital es <strong>irrelevante</strong>.</li>
+        </ul>
+        <div class="note">Más adelante incorporaron el <b>beneficio impositivo</b> de la deuda. Con ese único agregado, la estructura óptima pasaría a ser <b>100% deuda</b> — lo que muestra que son los costos de quiebra y de agencia (ausentes en el modelo) los que en la realidad limitan el endeudamiento.</div>
+        <div class="concept">
+          <div class="concept-title">Trade-off theory</div>
+          El óptimo <strong>D*</strong> es el nivel de deuda donde el <strong>beneficio marginal del escudo fiscal = costo marginal del distress</strong> (quiebra/agencia). Da una curva de valor con forma de <strong>campana</strong>. Predice <strong>más deuda en empresas estables</strong> (flujos predecibles → menos riesgo de quiebra).
+        </div>
+        <div class="concept">
+          <div class="concept-title">Pecking order (Myers)</div>
+          Las firmas siguen un orden de preferencia por <strong>información asimétrica</strong> (emitir equity es una mala señal): <strong>1.º fondos internos → 2.º deuda → 3.º equity</strong>. Explica por qué las empresas <strong>rentables tienen MENOS deuda</strong> (se autofinancian) — <strong>predicción opuesta</strong> a la del trade-off.
+        </div>
+        <figure class="chart"><svg viewBox="0 0 300 185" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="12" x2="14" y2="159" stroke="#2c3444"/><line x1="14" y1="159" x2="290" y2="159" stroke="#2c3444"/><line x1="140.2" y1="12" x2="140.2" y2="159" stroke="#222a38" stroke-dasharray="2 3"/><text x="140.2" y="171" fill="#9aa3b5" font-size="9" text-anchor="middle">D* (valor máx)</text><polyline points="14.0,142.7 290.0,142.7" fill="none" stroke="#566075" stroke-width="1.4" stroke-dasharray="4 4"/><polyline points="14.0,142.7 49.5,133.8 92.9,123.1 136.2,112.3 179.6,101.5 223.0,90.7 266.3,79.9 290.0,74.1" fill="none" stroke="#4ade80" stroke-width="1.6" stroke-dasharray="5 4" stroke-linejoin="round"/><polyline points="14.0,142.7 33.7,138.2 53.4,134.4 73.1,131.4 92.9,129.2 112.6,127.8 132.3,127.1 140.2,127.0 159.9,127.4 179.6,128.6 199.3,130.5 219.0,133.2 238.7,136.7 258.5,140.9 278.2,145.9 290.0,149.3" fill="none" stroke="#a78bfa" stroke-width="2.6" stroke-linejoin="round"/><circle cx="140.2" cy="127.0" r="3.5" fill="#fbbf24"/><text x="290" y="171" fill="#9aa3b5" font-size="9" text-anchor="end">apalancamiento (D)</text></svg><figcaption><b>Lectura:</b> <b>Trade-off theory</b>. Gris = valor sin deuda (MM sin impuestos). Verde = sumando solo el <b>escudo fiscal</b> (crece siempre → llevaría a 100% deuda). Violeta = restando además los <b>costos de quiebra/agencia</b>: da la campana. El máximo es <b>D*</b>, donde el beneficio marginal del escudo = costo marginal del distress.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 4.7 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.7</span>
+        <span class="sec-title">Cómo deciden las firmas + financiación interna vs. externa</span>
+        <span class="chip">Mecanismo</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>Las firmas definen su estructura de capital con tres argumentos:</p>
+        <ul>
+          <li>¿En qué <strong>fase de su ciclo de vida</strong> están?</li>
+          <li>¿Qué hacen <strong>otras empresas del mismo rubro</strong>?</li>
+          <li>Su propia <strong>preferencia</strong> financiera.</li>
+        </ul>
+        <div class="vs-grid vs-2">
+          <div class="vs-cell vs-header">Financiación interna</div>
+          <div class="vs-cell vs-header">Financiación externa</div>
+          <div class="vs-cell">Con fondos propios (net income / utilidades retenidas)</div>
+          <div class="vs-cell">Cualquier otro tipo: deuda o equity nuevo</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 4.8 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.8</span>
+        <span class="sec-title">Estructura óptima · Operating Income Approach</span>
+        <span class="chip">Operatoria</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>Busca el nivel de deuda compatible con una <strong>probabilidad de default tolerable</strong>. Lógica:</p>
+        <ul>
+          <li>Con información histórica, estimar la <strong>media</strong> y el <strong>desvío estándar</strong> de la variación del operating income (EBITDA).</li>
+          <li>Para un nivel dado de nueva deuda, estimar el <strong>total debt payment</strong> = intereses de deuda existente + intereses y principal de la deuda adicional.</li>
+          <li>Calcular el estadístico: <span class="fx">T = (EBITDA actual − total debt payment) / (desvío × EBITDA actual)</span></li>
+          <li>De la <strong>tabla normal</strong> se obtiene la <strong>probabilidad de default</strong> de ese nivel de deuda.</li>
+          <li>La empresa fija un <strong>límite máximo tolerable</strong> de probabilidad de default; se despeja el "breakeven debt payment" y de ahí el <strong>nivel óptimo de deuda</strong>.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 4.9 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.9</span>
+        <span class="sec-title">Estructura óptima · Cost of Capital Approach</span>
+        <span class="chip">Operatoria</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>Busca el <strong>debt ratio</strong> (deuda/activos) que <strong>maximiza el valor de la firma</strong> en estado estacionario:</p>
+        <p><span class="fx">Valor firma = Cash Flow·(1+g) / (WACC − g)</span></p>
+        <div class="key">El valor de la firma <b>aumenta cuando el WACC baja</b>, y viceversa → el óptimo es el debt ratio que <b>minimiza el WACC.</b></div>
+        <p><strong>Pasos:</strong></p>
+        <ul>
+          <li><strong>Cost of equity</strong> = tasa libre de riesgo + (β × market risk premium). El β se reapalanca (beta levered) para cada debt ratio.</li>
+          <li><strong>Cost of debt:</strong> depende del riesgo de default (rating). El rating se resume en el <strong>Interest Coverage Ratio = EBIT / intereses</strong> (&gt;8,5 → AAA … &lt;0,65 → D).</li>
+          <li><strong>WACC</strong> = Ke·(E/(E+D)) + Kd después de impuestos·(D/(E+D)), donde Kd after-tax = tasa pre-impuesto·(1 − tax rate).</li>
+        </ul>
+        <div class="note"><b>Detalle clave:</b> el beneficio impositivo de los intereses <b>empieza a reducirse cuando los intereses superan al EBIT</b>: a partir de ahí dejan de ser plenamente deducibles. <b>Desventaja del método:</b> hay que estimar el costo de deuda y de equity para cada nivel y suponerlos constantes en el tiempo.</div>
+        <figure class="chart"><svg viewBox="0 0 290 180" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="12" x2="14" y2="154" stroke="#2c3444"/><line x1="14" y1="154" x2="280" y2="154" stroke="#2c3444"/><line x1="135.6" y1="12" x2="135.6" y2="154" stroke="#222a38" stroke-dasharray="2 3"/><text x="135.6" y="166" fill="#9aa3b5" font-size="9" text-anchor="middle">D*</text><polyline points="14.0,68.8 25.4,80.2 36.8,90.4 48.2,99.5 59.6,107.5 71.0,114.4 82.4,120.1 93.8,124.7 105.2,128.2 116.6,130.6 128.0,131.8 135.6,132.1 143.2,131.8 154.6,130.4 166.0,127.9 177.4,124.2 188.8,119.5 200.2,113.6 211.6,106.6 223.0,98.5 234.4,89.2 245.8,78.8 257.2,67.3 268.6,54.7 280.0,41.0" fill="none" stroke="#4fc3f7" stroke-width="2.4" stroke-linejoin="round"/><circle cx="135.6" cy="132.1" r="3.5" fill="#fbbf24"/><text x="135.6" y="125.1" fill="#fbbf24" font-size="10" font-weight="700" text-anchor="middle">WACC mín</text><text x="280" y="166" fill="#9aa3b5" font-size="9" text-anchor="end">ratio Deuda/Valor</text></svg><figcaption><b>Lectura:</b> el WACC baja al principio (la deuda es más barata y deduce impuestos) pero después sube (más deuda → Ke y Kd suben por riesgo de default). El mínimo marca la <b>estructura óptima D*</b>, donde el valor de la firma es máximo. Kd cae del rating (Interest Coverage) y Ke del beta levered: ninguno se supone libre.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 4.10 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">4.10</span>
+        <span class="sec-title">Estructura óptima · Adjusted Present Value (APV)</span>
+        <span class="chip">Operatoria</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p>Descompone el valor de la firma en sus partes. Se arranca del valor <strong>como si no tuviera deuda</strong> y se ajusta:</p>
+        <p><span class="fx">Valor firma levered = Valor unlevered + VP del beneficio impositivo − Costo esperado de default</span></p>
+        <ul>
+          <li><strong>VP del beneficio impositivo:</strong> <span class="fx">tD = (tax rate × Kd × Deuda) / Kd</span> (≈ tax rate × Deuda).</li>
+          <li><strong>Costo esperado de default:</strong> <span class="fx">pDC = prob. de default × VP de los costos de default</span>. Es el <strong>gran problema</strong> del método: ambos son difíciles de estimar directamente.</li>
+          <li>La <strong>probabilidad de default</strong> se estima por la evidencia empírica de los ratings; los <strong>costos de default</strong>, por estudios de empresas similares (≈ <strong>25%–30% del valor de la firma</strong>).</li>
+        </ul>
+        <p>Se calcula el valor de la firma levered para distintos niveles de deuda; el nivel que lo maximiza es el <strong>ratio óptimo de deuda</strong>.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ===================== UNIDAD 5 ===================== -->
+  <div class="unit u5" id="u5">
+    <div class="uhead">
+      <h2>Unidad 5 · Política de dividendos</h2>
+      <p>Distribuir vs retener; formas de pago y recompras; cómo deciden las empresas (Lintner); señalización; la irrelevancia de MM (1961) y las imperfecciones que la rompen (impuestos).</p>
+    </div>
+    <span class="expand-all" onclick="toggleAll('u5')">Expandir / colapsar todo</span>
+
+    <!-- 5.1 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">5.1</span>
+        <span class="sec-title">La pregunta central y por qué hay que aislar la política</span>
+        <span class="chip">Concepto</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">La política de dividendos = cuánta plata distribuir y de qué forma. Viene entretejida con inversión y financiamiento, así que para estudiarla hay que aislarla.</p>
+        <p>Si <strong>fijás los gastos de inversión y el endeudamiento</strong>, la plata para los dividendos tiene que salir de un solo lado:</p>
+        <ul>
+          <li>Para <strong>subir el dividendo</strong> → hay que <strong>emitir nuevas acciones</strong>.</li>
+          <li>Para <strong>bajar el dividendo</strong> → sobran fondos → hay que <strong>recomprar acciones</strong>.</li>
+        </ul>
+        <div class="key"><b>Pregunta central de la unidad:</b> ¿cómo afecta al valor de la empresa la decisión de pagar un dividendo o recomprar acciones? Son dos caras de la misma moneda.</div>
+      </div></div>
+    </div>
+
+    <!-- 5.2 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">5.2</span>
+        <span class="sec-title">Formas de pago, tipos de dividendos y fechas clave</span>
+        <span class="chip">Mecánica</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">La empresa devuelve plata de dos maneras: dividendo o recompra. Acá, la mecánica del dividendo.</p>
+        <div class="concept">
+          <div class="concept-title">Formas de pago</div>
+          <strong>Efectivo</strong> (lo común) · <strong>en acciones</strong> (stock dividend) · <strong>en especie</strong> (producto). Un dividendo en acciones <strong>equivale a un split</strong>: más acciones, mismo valor total → baja el valor por acción, no crea valor.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Tipos de dividendos</div>
+          <strong>Regulares</strong> (compromiso sostenido) · <strong>extras</strong> (adicional sin compromiso) · <strong>especiales</strong> (por única vez). La distinción importa por la señalización.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Las fechas clave (orden)</div>
+          (1) <strong>Declaración</strong> — el board anuncia. → (2) <strong>Ex-dividendo</strong> — el corte: el que compra desde acá NO cobra (cum dividend hasta 2 días hábiles antes del registro). → (3) <strong>Registro (record date)</strong> — cobran los registrados ese día. → (4) <strong>Pago</strong>. En la ex-date la acción cae ~el monto del dividendo.
+        </div>
+        <div class="note"><b>Otros detalles:</b> planes de reinversión (PRD/DRIP) con ~5% de descuento; restricciones legales (mínimos en Brasil/Chile, límites de acreedores, no pagar del capital legal en EE.UU.).</div>
+        <figure class="chart wide"><svg viewBox="0 0 320 135" xmlns="http://www.w3.org/2000/svg"><line x1="24" y1="62" x2="300" y2="62" stroke="#566075" stroke-width="2"/><circle cx="45" cy="62" r="6" fill="#a78bfa"/><text x="45" y="40" fill="#e8eaf0" font-size="9" text-anchor="middle" font-weight="700">Declaración</text><text x="45" y="84" fill="#9aa3b5" font-size="7.5" text-anchor="middle">board anuncia</text><circle cx="130" cy="62" r="6" fill="#fbbf24"/><text x="130" y="40" fill="#fbbf24" font-size="9" text-anchor="middle" font-weight="700">Ex-dividendo</text><text x="130" y="84" fill="#9aa3b5" font-size="7.5" text-anchor="middle">corte: el que compra no cobra</text><circle cx="215" cy="62" r="6" fill="#4ade80"/><text x="215" y="40" fill="#e8eaf0" font-size="9" text-anchor="middle" font-weight="700">Registro</text><text x="215" y="84" fill="#9aa3b5" font-size="7.5" text-anchor="middle">cobran los registrados</text><circle cx="290" cy="62" r="6" fill="#4fc3f7"/><text x="290" y="40" fill="#e8eaf0" font-size="9" text-anchor="middle" font-weight="700">Pago</text><text x="162" y="106" fill="#9aa3b5" font-size="8" text-anchor="middle">cum dividend ←  |  → ex dividend (2 días hábiles antes del registro)</text></svg><figcaption><b>Lectura:</b> la secuencia de fechas del dividendo. En la <b>ex-dividend date</b> está el corte: quien compra desde ese día ya no cobra el dividendo (lo cobra el vendedor), por eso la acción <b>cae ~el monto del dividendo</b>. Cobran quienes figuran registrados en la <b>record date</b>.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 5.3 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">5.3</span>
+        <span class="sec-title">Recompras de acciones (las 4 formas)</span>
+        <span class="chip">Mecánica</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">En vez de pagar dividendo, la empresa puede recomprar sus acciones (van a tesorería, reventa posible).</p>
+        <ul>
+          <li><strong>Mercado abierto:</strong> la más común. Compra en bolsa como cualquier inversor. Flexible.</li>
+          <li><strong>Oferta / tender offer:</strong> número definido a precio fijo (~20% sobre mercado); el accionista decide.</li>
+          <li><strong>Subasta holandesa:</strong> la empresa define un rango de precios y calcula el mínimo al que junta la cantidad deseada.</li>
+          <li><strong>Negociación directa</strong> con un accionista grande.</li>
+        </ul>
+        <div class="concept">
+          <div class="concept-title">Por qué recompran</div>
+          Exceso de caja sin proyectos rentables (retorno &lt; WACC) o para subir el leverage. Más en expansiones, menos en recesiones.
+        </div>
+        <div class="key"><b>Diferencia de fondo:</b> el <strong>dividendo regular es un compromiso pegajoso (sticky)</strong>; la <strong>recompra es flexible y discrecional</strong>. Por eso se usan recompras para caja extraordinaria y dividendos para distribución estable.</div>
+      </div></div>
+    </div>
+
+    <!-- 5.4 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">5.4</span>
+        <span class="sec-title">Modelo de Lintner (cómo deciden en la práctica)</span>
+        <span class="chip">Modelo</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Lintner explica cómo deciden las empresas el monto del dividendo: no lo ajustan de golpe, lo suavizan.</p>
+        <div class="concept">
+          <div class="concept-title">Las 4 observaciones</div>
+          (1) Hay un <strong>ratio objetivo (payout)</strong> de largo plazo. (2) Importan los <strong>cambios de tendencia</strong>, no el nivel. (3) Los cambios siguen a aumentos <strong>sostenibles</strong> de ganancias. (4) Cambios <strong>transitorios</strong> no afectan el dividendo. El management es reacio a cambios que después haya que deshacer → suaviza (prefiere endeudarse antes que recortar).
+        </div>
+        <div class="concept">
+          <div class="concept-title">La mecánica (ajuste parcial)</div>
+          <span class="fx">Div₁ − Div₀ = tasa de ajuste × (ratio objetivo × bpa₁ − Div₀)</span><br>
+          <span class="fx">Divₜ = a·T·bpaₜ + (1−a)·Divₜ₋₁</span> (a = tasa de ajuste, T = ratio objetivo). Tasa de ajuste baja = más conservadora = dividendos más suavizados. Conclusión: <strong>los dividendos actuales son una media ponderada de los beneficios pasados</strong>.
+        </div>
+        <div class="note"><b>Aclaración clave:</b> la <strong>meta es el ratio (payout)</strong>; lo que se <strong>suaviza es el monto (DPS)</strong>. Si suben ganancias y el payout queda igual, el monto sube solo; Lintner aplica cuando el management deja caer el payout temporalmente en vez de subir todo el monto.</div>
+      </div></div>
+    </div>
+
+    <!-- 5.5 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">5.5</span>
+        <span class="sec-title">La información en dividendos y recompras (señalización)</span>
+        <span class="chip">Señalización</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">En un mundo de información asimétrica, el dividendo es una señal creíble porque es cara de fingir.</p>
+        <p>Como el management sólo sube el dividendo cuando confía en sostenerlo (recortarlo es carísimo en reputación), un aumento es una <strong>promesa respaldada</strong>:</p>
+        <ul>
+          <li><strong>Sube el dividendo</strong> → señal de confianza → analistas suben pronóstico → <strong>sube el precio</strong>.</li>
+          <li><strong>Recorta el dividendo</strong> → señal negativa → <strong>baja el precio, fuerte</strong>.</li>
+        </ul>
+        <div class="key"><b>Punto fino:</b> lo que mueve el precio es el <strong>cambio</strong>, no el nivel. Importa que el dividendo pasó de $1 a $2, no que sea $2.</div>
+        <div class="concept">
+          <div class="concept-title">La recompra también señaliza</div>
+          Alivia porque devuelve el exceso de caja (evita malgastarlo en proyectos &lt; WACC) y/o sube deuda (disciplina). Estudio Comment &amp; Jarrell: +2% de retorno anormal al anunciar recompra en mercado abierto. En ofertas con prima, los directivos suelen comprometerse a conservar sus acciones.
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 5.6 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">5.6</span>
+        <span class="sec-title">La controversia + Miller-Modigliani (1961)</span>
+        <span class="chip">Teoría central</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">¿La política de dividendos cambia el valor, o sólo señaliza? Los economistas se dividen en tres grupos.</p>
+        <div class="vs-grid vs-3">
+          <div class="vs-cell vs-header">Derecha (conservadores)</div>
+          <div class="vs-cell vs-header">Centro (MM)</div>
+          <div class="vs-cell vs-header">Izquierda (radicales)</div>
+          <div class="vs-cell">Más dividendo → <strong>más</strong> valor ("pájaro en mano")</div>
+          <div class="vs-cell">No hace <strong>ninguna</strong> diferencia</div>
+          <div class="vs-cell">Más dividendo → <strong>menos</strong> valor (por impuestos)</div>
+        </div>
+        <div class="concept">
+          <div class="concept-title">Teorema de MM (1961) — irrelevancia</div>
+          En un mundo perfecto (sin impuestos, sin costos de transacción) la política de dividendos es <strong>irrelevante</strong>. Subir el dividendo obliga a emitir acciones → los accionistas viejos sufren una <strong>pérdida de capital que compensa exactamente</strong> el dividendo extra → neto cero. Si querés efectivo, vendés acciones (homemade dividend). Lo que crea valor es la <strong>inversión</strong> (retorno &gt; WACC), no el reparto.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Caso Semiconductor Racional</div>
+          Empresa con valor $10.000 + VAN. Paga $1.000 de dividendo y emite $1.000 en acciones nuevas → el balance queda <strong>idéntico</strong>. Acciones viejas: ($10.000 + VAN) − $1.000 = $9.000 + VAN. Con 1.000 acciones y VAN = $2.000: precio antes <strong>$12</strong>, después <strong>$11</strong>; acciones nuevas = $1.000/$11 = <strong>91</strong>. El accionista viejo: −$1 de capital + $1 de dividendo = <strong>$0</strong>.
+        </div>
+        <div class="note"><b>Importante:</b> MM no dice que los dividendos no importen en la realidad — dice que si importan es por las <strong>imperfecciones</strong> (impuestos, señalización). Es el benchmark contra el que se mide todo lo demás.</div>
+        <figure class="chart"><svg viewBox="0 0 290 175" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="145" x2="280" y2="145" stroke="#2c3444"/><rect x="55" y="35" width="65" height="110" fill="#4fc3f7" opacity="0.8"/><text x="87" y="29" fill="#4fc3f7" font-size="10" text-anchor="middle" font-weight="700">$12</text><text x="87" y="159" fill="#9aa3b5" font-size="8.5" text-anchor="middle">Antes: acción</text><rect x="170" y="44" width="65" height="101" fill="#4ade80" opacity="0.8"/><text x="202" y="100" fill="#0f1115" font-size="9" text-anchor="middle" font-weight="700">$11</text><rect x="170" y="35" width="65" height="9" fill="#fbbf24" opacity="0.95"/><text x="248" y="41" fill="#fbbf24" font-size="8.5" text-anchor="start">+$1 div</text><text x="202" y="159" fill="#9aa3b5" font-size="8.5" text-anchor="middle">Después: acción + dividendo</text></svg><figcaption><b>Lectura (Semiconductor Racional):</b> tras pagar $1 de dividendo y emitir acciones, el precio cae de <b>$12 a $11</b>. El accionista viejo perdió $1 de capital pero cobró $1 de dividendo → <b>queda igual ($0 neto)</b>. La altura total ($12) no cambia: esa es la irrelevancia de MM.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- 5.7 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">5.7</span>
+        <span class="sec-title">Aspectos fiscales (dividendos vs ganancias de capital)</span>
+        <span class="chip">Impuestos</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">La imperfección que rompe la irrelevancia de MM. Dividendos y ganancias de capital no tributan igual.</p>
+        <div class="concept">
+          <div class="concept-title">La asimetría central</div>
+          <strong>Dividendos:</strong> pagás el impuesto de inmediato, al cobrarlos. <strong>Ganancias de capital:</strong> el impuesto se <strong>difiere</strong> hasta vender, y vos elegís cuándo → su <strong>valor presente es más bajo</strong>. Por eso, para el inversor gravado, las ganancias de capital son fiscalmente preferibles → mucho dividendo resta valor (argumento radical).
+        </div>
+        <div class="concept">
+          <div class="concept-title">Depende de quién es el accionista (efecto clientela)</div>
+          <strong>Exentos</strong> (fondos de pensión, &gt;$4 bn en acciones EE.UU.): indiferentes. <strong>Corporaciones:</strong> único grupo que <strong>prefiere dividendos</strong> — tributan sólo el 30% del dividendo recibido (tasa efectiva ≈ 30%×35% = 10,5%) vs 35% sobre toda la ganancia de capital.
+        </div>
+        <div class="key"><b>Arco de la unidad:</b> distribuir vs retener (= emitir vs recomprar) → en mundo perfecto MM dice irrelevante → en el mundo real sí importa, por señalización (Lintner) e impuestos.</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ===================== PROJECT FINANCE ===================== -->
+  <div class="unit upf" id="upf">
+    <div class="uhead">
+      <h2>Project Finance · Financiación estructurada de proyectos</h2>
+      <p>Cómo financiar un proyecto con su propio flujo de fondos y sin recurso contra los Sponsors: estructura, contratos, ventajas/desventajas y esquema de garantías. Caso VMOS (Vaca Muerta Oleoducto Sur).</p>
+    </div>
+    <span class="expand-all" onclick="toggleAll('upf')">Expandir / colapsar todo</span>
+
+    <!-- PF.1 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">PF.1</span>
+        <span class="sec-title">¿Qué es el Project Finance?</span>
+        <span class="chip">Concepto base</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Estructuración de un proyecto que tendrá su <strong>propio funding</strong>, que queda separado de la posición de deuda de sus Sponsors. La decisión de prestar se apoya en el <strong>flujo de fondos futuro del propio proyecto</strong>, no en el balance de los dueños.</p>
+        <ul>
+          <li><strong>Sin recurso (non-recourse):</strong> el acreedor de la deuda <strong>no tiene recurso contra el balance de los Sponsors</strong>. Su garantía son los activos y los flujos del proyecto.</li>
+          <li><strong>Desconsolidación:</strong> al quedar fuera del balance del Sponsor, <strong>mejora los ratios de endeudamiento</strong> de los Sponsors.</li>
+          <li><strong>Múltiples contratos en simultáneo:</strong> la operación involucra negociar varios contratos a la vez, que buscan asegurar que los <strong>flujos de fondos del proyecto puedan ser capturados por el acreedor de deuda</strong>.</li>
+        </ul>
+        <div class="note"><b>Idea central:</b> se aísla el riesgo del proyecto del riesgo corporativo del dueño. El proyecto "se banca solo" a través de un vehículo dedicado (SPV).</div>
+      </div></div>
+    </div>
+
+    <!-- PF.2 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">PF.2</span>
+        <span class="sec-title">El SPV y los actores de la estructura</span>
+        <span class="chip">Estructura</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Todo gira en torno a un <strong>SPV (Special Purpose Vehicle)</strong> — una sociedad creada exclusivamente para el proyecto. Cada actor se conecta a ese vehículo por un contrato distinto.</p>
+        <div class="concept">
+          <div class="concept-title">SPV (el Proyecto)</div>
+          Sociedad dedicada que concentra activos, deuda y flujos. Es el centro de toda la red de contratos.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Accionistas / Sponsors</div>
+          Aportan el <strong>equity</strong> y reciben <strong>dividendos</strong>. Su responsabilidad se limita al capital aportado (salvo Completion Guarantee).
+        </div>
+        <div class="concept">
+          <div class="concept-title">Bancos / Acreedores</div>
+          Aportan el <strong>financiamiento (deuda)</strong> y reciben el <strong>repago</strong> que sale de los flujos del proyecto.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Proveedores y Constructor</div>
+          Reciben <strong>contratación/pagos</strong> a cambio de servicios, equipos y materiales, y de la construcción de la obra.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Clientes (Off-takers)</div>
+          Compran la producción: generan las <strong>ventas y cobranzas</strong> que son la fuente última del repago.
+        </div>
+        <div class="note"><b>Debt Service Reserve Account (DSRA):</b> cuenta de reserva que guarda fondos para cubrir el servicio de deuda ante baches de caja. Funciona como garantía/colchón para el acreedor.</div>
+        <figure class="chart wide"><svg viewBox="0 0 340 230" xmlns="http://www.w3.org/2000/svg" role="img"><line x1="170" y1="115" x2="60" y2="40" stroke="#566075" stroke-width="1.2"/><line x1="170" y1="115" x2="280" y2="40" stroke="#566075" stroke-width="1.2"/><line x1="170" y1="115" x2="60" y2="190" stroke="#566075" stroke-width="1.2"/><line x1="170" y1="115" x2="280" y2="190" stroke="#566075" stroke-width="1.2"/><line x1="170" y1="115" x2="170" y2="210" stroke="#566075" stroke-width="1.2"/><rect x="8" y="23" width="104" height="34" rx="7" fill="#10141c" stroke="#a78bfa" stroke-width="1.5"/><text x="60" y="38" fill="#e8eaf0" font-size="10" font-weight="700" text-anchor="middle">Sponsors</text><text x="60" y="51" fill="#9aa3b5" font-size="8" text-anchor="middle">aporte equity</text><rect x="228" y="23" width="104" height="34" rx="7" fill="#10141c" stroke="#4fc3f7" stroke-width="1.5"/><text x="280" y="38" fill="#e8eaf0" font-size="10" font-weight="700" text-anchor="middle">Bancos / Lenders</text><text x="280" y="51" fill="#9aa3b5" font-size="8" text-anchor="middle">deuda non-recourse</text><rect x="8" y="173" width="104" height="34" rx="7" fill="#10141c" stroke="#4ade80" stroke-width="1.5"/><text x="60" y="188" fill="#e8eaf0" font-size="10" font-weight="700" text-anchor="middle">EPC</text><text x="60" y="201" fill="#9aa3b5" font-size="8" text-anchor="middle">construcción llave en mano</text><rect x="228" y="173" width="104" height="34" rx="7" fill="#10141c" stroke="#fbbf24" stroke-width="1.5"/><text x="280" y="188" fill="#e8eaf0" font-size="10" font-weight="700" text-anchor="middle">Offtaker</text><text x="280" y="201" fill="#9aa3b5" font-size="8" text-anchor="middle">take-or-pay (ventas)</text><rect x="118" y="193" width="104" height="34" rx="7" fill="#10141c" stroke="#4ade80" stroke-width="1.5"/><text x="170" y="208" fill="#e8eaf0" font-size="10" font-weight="700" text-anchor="middle">O&amp;M</text><text x="170" y="221" fill="#9aa3b5" font-size="8" text-anchor="middle">operación y mantenim.</text><rect x="124" y="96" width="92" height="38" rx="7" fill="#10141c" stroke="#f87171" stroke-width="1.5"/><text x="170" y="113" fill="#e8eaf0" font-size="10" font-weight="700" text-anchor="middle">SPV</text><text x="170" y="126" fill="#9aa3b5" font-size="8" text-anchor="middle">sociedad vehículo</text></svg><figcaption><b>Lectura:</b> la deuda la toma la <b>SPV</b> (no el sponsor) y se paga <b>solo con los flujos del proyecto</b> (<i>non-recourse</i>). La <b>red de contratos</b> asigna cada riesgo a quien mejor lo maneja: EPC (construcción), O&amp;M (operación), <b>offtake/take-or-pay</b> (previsibilidad de ventas), lenders (deuda). Desconsolida: no infla los ratios de deuda del sponsor.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- PF.3 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">PF.3</span>
+        <span class="sec-title">Proceso de estructuración (fases del proyecto)</span>
+        <span class="chip">Proceso</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Es un proceso de negociación de múltiples contratos en simultáneo, ordenado en fases. El <strong>Completion Date</strong> es el hito que separa construir de operar.</p>
+        <ul>
+          <li><strong>1 · Estudios de factibilidad:</strong> se evalúa la viabilidad técnica y económica del proyecto.</li>
+          <li><strong>2 · Estructuración:</strong> se arma el SPV, se negocian los contratos y el esquema de garantías hasta el cierre financiero.</li>
+          <li><strong>3 · Construcción:</strong> se ejecutan los <strong>desembolsos</strong> de la deuda y se construye la obra.</li>
+          <li><strong>4 · Completion Date:</strong> hito de finalización/puesta en marcha; cambia el perfil de riesgo (se suele liberar la Completion Guarantee).</li>
+          <li><strong>5 · Operación:</strong> el proyecto genera caja, comienza el <strong>repago</strong> de la deuda y el reparto de dividendos.</li>
+        </ul>
+        <div class="note"><b>Por qué importa el Completion Date:</b> antes de él el riesgo es de construcción (sin caja todavía); después es riesgo operativo. La estructura de garantías y los flujos de repago están "adaptados a la generación de caja del proyecto".</div>
+      </div></div>
+    </div>
+
+    <!-- PF.4 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">PF.4</span>
+        <span class="sec-title">Ventajas y desventajas</span>
+        <span class="chip">Comparativa</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <div class="concept">
+          <div class="concept-title">✓ Ventajas</div>
+          <ul>
+            <li><strong>Sin recurso:</strong> los acreedores no tienen recurso contra el balance de los Sponsors (excepto si hay Completion Guarantee). Limita la responsabilidad al capital aportado.</li>
+            <li><strong>Diferenciación de riesgo:</strong> separa el riesgo del proyecto del riesgo corporativo del Sponsor; evita impactos en su riesgo crediticio.</li>
+            <li><strong>Elude covenants:</strong> se evitan los covenants restrictivos contenidos en los instrumentos de deuda del Sponsor.</li>
+            <li><strong>Repago a medida:</strong> los flujos de repago se adaptan totalmente a la estructura de generación de caja del proyecto.</li>
+          </ul>
+        </div>
+        <div class="concept">
+          <div class="concept-title">✗ Desventajas</div>
+          <ul>
+            <li><strong>Mayor costo</strong> del financiamiento.</li>
+            <li><strong>Complejidad</strong> en la estructuración y en el esquema de garantías.</li>
+            <li><strong>Tiempos:</strong> mayores plazos de estructuración para llegar al cierre financiero.</li>
+          </ul>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- PF.5 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">PF.5</span>
+        <span class="sec-title">Esquemas de garantías</span>
+        <span class="chip">Garantías</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Como no hay recurso contra el Sponsor, el acreedor se cubre con un paquete de garantías sobre el propio proyecto.</p>
+        <ul>
+          <li><strong>Completion Guarantee (Sponsors):</strong> garantía de finalización. Es la principal excepción al "sin recurso": los Sponsors responden hasta que el proyecto se complete (Completion Date).</li>
+          <li><strong>Prenda sobre acciones del SPV:</strong> permite al acreedor tomar el control del vehículo ante default.</li>
+          <li><strong>Cesión fiduciaria de cobranzas (con o sin Off-taker):</strong> los cobros de las ventas se dirigen a un fideicomiso que asegura el repago antes de llegar a los Sponsors.</li>
+          <li><strong>Debt Service Reserve Account (DSRA):</strong> reserva de fondos para el servicio de deuda.</li>
+          <li><strong>Prenda sobre activos físicos (garantías reales):</strong> los activos del proyecto (p. ej. el oleoducto) respaldan el préstamo.</li>
+        </ul>
+        <figure class="chart wide"><svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" role="img"><rect x="30" y="22" width="240" height="24" rx="6" fill="#10141c" stroke="#4fc3f7" stroke-width="1.5"/><text x="44" y="38" fill="#e8eaf0" font-size="10">Ingresos del proyecto</text><line x1="150" y1="46" x2="150" y2="56" stroke="#566075" stroke-width="1.4"/><polygon points="146,55 154,55 150,61" fill="#566075"/><rect x="30" y="56" width="240" height="24" rx="6" fill="#10141c" stroke="#4ade80" stroke-width="1.5"/><text x="44" y="72" fill="#e8eaf0" font-size="10">1º  OPEX / operación</text><line x1="150" y1="80" x2="150" y2="90" stroke="#566075" stroke-width="1.4"/><polygon points="146,89 154,89 150,95" fill="#566075"/><rect x="30" y="90" width="240" height="24" rx="6" fill="#10141c" stroke="#f87171" stroke-width="1.5"/><text x="44" y="106" fill="#e8eaf0" font-size="10">2º  Servicio de deuda</text><line x1="150" y1="114" x2="150" y2="124" stroke="#566075" stroke-width="1.4"/><polygon points="146,123 154,123 150,129" fill="#566075"/><rect x="30" y="124" width="240" height="24" rx="6" fill="#10141c" stroke="#fbbf24" stroke-width="1.5"/><text x="44" y="140" fill="#e8eaf0" font-size="10">3º  DSRA (reserva 6–12m)</text><line x1="150" y1="148" x2="150" y2="158" stroke="#566075" stroke-width="1.4"/><polygon points="146,157 154,157 150,163" fill="#566075"/><rect x="30" y="158" width="240" height="24" rx="6" fill="#10141c" stroke="#a78bfa" stroke-width="1.5"/><text x="44" y="174" fill="#e8eaf0" font-size="10">4º  Sponsors (residual)</text></svg><figcaption><b>Lectura:</b> el <b>cash waterfall</b> ordena en qué se gasta cada peso de ingreso: primero operación, después <b>servicio de deuda</b>, luego se llena la <b>DSRA</b>, y recién al final cobran los <b>sponsors</b>. La garantía en project finance es <b>controlar el flujo</b> (cesión de flujos, prendas, step-in), no rematar un bien.</figcaption></figure>
+      </div></div>
+    </div>
+
+    <!-- PF.6 -->
+    <div class="sec">
+      <div class="sec-head" onclick="toggle(this)">
+        <span class="sec-num">PF.6</span>
+        <span class="sec-title">Caso VMOS — Vaca Muerta Oleoducto Sur</span>
+        <span class="chip">Caso real</span><span class="arrow">▼</span>
+      </div>
+      <div class="sec-body"><div class="sec-inner">
+        <p class="lead">Ejemplo de project finance en Argentina: financiación basada en los flujos de caja del proyecto VMOS para construir un oleoducto, vía un préstamo sindicado liderado por bancos internacionales.</p>
+        <div class="concept">
+          <div class="concept-title">¿Qué es VMOS?</div>
+          <strong>VMOS S.A.</strong> es una sociedad anónima formada por YPF, Pluspetrol, Pan American Energy, Pampa Energía, Vista, Chevron Argentina, Shell Argentina y Tecpetrol. Su objetivo es financiar y construir el <strong>Vaca Muerta Oleoducto Sur</strong>, un oleoducto de <strong>437 km</strong> que evacúa crudo desde la Cuenca Neuquina hasta la costa atlántica de Río Negro.
+        </div>
+        <div class="concept">
+          <div class="concept-title">El "project finance" acá</div>
+          Financiación estructurada donde los fondos se basan en la <strong>capacidad futura del proyecto de generar caja</strong>, y los <strong>activos del proyecto (el oleoducto) sirven como garantía</strong> del préstamo. El SPV es VMOS S.A.; los Sponsors son las petroleras.
+        </div>
+        <div class="concept">
+          <div class="concept-title">Detalles del financiamiento</div>
+          <ul>
+            <li><strong>Monto:</strong> préstamo sindicado de <strong>USD 2.000 millones</strong>.</li>
+            <li><strong>Líderes:</strong> bancos internacionales de primera línea — Citi, Deutsche Bank, Itaú, JP Morgan y Santander.</li>
+            <li><strong>Inversores:</strong> un grupo de 14 bancos e inversores institucionales internacionales.</li>
+            <li><strong>Importancia:</strong> el mayor préstamo comercial para un proyecto de infraestructura en la historia argentina y un hito en el mercado internacional de project finance.</li>
+          </ul>
+        </div>
+        <div class="note"><b>Nota:</b> los datos del caso VMOS provienen del apunte de la materia. Por tratarse de una operación reciente, cifras y participantes pueden haberse actualizado desde entonces.</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    Fuente: resúmenes de clase U1, U2&amp;3, U4 y U5 (Prof. E. Marino) + handoffs U1–U5 · caso CGI (GAAP/Non-GAAP) · PPT y apunte de Project Finance (Prof. N. Mesa) · Finanzas Corporativas II, UADE.<br>
+    Apunte <b>final integrador</b> — contenido solo teórico (sin resolución numérica). Repasá los "por qué" y las comparaciones.
+  </div>
+</div>
+
+<script>
+function show(n, btn){
+  document.querySelectorAll('.unit').forEach(u=>u.classList.remove('show'));
+  document.getElementById('u'+n).classList.add('show');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggle(head){
+  var body = head.nextElementSibling;
+  var open = body.classList.contains('open');
+  head.classList.toggle('open', !open);
+  body.classList.toggle('open', !open);
+}
+function toggleAll(unitId){
+  var unit = document.getElementById(unitId);
+  var heads = unit.querySelectorAll('.sec-head');
+  var anyClosed = Array.from(heads).some(h=>!h.classList.contains('open'));
+  heads.forEach(h=>{
+    h.classList.toggle('open', anyClosed);
+    h.nextElementSibling.classList.toggle('open', anyClosed);
+  });
+}
+</script>
+</body>
+</html>
