@@ -1,0 +1,1613 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Derivados II — Teoría</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+
+<style>
+  :root{
+    --bg:#0f0f0f; --bg2:#1a1a1a; --bg3:#242424; --bg4:#2e2e2e;
+    --text:#e8e8e8; --text2:#a0a0a0; --text3:#666;
+    --border:#2e2e2e; --border2:#3a3a3a;
+    --u0:#8b8fe8; --u1:#4fa3e8; --u2:#3dbf8a; --u3:#e8a83d;
+    --accent:var(--u1);
+    --sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+    --cond:"IBM Plex Sans Condensed","IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--sans); font-size:15px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px 90px}
+
+  /* ---------- header ---------- */
+  header.top{
+    border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg,#141414 0%,var(--bg) 100%);
+  }
+  .top-in{max-width:1000px;margin:0 auto;padding:34px 22px 0}
+  .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--text3); margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--cond); font-weight:700; font-size:clamp(30px,5.2vw,46px);
+    line-height:1.05; margin:0 0 10px; letter-spacing:-.015em; text-wrap:balance;
+  }
+  h1 .thin{color:var(--text2);font-weight:500}
+  .sub{color:var(--text2);max-width:62ch;margin:0 0 22px;font-size:14.5px}
+  .meta{
+    display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--mono);font-size:11.5px;
+    color:var(--text3);margin:0 0 26px;
+  }
+  .meta b{color:var(--text2);font-weight:500}
+
+  /* ---------- tabs ---------- */
+  nav.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin}
+  nav.tabs::-webkit-scrollbar{height:0}
+  .tab{
+    appearance:none;background:transparent;border:0;border-bottom:2px solid transparent;
+    color:var(--text3);font-family:var(--cond);font-size:14px;font-weight:600;
+    padding:11px 15px 12px;cursor:pointer;white-space:nowrap;letter-spacing:.01em;
+    transition:color .15s,border-color .15s;
+  }
+  .tab:hover{color:var(--text2)}
+  .tab .n{font-family:var(--mono);font-size:11px;opacity:.7;margin-right:7px}
+  .tab[aria-selected="true"]{color:var(--tc);border-bottom-color:var(--tc)}
+  .tab:focus-visible{outline:2px solid var(--u1);outline-offset:-2px;border-radius:3px}
+
+  /* ---------- toolbar ---------- */
+  .toolbar{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    padding:20px 0 4px;
+  }
+  .search{
+    flex:1 1 240px;min-width:200px;display:flex;align-items:center;gap:9px;
+    background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:0 11px;
+  }
+  .search svg{flex:none;opacity:.45}
+  .search input{
+    flex:1;background:transparent;border:0;color:var(--text);
+    font-family:var(--sans);font-size:13.5px;padding:9px 0;outline:none;
+  }
+  .search input::placeholder{color:var(--text3)}
+  .search:focus-within{border-color:var(--border2)}
+  .btn{
+    appearance:none;background:var(--bg2);border:1px solid var(--border);color:var(--text2);
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    padding:9px 13px;border-radius:7px;cursor:pointer;transition:.15s;
+  }
+  .btn:hover{background:var(--bg3);color:var(--text);border-color:var(--border2)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* ---------- unit panel ---------- */
+  .unit{display:none;animation:fade .18s ease-out}
+  .unit.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.unit{animation:none}*{transition:none!important}}
+
+  .unit-head{padding:26px 0 20px;border-bottom:1px solid var(--border);margin-bottom:8px}
+  .unit-tag{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 7px;
+  }
+  .unit-head h2{
+    font-family:var(--cond);font-weight:700;font-size:26px;line-height:1.15;margin:0 0 9px;
+    letter-spacing:-.01em;text-wrap:balance;
+  }
+  .unit-head p{margin:0;color:var(--text2);font-size:14px;max-width:68ch}
+  .srcline{
+    margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--text3);
+    display:flex;flex-wrap:wrap;gap:6px 14px;
+  }
+
+  /* ---------- accordion ---------- */
+  .sec{border-bottom:1px solid var(--border)}
+  .sec[hidden]{display:none}
+  .sec-head{
+    display:flex;align-items:flex-start;gap:14px;width:100%;
+    background:transparent;border:0;color:inherit;text-align:left;
+    padding:15px 4px;cursor:pointer;font-family:inherit;
+  }
+  .sec-head:hover .sec-title{color:var(--accent)}
+  .sec-head:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px}
+  .sec-num{
+    font-family:var(--mono);font-size:11.5px;color:var(--text3);
+    padding-top:3px;min-width:30px;font-variant-numeric:tabular-nums;
+  }
+  .sec-title{
+    flex:1;font-family:var(--cond);font-weight:600;font-size:16.5px;line-height:1.3;
+    transition:color .15s;letter-spacing:.005em;
+  }
+  .chip{
+    flex:none;font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--text2);background:var(--bg3);border:1px solid var(--border2);
+    padding:3px 8px;border-radius:4px;margin-top:2px;white-space:nowrap;
+  }
+  .arrow{flex:none;color:var(--text3);transition:transform .2s;margin-top:5px}
+  .sec-head[aria-expanded="true"] .arrow{transform:rotate(180deg);color:var(--accent)}
+  .sec-head[aria-expanded="true"] .sec-title{color:var(--accent)}
+  .sec-body{display:none;padding:2px 4px 26px 48px}
+  .sec-body.open{display:block}
+  @media(max-width:640px){
+    .sec-body{padding-left:8px}
+    .chip{display:none}
+  }
+
+  /* ---------- content atoms ---------- */
+  .sec-body > * + *{margin-top:14px}
+  .sec-body p{margin:0;color:#d6d6d6;max-width:70ch}
+  .sec-body ul{margin:0;padding-left:19px;display:flex;flex-direction:column;gap:7px;max-width:72ch}
+  .sec-body li{color:#d6d6d6}
+  .sec-body li::marker{color:var(--text3)}
+  strong{color:var(--text);font-weight:600}
+  em{color:var(--text2)}
+  code,.k{
+    font-family:var(--mono);font-size:.88em;background:var(--bg3);
+    border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:#d8d8d8;
+  }
+
+  .concept{
+    background:var(--bg2);border:1px solid var(--border);border-left:2px solid var(--accent);
+    border-radius:0 7px 7px 0;padding:13px 16px;
+  }
+  .concept + .concept{margin-top:10px}
+  .concept-title{
+    font-family:var(--cond);font-weight:600;font-size:14.5px;color:var(--text);margin-bottom:4px;
+    letter-spacing:.005em;
+  }
+  .concept p{margin:0;font-size:14px;color:#cfcfcf}
+  .concept ul{margin-top:7px;font-size:14px}
+
+  .note{
+    background:#171410;border:1px solid #3a3021;border-radius:7px;padding:11px 14px;
+    font-size:13.5px;color:#cbbfa8;
+  }
+  .note b{color:var(--u3);font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:4px;font-weight:500}
+  .note p{margin:0;color:#cbbfa8;font-size:13.5px}
+
+  .fx{
+    font-family:var(--mono);font-size:14px;background:var(--bg2);border:1px solid var(--border);
+    border-radius:7px;padding:12px 15px;color:#e0e0e0;overflow-x:auto;
+  }
+  .fx .lbl{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--text3);margin-bottom:6px}
+
+  /* comparison grid */
+  .vs-wrap{overflow-x:auto}
+  .vs-grid{
+    display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:1px;
+    background:var(--border);border:1px solid var(--border);border-radius:7px;overflow:hidden;
+    min-width:340px;
+  }
+  .vs-grid.c3{grid-template-columns:minmax(120px,.8fr) repeat(2,minmax(150px,1fr));min-width:480px}
+  .vs-grid.c4{grid-template-columns:minmax(110px,.8fr) repeat(3,minmax(140px,1fr));min-width:600px}
+  .vs-cell{background:var(--bg2);padding:10px 13px;font-size:13.5px;color:#cfcfcf}
+  .vs-header{
+    background:var(--bg3);color:var(--text);font-family:var(--cond);font-weight:600;font-size:13.5px;
+  }
+  .vs-key{background:#1e1e1e;color:var(--text2);font-family:var(--mono);font-size:11.5px;
+    letter-spacing:.02em}
+  .vs-cell .pos{color:var(--u2);font-family:var(--mono)}
+  .vs-cell .neg{color:#e0708c;font-family:var(--mono)}
+
+  /* legs list */
+  .legs{
+    display:flex;flex-wrap:wrap;gap:7px;font-family:var(--mono);font-size:12px;
+  }
+  .leg{border:1px solid var(--border2);border-radius:5px;padding:4px 9px;background:var(--bg2);color:#d0d0d0}
+  .leg.long{border-color:#2c5f47;color:#7fd6ae}
+  .leg.short{border-color:#5f2c3a;color:#e8a0b2}
+
+  .empty{padding:40px 4px;color:var(--text3);font-family:var(--mono);font-size:13px;display:none}
+  .empty.on{display:block}
+
+  footer{
+    border-top:1px solid var(--border);margin-top:44px;padding-top:20px;
+    font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.8;
+  }
+  mark{background:rgba(232,168,61,.28);color:inherit;border-radius:2px}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <p class="eyebrow">UADE · Instrumentos Financieros Derivados II · 2C 2026</p>
+    <h1>Mecánica, Estrategias<br><span class="thin">y Sensibilidades</span></h1>
+    <p class="sub">Resumen teórico de las clases dictadas hasta la fecha. Solo teoría: definiciones,
+      clasificaciones, comparativas y mecanismos. Sin ejercicios ni desarrollos numéricos.</p>
+    <div class="meta">
+      <span><b>4</b> clases</span>
+      <span><b>58</b> subtemas</span>
+      <span>Cátedra <b>Lic. Santiago Ranucci</b> · jueves</span>
+      <span>Bibliografía base <b>Hull (8ª ed.)</b></span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Clases">
+      <button class="tab" role="tab" id="t-c0" aria-controls="c0" aria-selected="false" style="--tc:var(--u0)"><span class="n">00</span>La materia</button>
+      <button class="tab" role="tab" id="t-c1" aria-controls="c1" aria-selected="true" style="--tc:var(--u1)"><span class="n">01</span>Mecánica de opciones</button>
+      <button class="tab" role="tab" id="t-c2" aria-controls="c2" aria-selected="false" style="--tc:var(--u2)"><span class="n">02</span>Estrategias</button>
+      <button class="tab" role="tab" id="t-c3" aria-controls="c3" aria-selected="false" style="--tc:var(--u3)"><span class="n">03</span>Letras griegas</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="toolbar">
+    <label class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input type="search" id="q" placeholder="Buscar en esta clase — collar, moneyness, gamma…" aria-label="Buscar subtemas">
+    </label>
+    <button class="btn" id="expand">Expandir todo</button>
+    <button class="btn" id="collapse">Colapsar</button>
+  </div>
+
+  <!-- ============================================ CLASE 0 -->
+  <section class="unit" id="c0" role="tabpanel" aria-labelledby="t-c0" style="--accent:var(--u0)">
+    <div class="unit-head">
+      <p class="unit-tag">Clase 0 · Presentación</p>
+      <h2>Introducción a Derivados II</h2>
+      <p>Encuadre de la materia: qué se persigue, cómo se ordenan las siete unidades, con qué bibliografía
+        se trabaja y cuáles son las fechas y condiciones de cursada.</p>
+      <div class="srcline"><span>Fuente: 0 — Introducción a Derivados II (Materia Jueves), 7 diapositivas</span></div>
+    </div>
+
+    <div class="sec" data-t="objetivos de la materia valuacion exoticos riesgo cobertura ingenieria financiera">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">0.1</span>
+        <span class="sec-title">Objetivos de la materia</span><span class="chip">Fundamentos</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <ul>
+          <li>Aplicar metodologías <strong>analíticas y numéricas</strong> para la valuación de instrumentos financieros derivados.</li>
+          <li>Analizar y valuar <strong>productos financieros exóticos</strong> surgidos de procesos de innovación e ingeniería financiera.</li>
+          <li>Identificar y <strong>medir los riesgos</strong> asociados a las posiciones financieras de inversores y empresas.</li>
+          <li>Seleccionar <strong>estrategias de cobertura</strong> adecuadas según los objetivos y necesidades de cada agente económico.</li>
+          <li>Diseñar y proponer <strong>productos financieros</strong> acordes con las expectativas del inversor sobre la evolución futura de variables económicas y financieras.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec" data-t="unidades tematicas programa estrategias sensibilidad exoticas metodos numericos volatility smiles tasas de interes credit derivatives estructurados">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">0.2</span>
+        <span class="sec-title">Las siete unidades temáticas</span><span class="chip">Programa</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <ul>
+          <li><strong>Unidad 1 —</strong> Estrategias con Opciones</li>
+          <li><strong>Unidad 2 —</strong> Sensibilidad del Precio de las Opciones</li>
+          <li><strong>Unidad 3 —</strong> Opciones Exóticas</li>
+          <li><strong>Unidad 4 —</strong> Métodos Numéricos</li>
+          <li><strong>Unidad 5 —</strong> Volatility Smiles y alternativas al modelo de Black &amp; Scholes</li>
+          <li><strong>Unidad 6 —</strong> Derivados de Tasas de Interés</li>
+          <li><strong>Unidad 7 —</strong> Credit Derivatives y Productos Estructurados</li>
+        </ul>
+        <div class="note"><b>Cómo mapea con las clases</b>
+          <p>La clase de Estrategias corresponde a la Unidad 1; la de Letras Griegas, a la Unidad 2.
+          La clase de Introducción a las Opciones funciona como repaso de mecánica de mercados previo a la Unidad 1.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="bibliografia hull fabozzi rebonato obligatoria libros">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">0.3</span>
+        <span class="sec-title">Bibliografía obligatoria</span><span class="chip">Referencias</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <ul>
+          <li><strong>Hull, J. C. (2012).</strong> <em>Options, futures, and other derivatives</em> (8th ed.). Pearson. — texto central de la materia.</li>
+          <li><strong>Fabozzi, F. J. (2013).</strong> <em>Bond markets, analysis, and strategies</em> (8th ed.). Pearson. — soporte para la unidad de tasas.</li>
+          <li><strong>Rebonato, R. (2004).</strong> <em>Volatility and correlation: The perfect hedger and the fox</em>. John Wiley &amp; Sons. — soporte para volatilidad y smiles.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec" data-t="requisitos aprobacion asistencia correlatividades mora fechas parcial recuperatorio final">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">0.4</span>
+        <span class="sec-title">Condiciones de cursada y fechas relevantes</span><span class="chip">Cursada</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="concept">
+          <div class="concept-title">Requisitos de aprobación</div>
+          <ul>
+            <li>Asistencia mínima del <strong>75 %</strong> (hasta 4 inasistencias permitidas).</li>
+            <li>Documentación de estudios secundarios y residencia vigente para alumnos extranjeros.</li>
+            <li>Cumplimiento del régimen de correlatividades y onboarding.</li>
+            <li>No poseer indicador de mora activo.</li>
+          </ul>
+        </div>
+        <div class="vs-wrap">
+          <div class="vs-grid c3">
+            <div class="vs-cell vs-header">Instancia</div>
+            <div class="vs-cell vs-header">Fecha</div>
+            <div class="vs-cell vs-header">Observación</div>
+            <div class="vs-cell vs-key">Clase sábado</div><div class="vs-cell">19 sep. 2026</div><div class="vs-cell">Clase de recupero de calendario</div>
+            <div class="vs-cell vs-key">1er parcial</div><div class="vs-cell">24 sep. 2026</div><div class="vs-cell">—</div>
+            <div class="vs-cell vs-key">2do parcial</div><div class="vs-cell">19 nov. 2026</div><div class="vs-cell">—</div>
+            <div class="vs-cell vs-key">Recuperatorio</div><div class="vs-cell">3 dic. 2026</div><div class="vs-cell">Junto con finales adelantados</div>
+            <div class="vs-cell vs-key">Final</div><div class="vs-cell">10 y 17 dic. 2026</div><div class="vs-cell">Desdoblado según cantidad de alumnos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ CLASE 1 -->
+  <section class="unit on" id="c1" role="tabpanel" aria-labelledby="t-c1" style="--accent:var(--u1)">
+    <div class="unit-head">
+      <p class="unit-tag">Clase 1 · Repaso previo a la Unidad 1</p>
+      <h2>Mecánica de los mercados de opciones</h2>
+      <p>Qué es un derivado y quiénes lo usan; los cuatro instrumentos base; la anatomía de un contrato
+        de opción; y toda la plomería del mercado — cámara compensadora, márgenes, open interest,
+        ajustes por eventos corporativos y la operatoria concreta en BYMA.</p>
+      <div class="srcline"><span>Fuente: Clase 1 — Introducción a las Opciones, 40 diapositivas</span></div>
+    </div>
+
+    <div class="sec" data-t="que es un derivado activo subyacente transferencia de riesgo acciones tasas divisas commodities clima">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.1</span>
+        <span class="sec-title">Qué es un derivado y qué puede ser el subyacente</span><span class="chip">Concepto base</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="concept">
+          <div class="concept-title">Definición</div>
+          <p>Instrumento financiero cuyo valor <strong>deriva o depende de una variable subyacente más
+            básica</strong>. Es la herramienta fundamental para la <strong>transferencia del riesgo</strong>.</p>
+        </div>
+        <p>El subyacente no se limita a activos financieros. La cátedra enumera: <strong>acciones</strong>,
+          <strong>tasas de interés</strong>, <strong>divisas</strong>, <strong>commodities</strong> y
+          <strong>clima</strong>.</p>
+      </div>
+    </div>
+
+    <div class="sec" data-t="tres actores hedgers coberturistas especuladores speculators arbitrajistas arbitrageurs apalancamiento">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.2</span>
+        <span class="sec-title">Los tres actores del mercado</span><span class="chip">Clasificación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="concept"><div class="concept-title">Coberturistas (Hedgers)</div>
+          <p>Buscan mitigar o eliminar un riesgo comercial o financiero <strong>ya existente</strong>. No
+            crean exposición: la neutralizan.</p></div>
+        <div class="concept"><div class="concept-title">Especuladores (Speculators)</div>
+          <p>Utilizan el <strong>apalancamiento</strong> para apostar por la dirección futura del mercado,
+            asumiendo riesgo deliberadamente.</p></div>
+        <div class="concept"><div class="concept-title">Arbitrajistas (Arbitrageurs)</div>
+          <p>Toman <strong>posiciones compensatorias en múltiples mercados</strong> para asegurar una
+            ganancia libre de riesgo ante ineficiencias de precios.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="cuatro pilares forwards futuros opciones swaps ingenieria financiera otc bolsa">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.3</span>
+        <span class="sec-title">Los cuatro pilares de la ingeniería financiera</span><span class="chip">Clasificación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Forwards</div><div class="vs-cell vs-header">Futuros</div>
+          <div class="vs-cell">Acuerdos <strong>privados (OTC)</strong> para comprar o vender un activo en el futuro a un precio fijado hoy.</div>
+          <div class="vs-cell">Contratos <strong>estandarizados y negociados en bolsa</strong>, con liquidación diaria de márgenes.</div>
+          <div class="vs-cell vs-header">Opciones</div><div class="vs-cell vs-header">Swaps</div>
+          <div class="vs-cell">El <strong>derecho, pero no la obligación</strong>, de comprar o vender un activo a un precio determinado.</div>
+          <div class="vs-cell">Acuerdos para <strong>intercambiar flujos de caja periódicos</strong> (por ejemplo, tasa fija por variable).</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="matriz estructural forwards vs futuros otc bursatil estandarizacion riesgo de credito contraparte camara compensacion liquidacion mark to market margins">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.4</span>
+        <span class="sec-title">Matriz estructural: forwards vs. futuros</span><span class="chip">Comparativa</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Dimensión</div>
+          <div class="vs-cell vs-header">Forwards</div>
+          <div class="vs-cell vs-header">Futuros</div>
+          <div class="vs-cell vs-key">Mercado</div><div class="vs-cell">Over-the-Counter (OTC)</div><div class="vs-cell">Bursátil (exchange-traded)</div>
+          <div class="vs-cell vs-key">Estandarización</div><div class="vs-cell">Contratos a medida</div><div class="vs-cell">Totalmente estándar</div>
+          <div class="vs-cell vs-key">Riesgo de crédito</div><div class="vs-cell"><span class="neg">Alto</span> — riesgo de contraparte</div><div class="vs-cell"><span class="pos">Casi nulo</span> — cámara de compensación</div>
+          <div class="vs-cell vs-key">Liquidación</div><div class="vs-cell">Al vencimiento</div><div class="vs-cell">Diaria (mark-to-market / margins)</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="naturaleza del compromiso opciones vs futuros asimetria prima premium obligacion derecho costo inicial cero margenes colaterales">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.5</span>
+        <span class="sec-title">La naturaleza del compromiso: opciones vs. futuros</span><span class="chip">Comparativa</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Mientras los futuros <strong>atan a ambas partes</strong>, las opciones ofrecen
+          <strong>asimetría estratégica a cambio de una prima</strong>.</p>
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Dimensión</div>
+          <div class="vs-cell vs-header">Forwards y futuros</div>
+          <div class="vs-cell vs-header">Opciones</div>
+          <div class="vs-cell vs-key">Dinámica</div>
+          <div class="vs-cell">Los tenedores se comprometen a una acción futura <strong>ineludible</strong>.</div>
+          <div class="vs-cell">Dan al tenedor el <strong>derecho, no la obligación</strong>, de hacer algo.</div>
+          <div class="vs-cell vs-key">Costo inicial</div>
+          <div class="vs-cell">Cero, excepto márgenes o colaterales.</div>
+          <div class="vs-cell">Pago de una <strong>prima (premium)</strong> por adelantado.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="lenguaje estructural variables spot strike precio ejercicio tiempo maturity tasa libre de riesgo volatilidad europeas americanas regimen de ejercicio">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.6</span>
+        <span class="sec-title">El lenguaje estructural de las opciones</span><span class="chip">Concepto base</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Cada contrato se define mediante un conjunto estricto de variables físicas y temporales.</p>
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Variable</div><div class="vs-cell vs-header">Nombre</div><div class="vs-cell vs-header">Definición</div>
+          <div class="vs-cell vs-key">S</div><div class="vs-cell">Precio spot</div><div class="vs-cell">Precio actual del subyacente en el mercado</div>
+          <div class="vs-cell vs-key">S<sub>T</sub></div><div class="vs-cell">Precio terminal</div><div class="vs-cell">Precio del activo en el momento T</div>
+          <div class="vs-cell vs-key">K (o X)</div><div class="vs-cell">Strike price</div><div class="vs-cell">Precio de ejercicio pactado</div>
+          <div class="vs-cell vs-key">T</div><div class="vs-cell">Tiempo</div><div class="vs-cell">Remanente hasta el vencimiento, expresado en años</div>
+          <div class="vs-cell vs-key">r</div><div class="vs-cell">Tasa libre de riesgo</div><div class="vs-cell">Anualizada, capitalización continua</div>
+          <div class="vs-cell vs-key">σ</div><div class="vs-cell">Volatilidad</div><div class="vs-cell">Del rendimiento del activo</div>
+        </div></div>
+        <div class="concept"><div class="concept-title">Regímenes de ejercicio</div>
+          <ul>
+            <li><strong>Opciones europeas:</strong> ejercicio exclusivo en la fecha de expiración.</li>
+            <li><strong>Opciones americanas:</strong> ejercicio en cualquier momento hasta la expiración.
+              Es el estándar del mercado bursátil.</li>
+          </ul></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="cuatro posiciones basicas long call short call long put short put payoff matriz de riesgo derechos obligaciones">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.7</span>
+        <span class="sec-title">La matriz de riesgo: las cuatro posiciones básicas</span><span class="chip">Clasificación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>El mercado se divide entre <strong>quienes compran derechos (pagando)</strong> y
+          <strong>quienes asumen obligaciones (cobrando)</strong>. De ahí salen cuatro posiciones y
+          cuatro perfiles de payoff.</p>
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Posición</div><div class="vs-cell vs-header">Payoff al vencimiento</div><div class="vs-cell vs-header">Naturaleza</div>
+          <div class="vs-cell vs-key">Long Call</div><div class="vs-cell">máx(S<sub>T</sub> − K, 0)</div><div class="vs-cell">Compra un derecho — paga prima</div>
+          <div class="vs-cell vs-key">Short Call</div><div class="vs-cell">−máx(S<sub>T</sub> − K, 0)</div><div class="vs-cell">Asume obligación — cobra prima</div>
+          <div class="vs-cell vs-key">Long Put</div><div class="vs-cell">máx(K − S<sub>T</sub>, 0)</div><div class="vs-cell">Compra un derecho — paga prima</div>
+          <div class="vs-cell vs-key">Short Put</div><div class="vs-cell">−máx(K − S<sub>T</sub>, 0)</div><div class="vs-cell">Asume obligación — cobra prima</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="payoff vs profit prima pagada break even punto de equilibrio call comprado put comprado curva rentabilidad">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.8</span>
+        <span class="sec-title">Payoff vs. Profit: el desplazamiento por la prima</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>La distinción es central y se repite en toda la materia: el <strong>payoff</strong> es el valor
+          teórico del contrato al vencimiento; el <strong>profit (P&amp;L)</strong> incorpora el desembolso
+          inicial.</p>
+        <ul>
+          <li><strong>Call comprado:</strong> el pago inicial de la prima <em>desplaza la curva de
+            rentabilidad real hacia abajo</em>. El punto de equilibrio se corre a <span class="k">K + prima</span>.</li>
+          <li><strong>Put comprado:</strong> el derecho a vender a un precio fijo protege contra caídas,
+            pero hace falta cubrir el costo inicial para generar ganancia neta. El break-even se ubica en
+            <span class="k">K − prima</span>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec" data-t="opciones mas subyacente modificadores topologicos covered call accion larga call corto perfil de riesgo">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.9</span>
+        <span class="sec-title">Opciones + subyacente: alterar la realidad del riesgo</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Las opciones actúan como <strong>modificadores topológicos</strong>: al combinarlas con el activo
+          subyacente, transforman perfiles de riesgo puros en <strong>arquitecturas a medida</strong>.</p>
+        <p>El caso canónico presentado en esta clase: <span class="k">acción larga</span> +
+          <span class="k">call corto</span> = <strong>Covered Call</strong>. Es la puerta de entrada a toda
+          la Unidad 1.</p>
+      </div>
+    </div>
+
+    <div class="sec" data-t="moneyness in the money at the money out of the money itm atm otm valor intrinseco valor temporal">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.10</span>
+        <span class="sec-title">El estado del contrato: moneyness</span><span class="chip">Clasificación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>La relación entre el precio spot (S) y el strike (K) define el valor inmediato de la opción.
+          Como regla general, <strong>solo se ejercen las opciones In the Money</strong>.</p>
+        <div class="vs-wrap"><div class="vs-grid c4">
+          <div class="vs-cell vs-header">Estado</div><div class="vs-cell vs-header">Call</div><div class="vs-cell vs-header">Put</div><div class="vs-cell vs-header">Valor</div>
+          <div class="vs-cell vs-key">In the Money (ITM)</div><div class="vs-cell">S &gt; K</div><div class="vs-cell">S &lt; K</div><div class="vs-cell">Valor intrínseco positivo</div>
+          <div class="vs-cell vs-key">At the Money (ATM)</div><div class="vs-cell">S = K</div><div class="vs-cell">S = K</div><div class="vs-cell">Precio de mercado idéntico al strike</div>
+          <div class="vs-cell vs-key">Out of the Money (OTM)</div><div class="vs-cell">S &lt; K</div><div class="vs-cell">S &gt; K</div><div class="vs-cell">Sin valor intrínseco; solo valor temporal</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="descomposicion prima valor intrinseco valor tiempo temporal probabilidad estadistica americanas ejercicio inmediato">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.11</span>
+        <span class="sec-title">Descomposición del precio de la prima</span><span class="chip">Concepto base</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="fx"><span class="lbl">Descomposición</span>Precio total de la opción = Valor intrínseco + Valor tiempo</div>
+        <div class="concept"><div class="concept-title">Valor intrínseco</div>
+          <p>La ventaja inmediata: <span class="k">Call: máx(S − K, 0)</span> · <span class="k">Put: máx(K − S, 0)</span>.</p></div>
+        <div class="concept"><div class="concept-title">Valor tiempo</div>
+          <p>Diferencia entre el precio de mercado y el valor intrínseco. Refleja la
+            <strong>probabilidad estadística de que la opción gane valor antes del vencimiento</strong>.</p></div>
+        <div class="note"><b>Nota de la cátedra</b>
+          <p>En opciones americanas el precio total <strong>siempre debe ser al menos igual a su valor
+            intrínseco</strong>, por la posibilidad de ejercicio inmediato.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="ecosistema trading activos mercados indices spx oex ndx cboe nyse euronext ise futuros forex fx nasdaq omx criptomonedas cash settlement multiplicador">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.12</span>
+        <span class="sec-title">El ecosistema de trading: activos y mercados</span><span class="chip">Mercados</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Las opciones se aplican a una diversidad de activos y operan tanto en bolsas centralizadas
+          (<em>exchanges</em>) como en redes OTC.</p>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Subyacente</div><div class="vs-cell vs-header">Dónde y cómo opera</div>
+          <div class="vs-cell vs-key">Acciones</div><div class="vs-cell">CBOE, NYSE Euronext, ISE, Boston Options.</div>
+          <div class="vs-cell vs-key">Índices</div><div class="vs-cell">SPX, OEX, NDX. Multiplicador típico ×100 y liquidación <strong>en efectivo</strong> (cash settlement).</div>
+          <div class="vs-cell vs-key">Futuros</div><div class="vs-cell">Generalmente de tipo americano. Al ejercer un call, el P&amp;L es <span class="k">Precio futuro − Strike</span>.</div>
+          <div class="vs-cell vs-key">Forex (FX)</div><div class="vs-cell">Mayoritariamente OTC; algunas listadas en NASDAQ OMX.</div>
+          <div class="vs-cell vs-key">Criptomonedas</div><div class="vs-cell">Incluidas por la cátedra dentro del ecosistema actual de subyacentes.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="ciclos expiracion vencimiento tercer viernes sabado leaps largo plazo enero aviso al broker liquidez">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.13</span>
+        <span class="sec-title">El reloj del mercado: ciclos de expiración</span><span class="chip">Operatoria</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>El mercado bursátil estadounidense organiza los vencimientos en <strong>ciclos estrictos</strong>
+          para mantener la liquidez.</p>
+        <div class="concept"><div class="concept-title">Regla general de expiración</div>
+          <ul>
+            <li>Vencimiento el <strong>sábado posterior al tercer viernes</strong> del mes.</li>
+            <li>Límite de aviso al broker: <strong>16:30 hs del viernes</strong>.</li>
+          </ul></div>
+        <div class="concept"><div class="concept-title">LEAPS</div>
+          <p>Opciones de <strong>largo plazo, hasta 39 meses</strong>. Siempre vencen en el mes de
+            <strong>enero</strong>.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="eventos corporativos ajustes contractuales splits dividendos valor nocional strike acciones por contrato">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.14</span>
+        <span class="sec-title">Eventos corporativos: ajustes por splits y dividendos</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Los contratos se <strong>calibran matemáticamente</strong> ante divisiones de acciones (splits)
+          para proteger el valor nocional.</p>
+        <div class="fx"><span class="lbl">Ajuste ante un split n:m</span>Nuevo strike = K × (m/n)&nbsp;&nbsp;·&nbsp;&nbsp;Nuevas acciones = Acciones × (n/m)</div>
+        <div class="concept"><div class="concept-title">Conclusión</div>
+          <p>El <strong>valor nocional total de la posición se mantiene idéntico</strong>. Ni el comprador ni
+            el vendedor sufren distorsiones de riqueza.</p></div>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Dividendos en efectivo</div><div class="vs-cell vs-header">Dividendos en acciones</div>
+          <div class="vs-cell">Generalmente <strong>NO alteran</strong> el contrato en opciones de bolsa.</div>
+          <div class="vs-cell">Se ajustan con <strong>la misma mecánica matemática que un split</strong>.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="open interest interes abierto creacion transferencia destruccion contratos vivos liquidez volumen">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.15</span>
+        <span class="sec-title">Dinámica de liquidez: el Open Interest</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>El open interest mide <strong>contratos vivos</strong>, no volumen operado. Sube, se mantiene o
+          baja según qué tipo de orden se cruce.</p>
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Momento</div><div class="vs-cell vs-header">Qué ocurre</div><div class="vs-cell vs-header">Open Interest</div>
+          <div class="vs-cell vs-key">1 · Creación</div><div class="vs-cell">Inversor A vende short e Inversor B compra long. Nace un contrato nuevo.</div><div class="vs-cell"><span class="pos">0 → 1</span></div>
+          <div class="vs-cell vs-key">2 · Transferencia</div><div class="vs-cell">B vende para cerrar y C abre compra. El contrato cambia de manos, no se crea uno nuevo.</div><div class="vs-cell">1 → 1</div>
+          <div class="vs-cell vs-key">3 · Destrucción</div><div class="vs-cell">A compra para cerrar y C vende para cerrar. Las posiciones se cruzan y el contrato desaparece.</div><div class="vs-cell"><span class="neg">1 → 0</span></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="costos operar comisiones discount broker costos ocultos ejercicio bid offer spread market makers ineficiencias">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.16</span>
+        <span class="sec-title">El costo de operar e ineficiencias de mercado</span><span class="chip">Operatoria</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="concept"><div class="concept-title">Estructura de comisiones (discount broker)</div>
+          <p>Escalonada por monto operado: un cargo fijo más un porcentaje, y el porcentaje
+            <strong>decrece</strong> a medida que sube el monto de la operación.</p></div>
+        <div class="concept"><div class="concept-title">Costos ocultos al ejercer</div>
+          <ul>
+            <li>Comisión original de la opción.</li>
+            <li>Costo del ejercicio físico de la opción.</li>
+            <li>Comisión de venta de las acciones subyacentes recibidas.</li>
+            <li><strong>Bid-offer spread:</strong> el peaje pagado a los <em>market makers</em> por proveer
+              liquidez inmediata.</li>
+          </ul></div>
+        <div class="note"><b>Idea clave</b>
+          <p>Ejercer no es gratis: la cadena de costos puede volver antieconómico un ejercicio que
+            <em>en payoff teórico</em> parecía conveniente.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="margenes margin comprador long position lanzador writer short position naked cubierto descubierto apalancamiento riesgo sistemico reg-t">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.17</span>
+        <span class="sec-title">Gestión de riesgo institucional: el sistema de márgenes</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">El comprador (long position)</div><div class="vs-cell vs-header">El lanzador (writer / short position)</div>
+          <div class="vs-cell"><strong>Regla:</strong> para vencimientos menores a 9 meses debe pagar el
+            <strong>100 % de la prima por adelantado</strong>. (Vencimientos &gt; 9 meses permiten 25 % de margen.)</div>
+          <div class="vs-cell"><strong>Regla:</strong> asume una obligación futura y debe
+            <strong>inmovilizar capital (margen)</strong> garantizando a la cámara compensadora que no hará default.</div>
+          <div class="vs-cell"><strong>Razón:</strong> la opción ya es un instrumento apalancado <em>per se</em>.
+            Permitir la compra en margen detonaría el <strong>riesgo sistémico</strong>.</div>
+          <div class="vs-cell"><strong>Cubierto vs. descubierto:</strong> las opciones <em>naked</em> —donde el
+            vendedor no posee el subyacente— requieren cálculos de margen <strong>dinámicos y altamente
+            punitivos</strong>.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="reg-t naked call algoritmo margen regulatorio branch maximo 20% 10% otm prima total interactive brokers cboe margin manual">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.18</span>
+        <span class="sec-title">Algoritmo de margen regulatorio (Reg-T, naked call)</span><span class="chip">Operatoria</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Para un call lanzado en descubierto, el margen es el <strong>máximo entre dos ramas</strong>
+          calculadas por acción y luego escaladas por la cantidad total de acciones comprometidas.</p>
+        <div class="fx"><span class="lbl">Regla estándar (rama 1)</span>Prima total + [ (20 % × Spot) − Diferencia OTM ] por acción</div>
+        <div class="fx"><span class="lbl">Mínimo de seguridad (rama 2)</span>Prima total + [ 10 % × Spot ] por acción</div>
+        <div class="fx"><span class="lbl">Determinación</span>Margen requerido = MÁX ( rama 1 ; rama 2 )</div>
+        <p>La <strong>diferencia OTM</strong> es <span class="k">máx(K − S, 0)</span> para un call: cuanto más
+          fuera del dinero está el call lanzado, más se descuenta de la rama estándar y menos margen exige.
+          El mínimo de seguridad existe precisamente para poner un piso a ese descuento.</p>
+        <div class="note"><b>Referencias citadas en clase</b>
+          <p>CBOE <em>Margin Manual</em> e Interactive Brokers <em>margin-options</em>.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="occ options clearing corporation camara compensadora riesgo de contraparte asignacion aleatoria garante universal broker">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.19</span>
+        <span class="sec-title">El motor del mercado: la OCC</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>La <strong>Options Clearing Corporation</strong> centraliza el riesgo de contraparte: actúa como
+          <strong>garante universal</strong> e <strong>interrumpe el vínculo directo</strong> entre comprador
+          y vendedor.</p>
+        <div class="concept"><div class="concept-title">Proceso de ejercicio</div>
+          <p>El broker del comprador <strong>notifica</strong> a la OCC → la OCC realiza una
+            <strong>selección aleatoria</strong> entre los lanzadores → notifica al broker del vendedor, que
+            <strong>asigna</strong> a su cliente lanzador.</p></div>
+        <p>En paralelo, la OCC <strong>mantiene los registros y exige capital de margen</strong>: el broker
+          del comprador deposita los fondos y el del vendedor mantiene el margen de garantía inmovilizado.</p>
+        <div class="note"><b>Consecuencia práctica</b>
+          <p>La asignación es <strong>aleatoria</strong>: un lanzador no controla cuándo lo ejercen. Ese es el
+            riesgo específico de estar short en opciones americanas.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="position limit exercise limit limites operativos manipulacion techos contratos alcistas bajistas 250000 large caps">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.20</span>
+        <span class="sec-title">Límites operativos y prevención de manipulación</span><span class="chip">Operatoria</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Para evitar distorsiones de precios sistémicas, las cámaras compensadoras imponen techos estrictos.</p>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Position Limit (límite de posición)</div><div class="vs-cell vs-header">Exercise Limit (límite de ejercicio)</div>
+          <div class="vs-cell">Tope de contratos <strong>en un mismo lado del mercado</strong>. Agrupa
+            <span class="k">Long Call + Short Put</span> como lado alcista y
+            <span class="k">Short Call + Long Put</span> como lado bajista.</div>
+          <div class="vs-cell">Máximo de contratos <strong>ejercibles</strong> por un inversor o grupo en un
+            bloque de <strong>5 días hábiles</strong>. Ejemplo citado: US large caps = 250.000 contratos.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="contratos no estandar flex binarias cebos doom puts semanales weeklys todo o nada credit event deep out of the money cds">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.21</span>
+        <span class="sec-title">El espectro expandido: contratos no estándar</span><span class="chip">Clasificación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="concept"><div class="concept-title">Opciones FLEX</div>
+          <p>Los traders <strong>fijan sus propios términos</strong> (strike, vencimiento) por fuera del
+            estándar del exchange.</p></div>
+        <div class="concept"><div class="concept-title">Semanales (weeklys)</div>
+          <p>Ciclo de vida ultracorto: se crean un jueves y vencen el viernes de la semana siguiente.</p></div>
+        <div class="concept"><div class="concept-title">Binarias y CEBOs</div>
+          <p>Payoff de <strong>todo o nada</strong>. Las CEBOs (<em>Credit Event Binary Options</em>) se
+            activan ante <strong>eventos crediticios</strong> — default o bancarrota.</p></div>
+        <div class="concept"><div class="concept-title">DOOM Puts</div>
+          <p><em>Deep-Out-of-the-Money Puts</em>. Funcionan como <strong>seguros catastróficos</strong>, con un
+            comportamiento similar al de un CDS ante desplomes.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="derivados corporativos bursatiles dilucion warrants employee stock options esos bonos convertibles emision nuevas acciones estructura de capital">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.22</span>
+        <span class="sec-title">Derivados corporativos vs. bursátiles: el impacto de la dilución</span><span class="chip">Comparativa</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>A diferencia de las opciones del mercado secundario, los derivados corporativos
+          <strong>alteran la estructura de capital de la compañía</strong>.</p>
+        <div class="vs-wrap"><div class="vs-grid c4">
+          <div class="vs-cell vs-header">Instrumento</div><div class="vs-cell vs-header">¿Cantidad predefinida?</div><div class="vs-cell vs-header">¿Empresa involucrada?</div><div class="vs-cell vs-header">Efecto al ejercerse</div>
+          <div class="vs-cell vs-key">Warrants</div><div class="vs-cell">Sí</div><div class="vs-cell">Directo</div><div class="vs-cell"><span class="neg">Dilución</span> — emite nuevas acciones</div>
+          <div class="vs-cell vs-key">ESOs</div><div class="vs-cell">Sí</div><div class="vs-cell">Directo</div><div class="vs-cell"><span class="neg">Dilución</span> — emite nuevas acciones</div>
+          <div class="vs-cell vs-key">Bonos convertibles</div><div class="vs-cell">Sí</div><div class="vs-cell">Directo</div><div class="vs-cell"><span class="neg">Dilución</span> — emite nuevas acciones</div>
+          <div class="vs-cell vs-key">Opciones de bolsa</div><div class="vs-cell">No</div><div class="vs-cell">Nulo</div><div class="vs-cell"><span class="pos">Cero dilución</span> — intercambio de acciones existentes</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="uso impositivo tax planning opciones pais a pais b ganancias de capital dividendos intereses subsidiaria hull business snapshot 10.2">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.23</span>
+        <span class="sec-title">Uso impositivo de las opciones (tax planning)</span><span class="chip">Aplicación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Basado en el <em>Business Snapshot 10.2</em> de Hull. El caso ilustra cómo una opción puede
+          <strong>relocalizar geográficamente el tipo de renta</strong> sin mover el activo.</p>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">País A</div><div class="vs-cell vs-header">País B</div>
+          <div class="vs-cell"><strong>Bajo</strong> impuesto a dividendos e intereses<br><strong>Alto</strong> impuesto a ganancias de capital</div>
+          <div class="vs-cell"><strong>Alto</strong> impuesto a dividendos e intereses<br><strong>Bajo</strong> impuesto a ganancias de capital</div>
+        </div></div>
+        <div class="concept"><div class="concept-title">Estrategia</div>
+          <ul>
+            <li>Recibir <strong>dividendos e intereses en el País A</strong>.</li>
+            <li>Generar <strong>ganancias de capital en el País B</strong>.</li>
+            <li>Generar la <strong>pérdida de capital en el País A</strong>, para computarla contra otras
+              ganancias gravadas a alta tasa.</li>
+          </ul></div>
+        <div class="concept"><div class="concept-title">Implementación</div>
+          <p>Una subsidiaria en el País A tiene la <strong>propiedad legal del activo</strong>; una subsidiaria
+            en el País B <strong>compra un call</strong> sobre ese activo a la del País A, con strike igual al
+            valor corriente. Si el precio sube fuerte, se ejerce y la ganancia se realiza en B; si cae fuerte,
+            no se ejerce y la pérdida queda en A.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="sintesis modelo mecanica del mercado estandarizacion garantias occ liquidez market makers ajustes corporativos hoja de ruta semestre">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.24</span>
+        <span class="sec-title">Síntesis del modelo y hoja de ruta del semestre</span><span class="chip">Síntesis</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Un ecosistema rigurosamente estandarizado donde el riesgo es <strong>tasado, garantizado y
+          transferido de forma predecible</strong>, sostenido sobre cuatro pilares:</p>
+        <ul>
+          <li><strong>Estandarización</strong> — 100 acciones por contrato, ciclos estrictos, strikes predefinidos por la bolsa.</li>
+          <li><strong>Sistema de garantías (OCC)</strong> — requisitos de margen (Reg-T), mitigación del riesgo de contraparte y clearing aleatorio.</li>
+          <li><strong>Ajustes corporativos</strong> — protección algorítmica frente a splits y dividendos en acciones.</li>
+          <li><strong>Liquidez asegurada</strong> — market makers reduciendo el spread y absorbiendo el riesgo del flujo operativo.</li>
+        </ul>
+        <div class="concept"><div class="concept-title">Mapa de ruta del semestre</div>
+          <p><strong>Fundamentos</strong> (forwards, futuros, opciones, swaps) → <strong>Arquitectura de
+            estrategias</strong> (spreads y combinaciones) → <strong>Valuación matemática</strong> (mundo
+            neutral al riesgo, árboles binomiales y Black-Scholes) → <strong>Cobertura y gestión</strong>
+            (letras griegas para aislar el riesgo) → <strong>Proyecto integrador</strong>.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="adelanto swaps cds credit default swap exoticas asiaticas barrera binarias opciones reales real options cdo 2008">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.25</span>
+        <span class="sec-title">Adelanto: swaps, derivados de crédito y territorio exótico</span><span class="chip">Panorama</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="concept"><div class="concept-title">Swaps</div>
+          <p>Contrato <strong>OTC</strong> donde dos partes acuerdan intercambiar series de flujos de caja
+            futuros (típicamente tasa fija contra tasa variable — LIBOR/SOFR). Permite a las corporaciones
+            <strong>alinear la estructura de su deuda</strong> con sus expectativas macroeconómicas,
+            transformando pasivos a tasa variable en pasivos a tasa fija —o viceversa— <strong>sin renegociar
+            la deuda original</strong>.</p></div>
+        <div class="concept"><div class="concept-title">Credit Default Swaps (CDS)</div>
+          <p>Funciona como una <strong>póliza de seguro</strong>: el comprador paga una prima recurrente; el
+            vendedor asume el riesgo y paga el valor nominal si la entidad de referencia incumple. El
+            <em>lado oscuro</em>: permitió a los bancos empaquetar y transferir riesgo crediticio (CDOs), lo
+            que impulsó la liquidez pero también <strong>ocultó el riesgo sistémico</strong> previo a la crisis
+            de 2008.</p></div>
+        <div class="concept"><div class="concept-title">Opciones exóticas</div>
+          <p>Personalización extrema en el mercado OTC: <strong>asiáticas</strong> (dependen del promedio de
+            precios), <strong>barrera</strong> (se activan o desactivan al tocar un precio) y
+            <strong>binarias</strong> (pago fijo o nada).</p></div>
+        <div class="concept"><div class="concept-title">Opciones reales</div>
+          <p>Aplicación de la teoría de derivados a decisiones de inversión de capital físico —plantas,
+            maquinaria, proyectos— para <strong>capturar el valor de la flexibilidad gerencial</strong>.</p></div>
+      </div>
+    </div>
+
+    <!-- ARGENTINA -->
+    <div class="sec" data-t="byma argentina garantias var valor en riesgo posicion lanzador titular cierre de posicion posiciones opuestas circular 3572 3588 3594 cupos">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.26</span>
+        <span class="sec-title">Argentina: gestión de garantías en BYMA</span><span class="chip">Mercado local</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="concept"><div class="concept-title">Cálculo de garantías</div>
+          <p>Para las posiciones de <strong>titular o lanzador</strong> de opciones de compra y venta, el
+            sistema aplica un cálculo de <strong>Valor en Riesgo (VaR)</strong> con un nivel de confianza
+            definido por BYMA, <strong>adicionando el valor de la prima</strong> correspondiente. Los valores
+            admitidos como garantía son los detallados en la Circular 3572.</p></div>
+        <div class="concept"><div class="concept-title">Qué es una "posición"</div>
+          <p>Es el <strong>saldo resultante, en valor nominal</strong>, de una o más opciones sobre la misma
+            serie, realizadas para un comitente en un mismo Agente Miembro. Según su saldo, la posición será
+            <strong>de lanzador o de titular</strong>.</p></div>
+        <div class="concept"><div class="concept-title">Cierre de posición</div>
+          <p>Se produce cuando el lanzador o el titular <strong>realiza la operación inversa sobre una
+            serie</strong>, extinguiendo su posición total o parcialmente, <strong>en el mismo Agente
+            Miembro</strong>.</p></div>
+        <div class="concept"><div class="concept-title">Posiciones opuestas</div>
+          <p>Un comitente posee posiciones opuestas cuando se cumplen simultáneamente:</p>
+          <ul>
+            <li>Opciones del <strong>mismo tipo</strong> (compra o venta) y de <strong>naturaleza inversa</strong>
+              (titular / lanzador) sobre un mismo activo subyacente.</li>
+            <li><strong>Idénticas cantidades</strong> de lotes lanzados y titulares en diferentes series.</li>
+            <li>Fecha de vencimiento de la posición <strong>titular igual o mayor</strong> a la de la posición
+              lanzadora.</li>
+          </ul></div>
+        <div class="note"><b>Facultades de BYMA</b>
+          <p>Puede requerir <strong>garantías intradiarias</strong>, suspender la operatoria si la cotización
+            del subyacente está suspendida o si median circunstancias que afecten el normal desenvolvimiento,
+            y requerir al Agente Miembro —o ejecutar por sí— el <strong>cierre total o parcial de las
+            posiciones</strong>.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="byma clearing go live 24 abril 2026 prima t+0 ejercicio automatico itm atm otm 15:30 15:59 dividendos ordinarios jul-26">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.27</span>
+        <span class="sec-title">Argentina: BYMA Clearing — negociación y ejercicio</span><span class="chip">Mercado local</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>A partir del <em>go live</em> de <strong>BYMA Clearing, el 24 de abril de 2026</strong>, los
+          principales cambios en la operatoria de opciones son:</p>
+        <ul>
+          <li>La <strong>prima se liquida el mismo día</strong> de la operación (<span class="k">T+0</span>).</li>
+          <li>El día del vencimiento, las opciones pueden negociarse <strong>hasta las 15:30 hs</strong>.</li>
+          <li>Las instrucciones de <strong>ejercicio o no ejercicio</strong> pueden registrarse en BYMA
+            Clearing <strong>hasta las 15:59 hs</strong>.</li>
+          <li>Las opciones <strong>ITM y ATM</strong> se consideran para <strong>ejercicio automático</strong>
+            al vencimiento, salvo instrucción distinta registrada en plazo.</li>
+          <li>La clasificación ITM/ATM/OTM es una <strong>referencia</strong> para el proceso de ejercicio
+            automático; se recomienda verificar posiciones y registrar instrucción antes de las 15:59 hs.</li>
+          <li>Sin instrucción: las <strong>ITM y ATM se ejercen automáticamente</strong>; las
+            <strong>OTM no se ejercen</strong>.</li>
+          <li>Los ejercicios se liquidan en <strong>contado normal (T+1)</strong>, como hasta ahora.</li>
+          <li>Desde las series con vencimiento <strong>JUL-26 no se realizan ajustes por dividendos
+            ordinarios</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec" data-t="operatoria byma americanas lotes cedears acciones titulos publicos 10 100 1000 valores nominales garantias lanzamientos cubiertos descubiertos t+0">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.28</span>
+        <span class="sec-title">Argentina: operatoria y lotes en BYMA</span><span class="chip">Mercado local</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <ul>
+          <li>En BYMA, las opciones sobre valores negociables son de tipo <strong>americanas</strong>: los
+            titulares pueden ejercer <strong>desde el día en que se liquida la prima y hasta el
+            vencimiento</strong>.</li>
+          <li>BYMA requiere garantías <strong>únicamente a los lanzamientos</strong>, que pueden ser
+            <strong>cubiertos o descubiertos</strong>.</li>
+          <li>La prima liquida en <strong>contado inmediato (T+0)</strong> y se registra automáticamente como
+            posición de liquidación desde el momento en que se negocia. Esto permite que el comprador
+            <strong>ejerza el mismo día</strong>; el pago efectivo de la prima es
+            <strong>condición necesaria</strong> para adquirir el derecho de ejercicio.</li>
+        </ul>
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Subyacente</div><div class="vs-cell vs-header">Lote</div><div class="vs-cell vs-header">Unidad</div>
+          <div class="vs-cell vs-key">CEDEARs</div><div class="vs-cell">10</div><div class="vs-cell">valores nominales</div>
+          <div class="vs-cell vs-key">Acciones</div><div class="vs-cell">100</div><div class="vs-cell">valores nominales</div>
+          <div class="vs-cell vs-key">Títulos públicos</div><div class="vs-cell">1.000</div><div class="vs-cell">valores nominales</div>
+        </div></div>
+        <div class="concept"><div class="concept-title">Al vencimiento</div>
+          <p>El tenedor puede <strong>ejercer total o parcialmente</strong> la posición, o
+            <strong>manifestar la instrucción de no ejercicio</strong> (<em>Set Option Intention = 0</em>). El
+            ejercicio se liquida en contado normal (T+1).</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="eventos corporativos ordinario extraordinario byma ajuste strike aviso particular reorganizaciones societarias distribuciones de capital">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">1.29</span>
+        <span class="sec-title">Argentina: eventos corporativos ordinarios vs. extraordinarios</span><span class="chip">Comparativa</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Tipo</div><div class="vs-cell vs-header">Definición</div><div class="vs-cell vs-header">Tratamiento</div>
+          <div class="vs-cell vs-key">Ordinario</div>
+          <div class="vs-cell">Forma parte de la práctica habitual o de la política de distribución de la
+            emisora y su ocurrencia es <strong>razonablemente previsible</strong> para el mercado,
+            independientemente de su monto o denominación.</div>
+          <div class="vs-cell">No se emiten comunicaciones individuales. <strong>No se ajustan</strong> los
+            precios de ejercicio ni las condiciones de los contratos vigentes.</div>
+          <div class="vs-cell vs-key">Extraordinario</div>
+          <div class="vs-cell">No forma parte de la práctica habitual, o deriva de hechos, operaciones o
+            circunstancias <strong>no recurrentes</strong>: reorganizaciones societarias, distribuciones de
+            capital u otros eventos excepcionales.</div>
+          <div class="vs-cell">Se comunican mediante <strong>aviso particular</strong>, informando el
+            tratamiento que corresponda aplicar a los contratos.</div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ CLASE 2 -->
+  <section class="unit" id="c2" role="tabpanel" aria-labelledby="t-c2" style="--accent:var(--u2)">
+    <div class="unit-head">
+      <p class="unit-tag">Clase 2 · Unidad 1</p>
+      <h2>Estrategias con opciones financieras</h2>
+      <p>El catálogo de arquitecturas: combinar opciones entre sí y con el subyacente para esculpir un
+        perfil de riesgo. Desde covered calls y collares hasta boxes, mariposas, calendarios, straddles
+        y strangles.</p>
+      <div class="srcline"><span>Fuente: Clase 2 — Estrategias con Opciones (Modificado), 60 diapositivas</span></div>
+    </div>
+
+    <div class="sec" data-t="opcion mas activo subyacente covered call protective put reverse sinteticas payoff tabla">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.1</span>
+        <span class="sec-title">Opción + activo subyacente: las cuatro combinaciones</span><span class="chip">Clasificación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Combinando opciones y acciones se pueden construir <strong>opciones sintéticas</strong>.</p>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Estrategia</div><div class="vs-cell vs-header">Composición</div>
+          <div class="vs-cell vs-key">Covered Call</div><div class="vs-cell"><span class="leg long">long stock</span> <span class="leg short">short call</span></div>
+          <div class="vs-cell vs-key">Protective Put</div><div class="vs-cell"><span class="leg long">long stock</span> <span class="leg long">long put</span></div>
+          <div class="vs-cell vs-key">Reverse Covered Call</div><div class="vs-cell"><span class="leg short">short stock</span> <span class="leg long">long call</span></div>
+          <div class="vs-cell vs-key">Reverse Protective Put</div><div class="vs-cell"><span class="leg short">short stock</span> <span class="leg short">short put</span></div>
+          <div class="vs-cell vs-key">Collar</div><div class="vs-cell"><span class="leg long">long stock</span> <span class="leg short">short call</span> <span class="leg long">long put</span></div>
+        </div></div>
+        <div class="concept"><div class="concept-title">Payoff del Covered Call (long stock + short call)</div>
+          <ul>
+            <li>Si <span class="k">0 &lt; S &lt; K</span>: el call vale 0 y el subyacente aporta −(K − S) →
+              total <strong>−(K − S)</strong>.</li>
+            <li>Si <span class="k">S &gt; K</span>: el call aporta −(S − K) y el subyacente +(S − K) →
+              total <strong>0</strong>. El upside queda <strong>truncado</strong>.</li>
+          </ul></div>
+        <div class="concept"><div class="concept-title">Payoff del Protective Put (long stock + long put)</div>
+          <ul>
+            <li>Si <span class="k">0 &lt; S &lt; K</span>: el put aporta (K − S) y el subyacente −(K − S) →
+              total <strong>0</strong>. El downside queda <strong>frenado</strong>.</li>
+            <li>Si <span class="k">S &gt; K</span>: el put vale 0 y queda el <strong>upside íntegro (S − K)</strong>.</li>
+          </ul></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="collar proteccion limitar perdidas ganancias no realizadas cero costo zero cost strike put call volatilidad desviacion estandar">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.2</span>
+        <span class="sec-title">Collar: proteger sin cerrar la posición</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Los collares protectores se utilizan para <strong>reducir el riesgo sin cerrar una posición en
+          acciones</strong>, mediante:</p>
+        <ul>
+          <li>La limitación de las posibles pérdidas.</li>
+          <li>La protección de las ganancias no realizadas.</li>
+          <li>El mantenimiento de la inversión en entornos de incertidumbre.</li>
+          <li>La definición de resultados ante eventos conocidos.</li>
+        </ul>
+        <div class="concept"><div class="concept-title">Estructuración</div>
+          <ul>
+            <li>Combina una <strong>posición existente en acciones</strong> con dos opciones.</li>
+            <li>Se <strong>compra un PUT</strong> para establecer un piso a la baja y se
+              <strong>vende un CALL</strong> para compensar el costo de esa protección.</li>
+            <li>El strike del put se fija a una <strong>distancia definida por debajo</strong> del precio
+              actual —usando un marco de porcentajes o de volatilidad / desvío estándar—; el strike del call
+              se fija <strong>por encima</strong>.</li>
+            <li>Ambas opciones suelen tener la <strong>misma fecha de vencimiento</strong>.</li>
+          </ul></div>
+        <div class="note"><b>Collar de costo cero</b>
+          <p>En algunos casos la prima del call <strong>compensa íntegramente</strong> el costo del put. Se
+            vende el upside para financiar el downside: put y call tienen la misma prima.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="opciones sinteticas por que costos profundidad del mercado oferta liquidez">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.3</span>
+        <span class="sec-title">¿Por qué construir una opción sintética?</span><span class="chip">Fundamentos</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Por costos</div><div class="vs-cell vs-header">Por profundidad de mercado</div>
+          <div class="vs-cell">Muchas veces se puede armar la opción sintética de forma <strong>más barata</strong>
+            que comprándola directamente en el mercado.</div>
+          <div class="vs-cell">Otras veces <strong>hay poca oferta del derivado</strong> para comprarlo de forma
+            directa: la réplica sintética es la única vía practicable.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="paridad put call parity arbitraje protective put covered call dividendos strike valor presente">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.4</span>
+        <span class="sec-title">Paridad Put-Call</span><span class="chip">Concepto base</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="fx"><span class="lbl">Relación de no arbitraje</span>p + S₀ = c + K·e<sup>−rT</sup> + D</div>
+        <ul>
+          <li><span class="k">p</span> precio del put europeo · <span class="k">c</span> precio del call europeo</li>
+          <li><span class="k">S₀</span> precio spot · <span class="k">K</span> strike · <span class="k">r</span> risk free · <span class="k">T</span> tiempo hasta maturity</li>
+          <li><span class="k">D</span> valor presente de los dividendos anticipados durante la vida de la opción</li>
+        </ul>
+        <p>La paridad muestra por qué <strong>Long Put + Long Stock (protective put) equivale a comprar un
+          call</strong>. Si la igualdad no se mantuviera existirían <strong>oportunidades de arbitraje</strong>,
+          ya sea por el lado del call, del put o del subyacente.</p>
+        <div class="concept"><div class="concept-title">Reformulación → Covered Call</div>
+          <p><span class="k">S₀ − c = K·e<sup>−rT</sup> + D − p</span>. El lado izquierdo es
+            <span class="leg long">long stock</span> + <span class="leg short">short call</span>: un
+            <strong>covered call</strong>. El lado derecho es <strong>invertir K·e<sup>−rT</sup> y
+            shortear un put</strong>. Es la misma lógica que permite obtener un reverse protective put
+            shorteando un call y comprando el subyacente.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="spreads definicion compra venta simultanea mismo subyacente limitar riesgo reducir prima costo de entrada">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.5</span>
+        <span class="sec-title">Spreads: definición y objetivo</span><span class="chip">Concepto base</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Una estrategia de tipo <em>spread</em> consiste en la <strong>compra y venta simultánea de dos o
+          más contratos de opción del mismo activo subyacente</strong>.</p>
+        <p>Su objetivo principal: <strong>limitar el riesgo de pérdida máxima</strong> y
+          <strong>reducir el costo de entrada (prima)</strong> en comparación con operar opciones individuales.</p>
+        <div class="note"><b>El trade-off</b>
+          <p>Se sacrifica el escenario de ganancias infinitas para financiar la posición y limitar el riesgo
+            a la baja. Ganancia máxima y pérdida máxima quedan <strong>definidas desde el primer día</strong>.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="vertical spreads taxonomia bull spread bear spread call put mismo vencimiento distintos strikes">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.6</span>
+        <span class="sec-title">Vertical spreads: la taxonomía</span><span class="chip">Clasificación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Un <strong>vertical spread</strong> combina dos opciones del <strong>mismo tipo</strong> y
+          <strong>mismo vencimiento</strong>, con <strong>strikes distintos</strong>.</p>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Bull Spreads (alcistas)</div><div class="vs-cell vs-header">Bear Spreads (bajistas)</div>
+          <div class="vs-cell">Bull Call Spread — <strong>débito</strong><br>Bull Put Spread — <strong>crédito</strong></div>
+          <div class="vs-cell">Bear Put Spread — <strong>débito</strong><br>Bear Call Spread — <strong>crédito</strong></div>
+        </div></div>
+        <div class="note"><b>Regla que ordena todo el bloque</b>
+          <p>En <strong>calls</strong>, a mayor strike menor prima. En <strong>puts</strong>, a mayor strike
+            mayor prima. De esa única regla se deduce si cada spread nace a débito o a crédito.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="bull call spread debito k1 k2 inversion inicial potencial alcista tipos otm itm agresiva moderada conservadora">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.7</span>
+        <span class="sec-title">Bull Call Spread (débito) y sus tres variantes</span><span class="chip">Estrategia</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Se usa con perspectiva <strong>moderadamente alcista</strong>. Estructura:
+          <span class="leg long">long call K₁</span> <span class="leg short">short call K₂</span>, con
+          <span class="k">K₁ &lt; K₂</span> y mismo vencimiento.</p>
+        <p>Como el valor de los calls <strong>decrece a medida que aumenta el strike</strong>, siempre habrá
+          que <strong>invertir dinero</strong> para armar la estrategia —salvo primas desarbitradas—. Ese
+          desembolso es la inversión inicial. Leído de otro modo: el inversor tiene un call en K₁ y
+          <strong>entrega parte del potencial alcista</strong> vendiendo otro call en K₂, reduciendo así el
+          costo de la compra.</p>
+        <div class="vs-wrap"><div class="vs-grid c4">
+          <div class="vs-cell vs-header">Con spot = $100</div>
+          <div class="vs-cell vs-header">Ambos calls OTM</div>
+          <div class="vs-cell vs-header">1 ITM + 1 OTM</div>
+          <div class="vs-cell vs-header">Ambos calls ITM</div>
+          <div class="vs-cell vs-key">Estructura</div>
+          <div class="vs-cell">Compra $105, vende $110</div>
+          <div class="vs-cell">Compra $95, vende $105</div>
+          <div class="vs-cell">Compra $90, vende $95</div>
+          <div class="vs-cell vs-key">Perfil</div>
+          <div class="vs-cell">Agresiva</div><div class="vs-cell">Moderada</div><div class="vs-cell">Conservadora</div>
+          <div class="vs-cell vs-key">Justificación</div>
+          <div class="vs-cell">El precio está por debajo de ambos strikes: el spread <strong>no tiene valor
+            intrínseco</strong>.</div>
+          <div class="vs-cell">El precio actual queda <strong>justo en medio</strong>. La opción comprada ($95)
+            ya tiene $5 de valor intrínseco.</div>
+          <div class="vs-cell">El precio ya <strong>superó ambos strikes</strong>. Aun con el mercado congelado
+            se obtiene el beneficio máximo al vencimiento.</div>
+          <div class="vs-cell vs-key">Ventaja</div>
+          <div class="vs-cell">Armarla es <strong>extremadamente barato</strong>: se paga muy poca prima.</div>
+          <div class="vs-cell">Punto de equilibrio cercano; alta probabilidad de éxito moderado; costo de
+            entrada financiado; pérdida máxima estrictamente limitada.</div>
+          <div class="vs-cell">Ideal para mercados lentos o maduros; <strong>vega baja</strong>; ganancia
+            máxima asegurada desde el inicio.</div>
+          <div class="vs-cell vs-key">Riesgo</div>
+          <div class="vs-cell">Si la acción no sube con fuerza y queda debajo de $105, se pierde el
+            <strong>100 % de lo invertido</strong>.</div>
+          <div class="vs-cell">Mayor capital en riesgo que con ambos OTM; ganancia máxima limitada (cap);
+            sensibilidad al tiempo (theta).</div>
+          <div class="vs-cell">Armarla es <strong>muy costoso</strong>: se compran opciones caras con mucho
+            valor intrínseco.</div>
+          <div class="vs-cell vs-key">Retorno</div>
+          <div class="vs-cell">Baja probabilidad de éxito, pero si llega a $110 el retorno porcentual es
+            enorme.</div>
+          <div class="vs-cell">Más equilibrada: cuesta más que la agresiva, pero necesita un movimiento mucho
+            menor para empezar a ganar.</div>
+          <div class="vs-cell">Alta probabilidad de éxito, pero retorno porcentual bajo por el alto costo de
+            entrada.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="bull put spread credito garantia vender put caro comprar put barato ingreso neto inmediato multiplicador">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.8</span>
+        <span class="sec-title">Bull Put Spread (crédito)</span><span class="chip">Estrategia</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Estrategia <strong>de crédito</strong>: <span class="leg short">short put K₂ (alto)</span>
+          <span class="leg long">long put K₁ (bajo)</span>, mismo activo y mismo vencimiento.</p>
+        <ul>
+          <li>Se usa cuando se espera una tendencia <strong>alcista, neutral o moderadamente estable</strong>.</li>
+          <li>Como en los puts <strong>a mayor strike más cara la prima</strong>, al vender el put de strike
+            más alto se cobra más de lo que se paga por el put de protección.</li>
+          <li>Resultado: <strong>ingreso neto inmediato (crédito)</strong> en la cuenta.</li>
+          <li><strong>Requiere garantías.</strong></li>
+        </ul>
+        <div class="fx"><span class="lbl">Garantía exigida</span>(Diferencia entre strikes × Multiplicador) − Crédito neto recibido</div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="bull call vs bull put debito credito diferencia objetivo vencer sin valor valor intrinseco">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.9</span>
+        <span class="sec-title">Bull Call vs. Bull Put: la misma vista, distinto motor</span><span class="chip">Comparativa</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Bull Call Spread (débito)</div><div class="vs-cell vs-header">Bull Put Spread (crédito)</div>
+          <div class="vs-cell">Necesitás que el precio <strong>suba con fuerza</strong> para que ambas opciones
+            ganen valor intrínseco.</div>
+          <div class="vs-cell">Ganás el máximo beneficio si las opciones <strong>vencen sin valor</strong> —el
+            precio se mantiene arriba—.</div>
+          <div class="vs-cell">Objetivo: <strong>vender el spread por más de lo que pagaste</strong>.</div>
+          <div class="vs-cell">Objetivo: que los contratos <strong>expiren valiendo cero</strong> para quedarte
+            con la totalidad del crédito.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="bear spread bajista bear call spread credito bear put spread debit espejo strikes upfront">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.10</span>
+        <span class="sec-title">Bear Spreads: Bear Call (crédito) y Bear Put (débito)</span><span class="chip">Estrategia</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Un Bear Spread es la <strong>estrategia espejo del Bull Spread</strong>, para perspectiva
+          <strong>moderadamente bajista</strong>. Dos opciones del mismo tipo, mismo vencimiento, strikes
+          distintos. Igual que la versión alcista, su objetivo es un
+          <strong>escenario de riesgo definido</strong>: pérdida y ganancia máximas quedan congeladas desde el
+          primer día.</p>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Bear Call Spread — <em>credit</em></div><div class="vs-cell vs-header">Bear Put Spread — <em>debit</em></div>
+          <div class="vs-cell"><span class="leg short">short call K₁</span> <span class="leg long">long call K₂</span></div>
+          <div class="vs-cell"><span class="leg long">long put K₂</span> <span class="leg short">short put K₁</span></div>
+          <div class="vs-cell">En los calls, <strong>a menor strike mayor prima</strong>: el call vendido en K₁
+            vale más que el comprado en K₂ → se genera un <strong>crédito upfront</strong>.</div>
+          <div class="vs-cell">En los puts, <strong>a mayor strike mayor prima</strong>: el put comprado en K₂
+            vale más que el vendido en K₁ → requiere un <strong>pago upfront</strong>.</div>
+          <div class="vs-cell">Se cobra por adelantado y se acota la pérdida con el call comprado más arriba.</div>
+          <div class="vs-cell">El inversor compra el put en K₂ y <strong>resigna parte de la ganancia
+            potencial</strong> vendiendo el put en K₁ para financiar la operación.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="box spread arbitraje prestamo financiamiento tasa interbancaria europeas americanas debit credit valor al vencimiento diferencia de strikes">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.11</span>
+        <span class="sec-title">Box Spread: arbitraje y financiamiento sintético</span><span class="chip">Estructura compleja</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Combinación de <strong>dos spreads verticales</strong> sobre los mismos dos strikes: un
+          <strong>Bull Call Spread</strong> (long call K₁ + short call K₂) y un <strong>Bear Put
+          Spread</strong> (short put K₁ + long put K₂).</p>
+        <div class="legs">
+          <span class="leg long">long call K₁</span><span class="leg short">short put K₁</span>
+          <span class="leg short">short call K₂</span><span class="leg long">long put K₂</span>
+        </div>
+        <p>Su objetivo es <strong>fijar un rendimiento financiero prácticamente sin riesgo de mercado</strong>.
+          Se usa exclusivamente como <strong>mecanismo de arbitraje</strong> o como método alternativo para
+          <strong>prestar o tomar prestado</strong> a tasas muy competitivas, similares a las interbancarias.</p>
+        <div class="fx"><span class="lbl">Valor al vencimiento</span>(Strike B − Strike A) × 100 — pase lo que pase con el subyacente</div>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Debit Box Spread</div><div class="vs-cell vs-header">Credit Box Spread</div>
+          <div class="vs-cell">Se <strong>paga dinero hoy</strong> para abrir la estrategia. El retorno
+            representa el <strong>interés ganado por "prestar"</strong> capital durante la vida de las
+            opciones.</div>
+          <div class="vs-cell">Se <strong>recibe dinero hoy</strong> al abrirla. Es la forma en que traders
+            retail con cuentas grandes consiguen <strong>financiamiento a tasas más bajas</strong> que las
+            tasas de margen tradicionales de los brókers.</div>
+        </div></div>
+        <div class="note"><b>Solo con opciones europeas</b>
+          <p>El box spread solo funciona con opciones <strong>europeas</strong>: con americanas se puede perder
+            dinero, porque el ejercicio anticipado de las patas vendidas rompe el valor terminal fijo.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="butterfly mariposa call put short butterfly tres strikes k1 k2 k3 movimiento lateral pequeno pago inicial">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.12</span>
+        <span class="sec-title">Butterfly Spreads (mariposas)</span><span class="chip">Estructura compleja</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Combinación de <strong>tres strikes distintos</strong>: un Bull Spread y un Bear Spread unidos en el
+          strike central. Todos expiran el mismo día —dimensión vertical—, pero la estructura es
+          <em>tridimensional</em> en cuanto a precios de ejercicio.</p>
+        <div class="concept"><div class="concept-title">Long Butterfly con calls</div>
+          <div class="legs"><span class="leg long">+1 long call K₁</span><span class="leg short">−2 short call K₂</span><span class="leg long">+1 long call K₃</span></div>
+          <ul>
+            <li>Para que la mariposa gane, el precio tiene que quedar <strong>cercano a K₂</strong>.</li>
+            <li>Puede generar una <strong>pequeña pérdida</strong> si hay un movimiento significativo en
+              cualquier dirección.</li>
+            <li>Sirve para inversores que <strong>no esperan un movimiento brusco</strong> del precio.</li>
+            <li>Implica un <strong>pequeño pago inicial</strong>: parte del costo de los calls en K₁ y K₃ está
+              financiado con la venta de los dos calls en K₂.</li>
+          </ul></div>
+        <div class="concept"><div class="concept-title">Long Butterfly con puts</div>
+          <div class="legs"><span class="leg long">+1 long put K₁</span><span class="leg short">−2 short put K₂</span><span class="leg long">+1 long put K₃</span></div>
+          <p>Usar puts en lugar de calls <strong>genera el mismo spread</strong>. Esto puede demostrarse con la
+            paridad put-call.</p></div>
+        <div class="concept"><div class="concept-title">Short Butterfly</div>
+          <p>La estructura invertida —<span class="leg short">short K₁</span>
+            <span class="leg long">long ×2 K₂</span> <span class="leg short">short K₃</span>, con
+            K₁ &lt; K₂ &lt; K₃— tanto en calls como en puts. Gana cuando el precio <strong>se aleja</strong>
+            del strike central. La cátedra lo deja planteado como ejercicio: máxima pérdida, máxima ganancia y
+            break-evens.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="calendar spread horizontal mismo strike distintos vencimientos maturity neutral bullish bearish inversion inicial">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.13</span>
+        <span class="sec-title">Calendar Spreads (horizontales)</span><span class="chip">Estructura compleja</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <ul>
+          <li>Las opciones tienen el <strong>mismo strike pero distintos vencimientos</strong>.</li>
+          <li>Por ejemplo: vender un call con strike K₁ y comprar otro con el <strong>mismo strike K₁ pero
+            vencimiento más largo</strong>.</li>
+          <li>Cuanto más larga la <em>maturity</em>, <strong>más caras suelen ser</strong> las opciones → la
+            estrategia suele requerir <strong>inversión inicial</strong>.</li>
+          <li>El inversor gana si el precio al vencimiento de la opción corta <strong>se acerca al
+            strike</strong>; incurre en pérdidas cuando el precio queda significativamente por encima o por
+            debajo de ese strike.</li>
+        </ul>
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Variante</div><div class="vs-cell vs-header">Ubicación del strike</div><div class="vs-cell vs-header">Sesgo</div>
+          <div class="vs-cell vs-key">Neutral Calendar</div><div class="vs-cell">Cercano al precio actual del activo</div><div class="vs-cell">Neutral</div>
+          <div class="vs-cell vs-key">Bullish Calendar</div><div class="vs-cell">Por encima del precio actual</div><div class="vs-cell">Alcista</div>
+          <div class="vs-cell vs-key">Bearish Calendar</div><div class="vs-cell">Por debajo del precio actual</div><div class="vs-cell">Bajista</div>
+        </div></div>
+        <div class="note"><b>Se retoma en la Unidad 2</b>
+          <p>El motor económico del calendar spread es la <strong>theta</strong>: la opción corta pierde valor
+            temporal más rápido que la larga. Ver 3.6.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="diagonal spread vertical calendar distintos strikes distintos vencimientos avanzada">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.14</span>
+        <span class="sec-title">Diagonal Spreads</span><span class="chip">Estructura compleja</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Estrategia avanzada en la que se compran y venden contratos del <strong>mismo tipo</strong> (dos
+          calls o dos puts), pero con <strong>diferentes strikes Y diferentes vencimientos</strong>.</p>
+        <p>Se llama "diagonal" porque combina las características de un <strong>vertical spread</strong>
+          (diferentes strikes) y un <strong>calendar spread</strong> (diferentes vencimientos).</p>
+      </div>
+    </div>
+
+    <div class="sec" data-t="straddle long short cono mismo strike volatilidad movimiento brusco lateraliza break even">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.15</span>
+        <span class="sec-title">Straddles: operar volatilidad pura</span><span class="chip">Combinación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Las <strong>combinaciones</strong> mezclan calls y puts. Se usan cuando
+          <strong>no se sabe la dirección pero se espera un movimiento violento</strong>.</p>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Long Straddle</div><div class="vs-cell vs-header">Short Straddle</div>
+          <div class="vs-cell"><span class="leg long">long call</span> <span class="leg long">long put</span> — <strong>mismo strike</strong></div>
+          <div class="vs-cell"><span class="leg short">short call</span> <span class="leg short">short put</span> — <strong>mismo strike</strong></div>
+          <div class="vs-cell">Ganancia masiva ante cualquier movimiento brusco. <strong>Pierde si el mercado
+            lateraliza.</strong></div>
+          <div class="vs-cell">Cobra las dos primas y gana si el mercado queda quieto. Riesgo teóricamente
+            <strong>ilimitado</strong> por la pata del call.</div>
+        </div></div>
+        <div class="note"><b>Planteado en clase</b>
+          <p>Para cada variante la cátedra deja como ejercicio determinar máxima pérdida, máxima ganancia y
+            break-evens.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="strangle long short cuna strikes distintos call alto put bajo menor costo explosividad">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">2.16</span>
+        <span class="sec-title">Strangles</span><span class="chip">Combinación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Long Strangle</div><div class="vs-cell vs-header">Short Strangle</div>
+          <div class="vs-cell"><span class="leg long">long call</span> <span class="leg long">long put</span> con <span class="k">K<sub>call</sub> &gt; K<sub>put</sub></span></div>
+          <div class="vs-cell"><span class="leg short">short call</span> <span class="leg short">short put</span> con <span class="k">K<sub>call</sub> &gt; K<sub>put</sub></span></div>
+          <div class="vs-cell"><strong>Menor costo inicial</strong> que el straddle —ambas patas nacen OTM—,
+            pero requiere <strong>mayor explosividad</strong> en el precio para ser rentable.</div>
+          <div class="vs-cell">Cobra menos prima que el short straddle, pero tiene una
+            <strong>zona de ganancia más ancha</strong> entre los dos strikes.</div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ CLASE 3 -->
+  <section class="unit" id="c3" role="tabpanel" aria-labelledby="t-c3" style="--accent:var(--u3)">
+    <div class="unit-head">
+      <p class="unit-tag">Clase 3 · Unidad 2</p>
+      <h2>Letras griegas: sensibilidad del precio</h2>
+      <p>Cómo se descompone el riesgo de una posición en opciones en sensibilidades a cada factor, y cómo
+        se usan esas sensibilidades para inmunizar un portafolio.</p>
+      <div class="srcline"><span>Fuente: Letras Griegas — 2C 2026, 14 diapositivas</span></div>
+    </div>
+
+    <div class="sec" data-t="que son letras griegas medidas de sensibilidad especulacion cobertura factores delta gamma theta vega rho mapa">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">3.1</span>
+        <span class="sec-title">Qué son las letras griegas</span><span class="chip">Concepto base</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>Son <strong>medidas de sensibilidad</strong>. Parten de reconocer que la prima es una función de
+          varios factores: <span class="k">c = f(S ; T−t ; σ ; r)</span>. Cada letra aísla la derivada
+          respecto de uno de ellos.</p>
+        <p><strong>¿Para qué se usan?</strong> Especulación y cobertura.</p>
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Factor</div><div class="vs-cell vs-header">Letra</div><div class="vs-cell vs-header">Mide</div>
+          <div class="vs-cell vs-key">S</div><div class="vs-cell">Δ (delta)</div><div class="vs-cell">Sensibilidad al precio del subyacente</div>
+          <div class="vs-cell vs-key">S (2º orden)</div><div class="vs-cell">Γ (gamma)</div><div class="vs-cell">Curvatura: cómo cambia delta</div>
+          <div class="vs-cell vs-key">T − t</div><div class="vs-cell">θ (theta)</div><div class="vs-cell">Decaimiento por paso del tiempo</div>
+          <div class="vs-cell vs-key">σ</div><div class="vs-cell">ν (vega)</div><div class="vs-cell">Sensibilidad a la volatilidad</div>
+          <div class="vs-cell vs-key">r</div><div class="vs-cell">ρ (rho)</div><div class="vs-cell">Sensibilidad a la tasa de interés</div>
+        </div></div>
+        <div class="note"><b>Notación de la cátedra</b>
+          <p>La PPT usa <strong>τ</strong> para theta y <strong>υ</strong> para vega, y en la tabla de signos
+            rotula vega como <strong>σ</strong>. Hull usa <strong>Θ</strong> y <strong>ν</strong>. Es una
+            diferencia de notación, no de contenido — conviene tenerla presente al leer el material.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="naked position covered position gestion del riesgo inmunizar portafolio alternativas vendido calls europeos">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">3.2</span>
+        <span class="sec-title">El problema de partida: naked vs. covered position</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>La clase plantea el caso de un lanzador de calls europeos que cobró primas y debe
+          <strong>gestionar el riesgo</strong> de esa posición corta. El objetivo declarado:
+          <strong>inmunizar el portafolio contra subas o bajas del subyacente</strong>.</p>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Alternativa 1 — Naked position</div><div class="vs-cell vs-header">Alternativa 2 — Covered position</div>
+          <div class="vs-cell">No hacer nada. Si el subyacente termina <strong>debajo del strike</strong> se
+            gana la prima íntegra; si termina <strong>arriba</strong>, la pérdida en las opciones puede superar
+            ampliamente las primas cobradas.</div>
+          <div class="vs-cell">Comprar las acciones. Si el precio <strong>sube</strong>, la ganancia en acciones
+            compensa la pérdida en opciones; si <strong>cae</strong>, se gana la prima pero se pierde en la
+            tenencia accionaria.</div>
+          <div class="vs-cell">Deja la posición <strong>expuesta al alza</strong>.</div>
+          <div class="vs-cell">Deja la posición <strong>expuesta a la baja</strong>.</div>
+        </div></div>
+        <div class="note"><b>La conclusión que abre la unidad</b>
+          <p>Ninguna de las dos alternativas estáticas inmuniza. Hace falta una cobertura
+            <strong>dinámica</strong>: delta hedging.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="delta hedging pendiente aproximacion lineal derivada portafolio delta neutral rebalanceo moneyness ventajas desventajas">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">3.3</span>
+        <span class="sec-title">Delta y delta hedging</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="fx"><span class="lbl">Definición</span>Δ<sub>c</sub> = ∂c / ∂S</div>
+        <ul>
+          <li>Δ es la <strong>pendiente de la curva</strong> que relaciona el precio del subyacente con el
+            precio de la opción.</li>
+          <li>Es una <strong>aproximación lineal</strong>: vale para movimientos chicos del subyacente.</li>
+          <li>Depende del <strong>moneyness</strong>: la pendiente no es la misma ITM, ATM y OTM.</li>
+        </ul>
+        <div class="concept"><div class="concept-title">Portafolio delta neutral</div>
+          <p>Para cubrir una posición corta en calls se compra una cantidad de acciones igual a
+            <strong>Δ × acciones totales comprometidas</strong>. Ante un movimiento pequeño del subyacente, la
+            ganancia en una pata compensa exactamente la pérdida en la otra: <strong>resultado neto cero</strong>.</p></div>
+        <div class="note"><b>Pregunta abierta en clase</b>
+          <p>Ventajas y desventajas del portafolio delta neutral. La desventaja central aparece en el punto
+            siguiente: <strong>delta cambia</strong>, así que la cobertura debe rebalancearse, y cada
+            rebalanceo tiene costo.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="gamma curvatura segunda derivada rebalanceo hedging error convexidad bonos atm maximo ajuste">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">3.4</span>
+        <span class="sec-title">Gamma (Γ): curvatura y frecuencia de rebalanceo</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="fx"><span class="lbl">Definición</span>Γ = ∂Δ / ∂S = ∂²c / ∂S²</div>
+        <ul>
+          <li>Si Γ está <strong>cercano a 0</strong> → no hace falta rebalancear tan seguido.</li>
+          <li>Si Γ es <strong>muy positivo o muy negativo</strong> → rebalanceos frecuentes.</li>
+          <li>La diferencia entre la cobertura lineal y el movimiento real de la prima es el
+            <strong>hedging error</strong>.</li>
+          <li><strong>Gamma es máximo en opciones ATM.</strong></li>
+        </ul>
+        <div class="fx"><span class="lbl">Corrección de segundo orden</span>Variación en prima call = Δ<sub>c</sub>·ΔS + ½·Γ·(ΔS)²<br>Variación en prima put = Δ<sub>p</sub>·ΔS + ½·Γ·(ΔS)²</div>
+        <div class="note"><b>Analogía</b>
+          <p>Es la misma lógica que el <strong>ajuste por convexidad en bonos</strong>: duration captura el
+            primer orden, convexidad corrige el segundo.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="theta decaimiento temporal negativa long call put atm maximo valor intrinseco cero time decay">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">3.5</span>
+        <span class="sec-title">Theta (θ): el decaimiento temporal</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="fx"><span class="lbl">Definición</span>θ = ∂c / ∂(T−t)</div>
+        <ul>
+          <li>Es <strong>negativa</strong> tanto para posiciones compradoras en calls como en puts: el paso del
+            tiempo juega en contra del comprador.</li>
+          <li>Las opciones <strong>ATM tienen theta máximo</strong>.</li>
+        </ul>
+        <div class="note"><b>El porqué, según la cátedra</b>
+          <p>Porque en una opción ATM <strong>el valor intrínseco es 0</strong>: toda la prima es valor tiempo,
+            y por lo tanto todo lo que hay para perder se pierde por decaimiento.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="theta calendar spread long short vencimientos volatilidad implicita mercado estable">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">3.6</span>
+        <span class="sec-title">Theta aplicada: calendar spreads</span><span class="chip">Aplicación</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <p>En un calendar spread las opciones tienen <strong>distinta fecha de vencimiento</strong>, y la
+          desigualdad clave es:</p>
+        <div class="fx">θ (opciones ATM cerca de vencer) &gt; θ (opciones ATM lejos de vencer)</div>
+        <div class="concept"><div class="concept-title">Long Calendar Spread</div>
+          <p><span class="leg long">long opciones lejos de vencer</span>
+            <span class="leg short">short opciones prontas a vencer</span></p>
+          <p><strong>¿Cuándo se usa?</strong> Cuando el mercado está <strong>estable</strong>, o si se espera un
+            <strong>aumento en la volatilidad implícita</strong>.</p></div>
+        <div class="concept"><div class="concept-title">Short Calendar Spread</div>
+          <p><strong>¿Cuándo se usa?</strong> Cuando se espera que el mercado <strong>se mueva mucho en
+            breve</strong>, o que <strong>baje la volatilidad implícita</strong>.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="rho tasa de interes efecto valor presente strike gordon hull dos efectos contrapuestos">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">3.7</span>
+        <span class="sec-title">Rho (ρ): el efecto de la tasa de interés</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="fx"><span class="lbl">Definición</span>ρ = ∂c / ∂r</div>
+        <p>¿Qué pasa con el valor de las primas si <strong>aumentan las tasas de interés</strong>? En un call
+          conviven <strong>dos efectos contrapuestos</strong>:</p>
+        <div class="vs-wrap"><div class="vs-grid">
+          <div class="vs-cell vs-header">Efecto 1 — descuento del strike</div><div class="vs-cell vs-header">Efecto 2 — valuación del subyacente</div>
+          <div class="vs-cell">Desde <span class="k">c = máx(S − K·e<sup>−r(T−t)</sup> ; 0)</span>: si sube r,
+            <strong>baja K·e<sup>−r(T−t)</sup></strong> y por lo tanto <strong>sube c</strong>.</div>
+          <div class="vs-cell">Desde la valuación por descuento de flujos (Gordon): si sube r,
+            <strong>baja S</strong> y por lo tanto <strong>baja c</strong>.</div>
+        </div></div>
+        <div class="note"><b>Resolución</b>
+          <p>Según la cátedra, <strong>Hull confirma que el término K·e<sup>−r(T−t)</sup> tiene más peso</strong>
+            que el efecto Gordon. Por eso <strong>rho es positiva para un call</strong> y negativa para un put.</p></div>
+      </div>
+    </div>
+
+    <div class="sec" data-t="vega volatilidad aumento monetario en prima 1% sensibilidad implicita">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">3.8</span>
+        <span class="sec-title">Vega (ν): sensibilidad a la volatilidad</span><span class="chip">Mecanismo</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="fx"><span class="lbl">Definición</span>ν = ∂c / ∂σ</div>
+        <p>Se interpreta como el <strong>aumento monetario en la prima por un aumento de 1 % en la
+          volatilidad</strong>.</p>
+        <p>Es positiva tanto para calls como para puts comprados: más volatilidad implica mayor probabilidad
+          de terminar profundamente in the money, y el downside ya está acotado por la propia asimetría de la
+          opción.</p>
+      </div>
+    </div>
+
+    <div class="sec" data-t="signo letras griegas tabla long call long put delta gamma vega theta rho positivo negativo">
+      <button class="sec-head" aria-expanded="false"><span class="sec-num">3.9</span>
+        <span class="sec-title">Tabla de signos: long call vs. long put</span><span class="chip">Comparativa</span>
+        <svg class="arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="sec-body">
+        <div class="vs-wrap"><div class="vs-grid c3">
+          <div class="vs-cell vs-header">Letra</div><div class="vs-cell vs-header">Long Call</div><div class="vs-cell vs-header">Long Put</div>
+          <div class="vs-cell vs-key">Δ delta</div><div class="vs-cell"><span class="pos">+</span></div><div class="vs-cell"><span class="neg">−</span></div>
+          <div class="vs-cell vs-key">Γ gamma</div><div class="vs-cell"><span class="pos">+</span></div><div class="vs-cell"><span class="pos">+</span></div>
+          <div class="vs-cell vs-key">ν vega</div><div class="vs-cell"><span class="pos">+</span></div><div class="vs-cell"><span class="pos">+</span></div>
+          <div class="vs-cell vs-key">θ theta</div><div class="vs-cell"><span class="neg">−</span></div><div class="vs-cell"><span class="neg">−</span></div>
+          <div class="vs-cell vs-key">ρ rho</div><div class="vs-cell"><span class="pos">+</span></div><div class="vs-cell"><span class="neg">−</span></div>
+        </div></div>
+        <div class="note"><b>Cómo leerla</b>
+          <p>Para posiciones <strong>short</strong> se invierten todos los signos. Gamma y vega son
+            <strong>positivas para cualquier opción comprada</strong> —call o put— porque ambas se benefician
+            del movimiento y de la incertidumbre; theta es negativa por la misma razón.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="empty" id="empty">Sin resultados en esta clase.</p>
+
+  <footer>
+    Resumen teórico generado a partir del material de cátedra de Instrumentos Financieros Derivados II,
+    UADE, 2C 2026 · Clases 0 a 3 · Solo contenido teórico; sin ejercicios ni desarrollos numéricos.<br>
+    Las fórmulas mostradas aparecen únicamente como definición de cada sensibilidad o relación, no como
+    material de cálculo.
+  </footer>
+</div>
+
+<script>
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var q = document.getElementById('q');
+  var empty = document.getElementById('empty');
+
+  function activeUnit(){ return document.querySelector('.unit.on'); }
+
+  function show(id){
+    tabs.forEach(function(t){
+      var on = t.getAttribute('aria-controls') === id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.unit').forEach(function(u){
+      u.classList.toggle('on', u.id === id);
+    });
+    filter();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ show(t.getAttribute('aria-controls')); });
+    t.addEventListener('keydown', function(e){
+      var i = tabs.indexOf(t), n = null;
+      if(e.key === 'ArrowRight') n = tabs[(i+1) % tabs.length];
+      if(e.key === 'ArrowLeft')  n = tabs[(i-1+tabs.length) % tabs.length];
+      if(n){ e.preventDefault(); n.focus(); show(n.getAttribute('aria-controls')); }
+    });
+  });
+
+  document.querySelectorAll('.sec-head').forEach(function(h){
+    h.addEventListener('click', function(){
+      var open = h.getAttribute('aria-expanded') === 'true';
+      h.setAttribute('aria-expanded', open ? 'false' : 'true');
+      h.nextElementSibling.classList.toggle('open', !open);
+    });
+  });
+
+  function setAll(open){
+    var u = activeUnit(); if(!u) return;
+    u.querySelectorAll('.sec').forEach(function(s){
+      if(s.hidden) return;
+      s.querySelector('.sec-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+      s.querySelector('.sec-body').classList.toggle('open', open);
+    });
+  }
+  document.getElementById('expand').addEventListener('click', function(){ setAll(true); });
+  document.getElementById('collapse').addEventListener('click', function(){ setAll(false); });
+
+  function norm(s){
+    return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  }
+
+  function filter(){
+    var term = norm(q.value.trim());
+    var u = activeUnit(); if(!u) return;
+    var hits = 0;
+    u.querySelectorAll('.sec').forEach(function(s){
+      if(!term){ s.hidden = false; hits++; return; }
+      var hay = norm(s.querySelector('.sec-title').textContent + ' ' +
+                     (s.getAttribute('data-t')||'') + ' ' +
+                     s.querySelector('.sec-body').textContent);
+      var ok = hay.indexOf(term) !== -1;
+      s.hidden = !ok;
+      if(ok) hits++;
+    });
+    empty.classList.toggle('on', hits === 0);
+  }
+  q.addEventListener('input', filter);
+})();
+</script>
+
+</body>
+</html>
